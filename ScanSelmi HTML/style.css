@@ -5,11 +5,49 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    min-height: 100vh;
+    color: #25344D; /* Colore del testo generale */
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #25344D; /* Colore di sfondo della barra superiore */
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.menu-btn {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.right-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.flash-btn, .gallery-btn {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 header {
-    background-color: #4CAF50;
-    color: white;
+    margin-top: 60px; /* spazio per la top-bar */
     padding: 1rem;
     text-align: center;
     width: 100%;
@@ -27,13 +65,17 @@ header {
 }
 
 #showRecentBtn {
-    margin: 20px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #25344D; /* Colore di sfondo del pulsante in basso */
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    z-index: 50;
 }
 
 #recentMachines {
@@ -57,4 +99,5 @@ header {
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #fff;
+    color: #25344D; /* Colore del testo degli elementi delle macchine */
 }
