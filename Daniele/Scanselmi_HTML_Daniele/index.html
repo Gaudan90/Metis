@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+    <header></header>
+    
+    <button id="menu-toggle">☰</button>
+    
+    <nav id="sidebar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">Follow Us</a></li>
+            <li><a href="#">Machine List</a></li>
+        </ul>
+    </nav>
+
+    <div id="selmi"></div>
+    
+    <main>
+        <h1>SCANSELMI</h1>
+        <p>Scan a QR code using your device's camera</p>
+        <div id="qr-reader"></div>
+    </main>
+
+    <footer>
+        <p>Click here for more information</p>
+    </footer>
+
+    <div id="popup">
+        <div id="loading-bar"></div>
+        <p>Download completed</p>
+    </div>
+    
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
+    <script src="./scripts/main.js"></script>
+</body>
+</html>
