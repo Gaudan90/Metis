@@ -99,6 +99,22 @@ footer {
   margin-top: 20px;
 }
 
+@media (max-width: 768px) {
+  #selmi {
+    width: 90%;
+    height: auto; 
+    min-height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  #selmi {
+    width: 100%;
+    height: auto;
+    min-height: 80px;  
+   }
+}
+
 #popup {
   display: none;
   position: fixed;
