@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
-    const main = document.querySelector('main');
     const footer = document.querySelector('footer');
     const popup = document.getElementById('popup');
     const loadingBar = document.getElementById('loading-bar');
@@ -126,6 +125,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
+    async function initializeQRScanner() {
+        try {
+            // Request camera permission
+            await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+            
+            const html5QrCode = new Html5Qrcode("qr-reader");
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            
+            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure);
+        } catch (err) {
+            console.error("Error in accessing camera:", err);
+            alert("Unable to access the camera. Please ensure you've granted the necessary permissions.");
+        }
+    }
+
     menuToggle.addEventListener('click', toggleSidebar);
     document.querySelector('.home-link').addEventListener('click', resetView);
     footer.addEventListener('touchstart', handleTouchStart);
@@ -135,9 +149,5 @@ document.addEventListener('DOMContentLoaded', function() {
     machineList.addEventListener('touchmove', handleTouchMove);
     machineList.addEventListener('touchend', handleTouchEnd);
 
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-        "qr-reader",
-        { fps: 10, qrbox: {width: 250, height: 250} },
-        /* verbose= */ false);
-    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    initializeQRScanner();
 });

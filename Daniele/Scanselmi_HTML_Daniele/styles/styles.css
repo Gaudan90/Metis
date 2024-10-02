@@ -16,6 +16,9 @@ header {
   top: 0;
   left: 0;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #menu-toggle {
@@ -85,21 +88,18 @@ header {
 
 main {
   flex-grow: 1;
-  padding: 2rem;
-  text-align: center;
   margin-top: 60px;
-  overflow-y: auto;
-  height: calc(100vh - 120px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-bottom: 60px;
+  overflow: hidden;
+  position: relative;
 }
 
 #qr-reader {
-  width: 80%;
-  max-width: 500px;
-  height: 50vh;
-  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 footer {
@@ -113,6 +113,7 @@ footer {
   transition: transform 0.3s ease-in-out;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  z-index: 1000;
 }
 
 #footer-content {
@@ -120,15 +121,12 @@ footer {
 }
 
 #selmi {
-  width: 328px; 
-  height: 80px; 
+  width: 200px; 
+  height: 50px; 
   background-image: url('https://www.selmi-group.it/img/logo-selmi-social.png'); 
   background-size: contain;
   background-position: center; 
   background-repeat: no-repeat; 
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
 
 #popup {
@@ -141,6 +139,7 @@ footer {
   padding: 2rem;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  z-index: 1002;
 }
 
 #loading-bar {
@@ -173,17 +172,9 @@ footer {
       width: 200px;
   }
 
-  #qr-reader {
-      width: 90%;
-  }
-
   #selmi {
-      width: 90%;
-      height: 60px;
-  }
-
-  main {
-      padding: 1rem;
+      width: 150px;
+      height: 40px;
   }
 }
 
@@ -203,7 +194,7 @@ footer {
 
   main {
       margin-top: 50px;
-      height: calc(100vh - 100px);
+      margin-bottom: 50px;
   }
 
   footer {
@@ -219,6 +210,7 @@ footer {
   }
 
   #selmi {
-      height: 50px;
+      width: 120px;
+      height: 30px;
   }
 }
