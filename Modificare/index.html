@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Base Selmi</title>
+    <meta name="description" content="This site will have a lots of lists" />
+    <meta name="author" content="Federico La Mattina" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <i class="fa-solid fa-backward-step"></i>
+
+      <img src="https://www.selmi-group.it/img/logo-selmi-social.png" />
+
+      <i class="fa-solid fa-pen"></i>
+    </div>
+    <div>
+      <img
+        class="imageofthemachine"
+        src="C:\Users\utente\OneDrive\Desktop\progetto learn by project\temperatrice.avif"
+      />
+    </div>
+    <form>
+      <label for="year">Anno di Produzione</label>
+      <select name="year" id="year">
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
+    </form>
+
+    <form>
+      <label for="language">Lingua</label>
+      <select name="language" id="language">
+        <option value="IT">Italiano</option>
+        <option value="EN">Inglese</option>
+        <option value="SP">Spagnolo</option>
+        <option value="FR">Francese</option>
+        <option value="CN">Cinese</option>
+        <option value="RU">Russo</option>
+      </select>
+    </form>
+    <table>
+      <h1>PDF</h1>
+      <i class="fa-solid fa-file-pdf"></i>
+      <a
+        href="https://www.selmi-group.it/pdf/Selmi-One-Temperatrice-professionale-cioccolato.pdf"
+        download="nome_del_file.pdf"
+        >PDF</a
+      >
+    </table>
+    <h2 class="macchina">Temperatrice</h2>
+    <div id="description" class="description"></div>
+    <script src="./main.js"></script>
+  </body>
+</html>
