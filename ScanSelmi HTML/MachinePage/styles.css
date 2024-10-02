@@ -14,7 +14,7 @@ body {
     flex-direction: column;
 }
 
-.back-arrow {
+button {
     font-size: 24px;
     color: #003366;
     text-decoration: none;
