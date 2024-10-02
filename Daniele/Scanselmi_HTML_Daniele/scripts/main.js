@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let startY, currentY;
     let isFooterDragging = false;
+    let footerHeight = footer.offsetHeight;
+    let isDragging = false;
+    let startY, currentY;
 
     function toggleSidebar() {
         sidebar.classList.toggle('active');
@@ -30,30 +33,53 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleTouchStart(e) {
+        isDragging = true;
         startY = e.touches[0].clientY;
-        isFooterDragging = e.target === footer || footer.contains(e.target);
+        footer.style.transition = 'none';
     }
 
     function handleTouchMove(e) {
-        if (!startY) return;
+        if (!isDragging) return;
         currentY = e.touches[0].clientY;
         let deltaY = startY - currentY;
-        if (isFooterDragging) {
-            handleFooterDrag(deltaY);
+        
+        if (deltaY > 0) {
+            // Trascinamento verso l'alto
+            let newPosition = Math.min(deltaY, window.innerHeight - footerHeight);
+            footer.style.transform = `translateY(-${newPosition}px)`;
+            machineList.style.bottom = `${newPosition}px`;
         } else {
-            handleMachineListDrag(deltaY);
+            // Trascinamento verso il basso
+            let newPosition = Math.max(0, -deltaY);
+            footer.style.transform = `translateY(-${window.innerHeight - footerHeight - newPosition}px)`;
+            machineList.style.bottom = `${window.innerHeight - footerHeight - newPosition}px`;
         }
     }
 
     function handleTouchEnd() {
-        if (!startY || !currentY) return;
+        if (!isDragging) return;
+        isDragging = false;
+        footer.style.transition = 'transform 0.3s ease-in-out';
+        
         let deltaY = startY - currentY;
-        if (isFooterDragging) {
-            finalizeFooterDrag(deltaY);
+        if (Math.abs(deltaY) > 100) {
+            if (deltaY > 0) {
+                // Apri completamente
+                footer.style.transform = `translateY(-${window.innerHeight - footerHeight}px)`;
+                machineList.style.bottom = '0';
+                machineList.classList.add('active');
+            } else {
+                // Chiudi completamente
+                footer.style.transform = 'translateY(0)';
+                machineList.style.bottom = `-${window.innerHeight - footerHeight}px`;
+                machineList.classList.remove('active');
+            }
         } else {
-            finalizeMachineListDrag(deltaY);
+            // Torna alla posizione originale
+            footer.style.transform = 'translateY(0)';
+            machineList.style.bottom = `-${window.innerHeight - footerHeight}px`;
+            machineList.classList.remove('active');
         }
-        resetDragState();
     }
 
     function handleFooterDrag(deltaY) {
