@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleResize() {
         resetFooterAndMachineList();
+        adjustQRScannerSize();
     }
 
     function onScanSuccess(decodedText, decodedResult) {
@@ -132,43 +133,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initQRScanner() {
-        Html5Qrcode.getCameras().then(devices => {
-            if (devices && devices.length) {
-                let html5QrcodeScanner = new Html5Qrcode("qr-reader");
-                
-                function getQrBoxSize() {
-                    const minEdgePercentage = 70;
-                    const minWidth = Math.min(window.innerWidth, window.innerHeight);
-                    const qrboxSize = Math.floor(minWidth * minEdgePercentage / 100);
-                    return { width: qrboxSize, height: qrboxSize };
-                }
+        const html5QrCode = new Html5Qrcode("qr-scanner-container");
+        const config = {
+            fps: 10,
+            qrbox: { width: 250, height: 250 },
+            aspectRatio: 1.0
+        };
 
-                let qrboxSize = getQrBoxSize();
-
-                const qrConfig = { 
-                    fps: 10, 
-                    qrbox: qrboxSize
-                };
-
-                html5QrcodeScanner.start(
-                    { facingMode: "environment" }, 
-                    qrConfig, 
-                    onScanSuccess, 
-                    onScanFailure
-                ).catch(err => {
-                    console.error("Error starting QR scanner:", err);
-                });
-
-                window.addEventListener('resize', () => {
-                    qrboxSize = getQrBoxSize();
-                    html5QrcodeScanner.applyVideoConstraints({
-                        qrbox: qrboxSize
-                    });
-                });
-            }
-        }).catch(err => {
-            console.error("Error getting cameras:", err);
+        html5QrCode.start(
+            { facingMode: "environment" },
+            config,
+            onScanSuccess,
+            onScanFailure
+        ).catch(err => {
+            console.error("Error starting QR scanner:", err);
         });
+
+        adjustQRScannerSize();
+    }
+
+    function adjustQRScannerSize() {
+        const scannerContainer = document.getElementById('qr-scanner-container');
+        const aspectRatio = window.innerWidth / window.innerHeight;
+        
+        if (aspectRatio > 1) {
+            // Landscape
+            scannerContainer.style.width = '100vh';
+            scannerContainer.style.height = '100vh';
+        } else {
+            // Portrait
+            scannerContainer.style.width = '100vw';
+            scannerContainer.style.height = '100vw';
+        }
     }
 
     window.addEventListener('resize', handleResize);
