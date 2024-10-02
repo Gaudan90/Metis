@@ -12,3 +12,6 @@ function handleSignIn() {
   console.log("Password:", password);
   alert(`Welcome, ${email}!`);
 }
+function goBack() {
+  window.history.back();
+}
