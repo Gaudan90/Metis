@@ -21,6 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function resetFooterAndMachineList() {
+        machineList.classList.remove('active');
+        footer.style.transform = 'translateY(0)';
+        machineList.style.bottom = `-${window.innerHeight - 60}px`;
+        footer.style.zIndex = '1000';
+    }
+
     function resetView() {
         sidebar.classList.remove('active');
         menuToggle.classList.remove('arrow-left');
@@ -70,14 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             machineList.style.bottom = `${newBottom}px`;
             footer.style.transform = `translateY(${newBottom}px)`;
         }
-    }
-
-    function resetFooterAndMachineList() {
-        machineList.classList.remove('active');
-        footer.style.transform = 'translateY(0)';
-        machineList.style.bottom = `-${window.innerHeight - 60}px`;
-        footer.style.zIndex = '1000';
-    }
+    }   
 
     function handleResize() {
         if (!machineList.classList.contains('active')) {
