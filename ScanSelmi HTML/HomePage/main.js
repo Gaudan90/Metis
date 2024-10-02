@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function onScanSuccess(decodedText, decodedResult) {
         // Handle the scanned code as you like, for now, just console.log the result
         console.log(`Code matched = ${decodedText}`, decodedResult);
-        window.location.assign("../MachinePage/secondPage.html");
+        window.location.assign("../MachinePage/index.html");
         
         // Show loading bar
         popup.style.display = 'block';
