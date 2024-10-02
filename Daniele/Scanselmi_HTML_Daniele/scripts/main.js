@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleTouchStart(e) {
         startY = e.touches[0].clientY;
-        isFooterDragging = e.target === footer || footer.contains(e.target);
+        isFooterDragging = e.target === footer || footer.contains(e.target) || machineList.contains(e.target);
     }
 
     function handleTouchMove(e) {
@@ -41,9 +41,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (isFooterDragging) {
             e.preventDefault();
-            let newTransform = Math.max(-window.innerHeight + 60, Math.min(0, -deltaY));
-            footer.style.transform = `translateY(${newTransform}px)`;
-            machineList.style.transform = `translateY(${newTransform}px)`;
+            if (machineList.classList.contains('active')) {
+                // If machine list is open, allow dragging down to close
+                let newTransform = Math.max(0, Math.min(window.innerHeight - 60, deltaY));
+                footer.style.transform = `translateY(calc(-100% + 60px + ${newTransform}px))`;
+                machineList.style.transform = `translateY(${newTransform}px)`;
+            } else {
+                // If machine list is closed, allow dragging up to open
+                let newTransform = Math.max(-window.innerHeight + 60, Math.min(0, -deltaY));
+                footer.style.transform = `translateY(${newTransform}px)`;
+                machineList.style.transform = `translateY(${newTransform}px)`;
+            }
         }
     }
 
@@ -52,12 +60,27 @@ document.addEventListener('DOMContentLoaded', function() {
         let deltaY = startY - currentY;
         
         if (isFooterDragging) {
-            if (deltaY > 50) {
-                footer.style.transform = 'translateY(calc(-100% + 60px))';
-                machineList.style.transform = 'translateY(0)';
-                machineList.classList.add('active');
+            if (machineList.classList.contains('active')) {
+                // If machine list is open
+                if (deltaY < -50) {
+                    // Dragged down more than 50px, close the machine list
+                    resetFooterAndMachineList();
+                } else {
+                    // Not dragged down enough, keep it open
+                    footer.style.transform = 'translateY(calc(-100% + 60px))';
+                    machineList.style.transform = 'translateY(0)';
+                }
             } else {
-                resetFooterAndMachineList();
+                // If machine list is closed
+                if (deltaY > 50) {
+                    // Dragged up more than 50px, open the machine list
+                    footer.style.transform = 'translateY(calc(-100% + 60px))';
+                    machineList.style.transform = 'translateY(0)';
+                    machineList.classList.add('active');
+                } else {
+                    // Not dragged up enough, keep it closed
+                    resetFooterAndMachineList();
+                }
             }
         }
         
