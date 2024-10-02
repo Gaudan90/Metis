@@ -136,8 +136,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const html5QrCode = new Html5Qrcode("qr-scanner-container");
         const config = {
             fps: 10,
-            qrbox: { width: 250, height: 250 },
-            aspectRatio: 1.0
+            qrbox: (viewfinderWidth, viewfinderHeight) => {
+                const minEdgePercentage = 70;
+                const minDimension = Math.min(viewfinderWidth, viewfinderHeight);
+                const qrboxSize = Math.floor(minDimension * minEdgePercentage / 100);
+                return { width: qrboxSize, height: qrboxSize };
+            },
+            aspectRatio: window.innerWidth / window.innerHeight
         };
 
         html5QrCode.start(
@@ -154,17 +159,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function adjustQRScannerSize() {
         const scannerContainer = document.getElementById('qr-scanner-container');
-        const aspectRatio = window.innerWidth / window.innerHeight;
-        
-        if (aspectRatio > 1) {
-            // Landscape
-            scannerContainer.style.width = '100vh';
-            scannerContainer.style.height = '100vh';
-        } else {
-            // Portrait
-            scannerContainer.style.width = '100vw';
-            scannerContainer.style.height = '100vw';
-        }
+        scannerContainer.style.width = '100vw';
+        scannerContainer.style.height = '100vh';
+        scannerContainer.style.position = 'fixed';
+        scannerContainer.style.top = '0';
+        scannerContainer.style.left = '0';
+        scannerContainer.style.zIndex = '1000';
     }
 
     window.addEventListener('resize', handleResize);
