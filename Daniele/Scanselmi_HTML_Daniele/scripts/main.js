@@ -5,21 +5,75 @@ document.addEventListener('DOMContentLoaded', function() {
     const footer = document.querySelector('footer');
     const popup = document.getElementById('popup');
     const loadingBar = document.getElementById('loading-bar');
+    const machineList = document.getElementById('machine-list');
+
+    let startY, currentY;
+    let isFooterDragging = false;
 
     menuToggle.addEventListener('click', function() {
         sidebar.classList.toggle('active');
-        main.classList.toggle('shift');
+        menuToggle.classList.toggle('arrow-left');
+        menuToggle.classList.toggle('arrow-right');
     });
 
-    footer.addEventListener('click', function() {
-        alert('You clicked the footer!');
+    footer.addEventListener('touchstart', function(e) {
+        startY = e.touches[0].clientY;
+        isFooterDragging = true;
+    });
+
+    footer.addEventListener('touchmove', function(e) {
+        if (!isFooterDragging) return;
+        currentY = e.touches[0].clientY;
+        let deltaY = startY - currentY;
+        if (deltaY > 0 && deltaY < window.innerHeight - 60) {
+            machineList.style.bottom = `${deltaY}px`;
+            footer.style.transform = `translateY(-${deltaY}px)`;
+        }
+    });
+
+    footer.addEventListener('touchend', function() {
+        isFooterDragging = false;
+        if (currentY && startY - currentY > 100) {
+            machineList.classList.add('active');
+            footer.style.transform = 'translateY(-100%)';
+        } else {
+            machineList.classList.remove('active');
+            footer.style.transform = 'translateY(0)';
+        }
+        machineList.style.bottom = '';
+        startY = null;
+        currentY = null;
+    });
+
+    machineList.addEventListener('touchstart', function(e) {
+        startY = e.touches[0].clientY;
+    });
+
+    machineList.addEventListener('touchmove', function(e) {
+        currentY = e.touches[0].clientY;
+        let deltaY = currentY - startY;
+        if (deltaY > 0 && deltaY < window.innerHeight - 60) {
+            machineList.style.bottom = `${window.innerHeight - 60 - deltaY}px`;
+            footer.style.transform = `translateY(-${window.innerHeight - 60 - deltaY}px)`;
+        }
+    });
+
+    machineList.addEventListener('touchend', function() {
+        if (currentY && currentY - startY > 100) {
+            machineList.classList.remove('active');
+            footer.style.transform = 'translateY(0)';
+        } else {
+            machineList.classList.add('active');
+            footer.style.transform = 'translateY(-100%)';
+        }
+        machineList.style.bottom = '';
+        startY = null;
+        currentY = null;
     });
 
     function onScanSuccess(decodedText, decodedResult) {
-        // Handle the scanned code as you like, for now, just console.log the result
         console.log(`Code matched = ${decodedText}`, decodedResult);
         
-        // Show loading bar
         popup.style.display = 'block';
         let width = 0;
         const interval = setInterval(() => {
@@ -39,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function onScanFailure(error) {
-        // handle scan failure, usually better to ignore and keep scanning.
         console.warn(`Code scan error = ${error}`);
     }
 
