@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (isFooterDragging) {
             e.preventDefault();
-            let newTransform = Math.max(-window.innerHeight + 60, -deltaY);
+            let newTransform = Math.max(-window.innerHeight + 60, Math.min(0, -deltaY));
             footer.style.transform = `translateY(${newTransform}px)`;
             machineList.style.transform = `translateY(calc(100% + ${newTransform}px))`;
         }
@@ -114,11 +114,39 @@ document.addEventListener('DOMContentLoaded', function() {
         Html5Qrcode.getCameras().then(devices => {
             if (devices && devices.length) {
                 let html5QrcodeScanner = new Html5Qrcode("qr-reader");
-                const qrConfig = { fps: 10, qrbox: { width: 250, height: 250 } };
-                html5QrcodeScanner.start({ facingMode: "environment" }, qrConfig, onScanSuccess, onScanFailure)
-                    .catch(err => {
-                        console.error("Error starting QR scanner:", err);
+                
+                // Function to calculate responsive dimensions
+                function getQrBoxSize() {
+                    const minEdgePercentage = 70; // Percentage of the smaller edge
+                    const minWidth = Math.min(window.innerWidth, window.innerHeight);
+                    const qrboxSize = Math.floor(minWidth * minEdgePercentage / 100);
+                    return { width: qrboxSize, height: qrboxSize };
+                }
+
+                // Initial QR box size
+                let qrboxSize = getQrBoxSize();
+
+                const qrConfig = { 
+                    fps: 10, 
+                    qrbox: qrboxSize
+                };
+
+                html5QrcodeScanner.start(
+                    { facingMode: "environment" }, 
+                    qrConfig, 
+                    onScanSuccess, 
+                    onScanFailure
+                ).catch(err => {
+                    console.error("Error starting QR scanner:", err);
+                });
+
+                // Update QR box size on window resize
+                window.addEventListener('resize', () => {
+                    qrboxSize = getQrBoxSize();
+                    html5QrcodeScanner.applyVideoConstraints({
+                        qrbox: qrboxSize
                     });
+                });
             }
         }).catch(err => {
             console.error("Error getting cameras:", err);
