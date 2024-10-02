@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             let newTransform = Math.max(-window.innerHeight + 60, Math.min(0, -deltaY));
             footer.style.transform = `translateY(${newTransform}px)`;
-            machineList.style.transform = `translateY(calc(100% + ${newTransform}px))`;
+            machineList.style.transform = `translateY(${newTransform}px)`;
         }
     }
 
@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let deltaY = startY - currentY;
         
         if (isFooterDragging) {
-            if (deltaY > 100) {
-                footer.style.transform = 'translateY(-100%)';
+            if (deltaY > 50) {
+                footer.style.transform = 'translateY(calc(-100% + 60px))';
+                machineList.style.transform = 'translateY(0)';
                 machineList.classList.add('active');
             } else {
-                footer.style.transform = 'translateY(0)';
-                machineList.classList.remove('active');
+                resetFooterAndMachineList();
             }
         }
         
@@ -77,9 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleResize() {
-        if (!machineList.classList.contains('active')) {
-            machineList.style.transform = 'translateY(100%)';
-        }
+        resetFooterAndMachineList();
     }
 
     function onScanSuccess(decodedText, decodedResult) {
@@ -115,15 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (devices && devices.length) {
                 let html5QrcodeScanner = new Html5Qrcode("qr-reader");
                 
-                // Function to calculate responsive dimensions
                 function getQrBoxSize() {
-                    const minEdgePercentage = 70; // Percentage of the smaller edge
+                    const minEdgePercentage = 70;
                     const minWidth = Math.min(window.innerWidth, window.innerHeight);
                     const qrboxSize = Math.floor(minWidth * minEdgePercentage / 100);
                     return { width: qrboxSize, height: qrboxSize };
                 }
 
-                // Initial QR box size
                 let qrboxSize = getQrBoxSize();
 
                 const qrConfig = { 
@@ -140,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error("Error starting QR scanner:", err);
                 });
 
-                // Update QR box size on window resize
                 window.addEventListener('resize', () => {
                     qrboxSize = getQrBoxSize();
                     html5QrcodeScanner.applyVideoConstraints({
@@ -163,6 +158,5 @@ document.addEventListener('DOMContentLoaded', function() {
     machineList.addEventListener('touchmove', handleTouchMove);
     machineList.addEventListener('touchend', handleTouchEnd);
 
-    // Initialize QR scanner
     initQRScanner();
 });

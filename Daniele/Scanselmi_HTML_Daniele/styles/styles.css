@@ -6,7 +6,6 @@ body {
   flex-direction: column;
   min-height: 100vh;
   overflow: hidden;
-  padding-bottom: 60px; /* Add padding to the body to account for the footer height */
 }
 
 header {
@@ -134,7 +133,6 @@ footer {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   z-index: 1000;
-  transform: translateY(0); /* Ensure the footer starts at the bottom */
 }
 
 #footer-content {
@@ -152,12 +150,19 @@ footer {
   transition: transform 0.3s ease-in-out;
   z-index: 998;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  padding-top: 20px;
+  overflow-y: auto;
 }
 
 #machine-list.active {
   transform: translateY(0);
+}
+
+#machine-list h2 {
+  margin-top: 20px;
 }
 
 #selmi {
@@ -237,8 +242,12 @@ footer {
     line-height: 50px;
   }
 
+  #machine-list {
+    height: calc(100% - 50px);
+  }
+
   #machine-list.active {
-    bottom: 50px;
+    transform: translateY(0);
   }
 
   #selmi {
