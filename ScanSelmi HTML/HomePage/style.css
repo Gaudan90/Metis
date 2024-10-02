@@ -1,182 +1,291 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  header {
-    width: 100%;
-    height: 60px;
-    background-color: #092d52;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-  }
-  
-  #menu-toggle {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1001;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: white;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+header {
+  width: 100%;
+  height: 60px;
+  background-color: #092d52;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+#menu-toggle {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 1001;
+  background: #092d52;
+  border: none;
+  cursor: pointer;
+  width: 30px;
+  height: 60px;
+  transition: left 0.3s ease-in-out;
+}
+
+.arrow-right::after {
+  content: '›';
+  font-size: 24px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.arrow-left::after {
+  content: '‹';
+  font-size: 24px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #092d52;
+  transition: left 0.3s ease-in-out;
+  padding-top: 60px;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+#sidebar.active {
+  left: 0;
+}
+
+#sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#sidebar ul li {
+  padding: 10px;
+}
+
+#sidebar ul li a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+main {
+  flex-grow: 1;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 60px;
+  overflow-y: auto;
+  height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#qr-reader {
+  width: 80%;
+  max-width: 500px;
+  height: 50vh;
+  margin: 0 auto;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #092d52;
+  color: white;
+  text-align: center;
+  height: 60px;
+  transition: transform 0.3s ease-in-out;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+#footer-content {
+  line-height: 60px;
+}
+
+#selmi {
+  width: 328px; 
+  height: 80px; 
+  background-image: url('https://www.selmi-group.it/img/logo-selmi-social.png'); 
+  background-size: contain;
+  background-position: center; 
+  background-repeat: no-repeat; 
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(231, 231, 231);
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#loading-bar {
+  width: 0%;
+  height: 5px;
+  background-color: #093564;
+  transition: width 0.5s;
+}
+
+#machine-list {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background-color: white;
+  transition: bottom 0.3s ease-in-out;
+  z-index: 998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#machine-list.active {
+  bottom: 60px;
+}
+
+@media (max-width: 768px) {
   #sidebar {
-    position: fixed;
-    top: 60px;
-    left: -250px;
-    width: 250px;
-    height: calc(100% - 60px);
-    background-color: #092d52;
-    transition: left 0.3s ease-in-out;
-    padding-top: 20px;
-    overflow-y: auto;
-  }
-  
-  #sidebar.active {
-    left: 0;
-  }
-  
-  #sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  #sidebar ul li {
-    padding: 10px;
-  }
-  
-  #sidebar ul li a {
-    text-decoration: none;
-    color: #ffffff;
-  }
-  
-  main {
-    flex-grow: 1;
-    padding: 2rem;
-    text-align: center;
-    margin-left: 0;
-    transition: margin-left 0.3s ease-in-out;
-    margin-top: 60px;
-  }
-  
-  main.shift {
-    margin-left: 250px;
-  }
-  
-  #qr-reader {
-    width: 300px;
-    margin: 0 auto;
-  }
-  
-  footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color:#092d52;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    cursor: pointer;
-  }
-  
-  #selmi {
-    width: 328px; 
-    height: 80px; 
-    background-image: url('https://www.selmi-group.it/img/logo-selmi-social.png'); 
-    background-size: contain;
-    background-position: center; 
-    background-repeat: no-repeat; 
-    margin: 0 auto;
-    margin-top: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    #selmi {
-      width: 90%;
-      height: auto; 
-      min-height: 80px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    #selmi {
-      width: 100%;
-      height: auto;
-      min-height: 80px;  
-     }
-  }
-  
-  #popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(231, 231, 231);
-    padding: 2rem;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  
-  #loading-bar {
-    width: 0%;
-    height: 5px;
-    background-color: #093564;
-    transition: width 0.5s;
-  }
-  
-  /* Media Queries per la Responsiveness */
-  @media (max-width: 768px) {
-    #sidebar {
       width: 200px;
-    }
-  
-    #qr-reader {
-      width: 80%;
-    }
-  
-    #selmi {
+  }
+
+  #qr-reader {
       width: 90%;
-      height: auto;
-    }
-  
-    #menu-toggle {
-      font-size: 20px;
-    }
-  
-    main {
+  }
+
+  #selmi {
+      width: 90%;
+      height: 60px;
+  }
+
+  main {
       padding: 1rem;
-    }
-  
-    footer {
-      font-size: 14px;
-    }
   }
-  
-  @media (max-width: 480px) {
-    header {
+}
+
+@media (max-width: 480px) {
+  header {
       height: 50px;
-    }
-  
-    #menu-toggle {
-      top: 10px;
-    }
-  
-    #sidebar {
-      top: 50px;
-      height: calc(100% - 50px);
-    }
-  
-    main {
-      margin-top: 50px;
-    }
   }
+
+  #menu-toggle {
+      top: 50%;
+  }
+
+  #sidebar {
+      top: 0;
+      height: 100%;
+  }
+
+  main {
+      margin-top: 50px;
+      height: calc(100vh - 100px);
+  }
+
+  footer {
+      height: 50px;
+  }
+
+  #footer-content {
+      line-height: 50px;
+  }
+
+  #machine-list.active {
+      bottom: 50px;
+  }
+
+  #selmi {
+      height: 50px;
+  }
+};
+
+.card {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+  background-color: white;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.card-content {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text-content {
+  flex: 1;
+}
+
+.card h2 {
+  margin: 0 0 4px 0;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+}
+
+.card p {
+  color: #666;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card a {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  font-size: 14px;
+  align-self: flex-start;
+}
+
+.card a:hover {
+  background-color: #0056b3;
+}
