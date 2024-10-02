@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
+    const main = document.querySelector('main');
     const footer = document.querySelector('footer');
     const popup = document.getElementById('popup');
     const loadingBar = document.getElementById('loading-bar');
@@ -8,9 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let startY, currentY;
     let isFooterDragging = false;
-    let footerHeight = footer.offsetHeight;
-    let isDragging = false;
-    let startY, currentY;
 
     function toggleSidebar() {
         sidebar.classList.toggle('active');
@@ -28,71 +26,62 @@ document.addEventListener('DOMContentLoaded', function() {
         menuToggle.classList.remove('arrow-left');
         menuToggle.classList.add('arrow-right');
         menuToggle.style.left = '0';
-        machineList.classList.remove('active');
-        footer.style.transform = 'translateY(0)';
+        resetFooterAndMachineList();
     }
 
+
     function handleTouchStart(e) {
-        isDragging = true;
         startY = e.touches[0].clientY;
-        footer.style.transition = 'none';
+        isFooterDragging = e.target === footer || footer.contains(e.target);
     }
 
     function handleTouchMove(e) {
-        if (!isDragging) return;
+        if (!startY) return;
         currentY = e.touches[0].clientY;
         let deltaY = startY - currentY;
-        
-        if (deltaY > 0) {
-            // Trascinamento verso l'alto
-            let newPosition = Math.min(deltaY, window.innerHeight - footerHeight);
-            footer.style.transform = `translateY(-${newPosition}px)`;
-            machineList.style.bottom = `${newPosition}px`;
+        if (isFooterDragging) {
+            handleFooterDrag(deltaY);
         } else {
-            // Trascinamento verso il basso
-            let newPosition = Math.max(0, -deltaY);
-            footer.style.transform = `translateY(-${window.innerHeight - footerHeight - newPosition}px)`;
-            machineList.style.bottom = `${window.innerHeight - footerHeight - newPosition}px`;
+            handleMachineListDrag(deltaY);
         }
     }
 
     function handleTouchEnd() {
-        if (!isDragging) return;
-        isDragging = false;
-        footer.style.transition = 'transform 0.3s ease-in-out';
-        
+        if (!startY || !currentY) return;
         let deltaY = startY - currentY;
-        if (Math.abs(deltaY) > 100) {
-            if (deltaY > 0) {
-                // Apri completamente
-                footer.style.transform = `translateY(-${window.innerHeight - footerHeight}px)`;
-                machineList.style.bottom = '0';
-                machineList.classList.add('active');
-            } else {
-                // Chiudi completamente
-                footer.style.transform = 'translateY(0)';
-                machineList.style.bottom = `-${window.innerHeight - footerHeight}px`;
-                machineList.classList.remove('active');
-            }
+        if (isFooterDragging) {
+            finalizeFooterDrag(deltaY);
         } else {
-            // Torna alla posizione originale
-            footer.style.transform = 'translateY(0)';
-            machineList.style.bottom = `-${window.innerHeight - footerHeight}px`;
-            machineList.classList.remove('active');
+            finalizeMachineListDrag(deltaY);
         }
+        resetDragState();
     }
 
     function handleFooterDrag(deltaY) {
         if (deltaY > 0 && deltaY < window.innerHeight - 60) {
-            machineList.style.bottom = `${deltaY}px`;
             footer.style.transform = `translateY(-${deltaY}px)`;
+            machineList.style.bottom = `${deltaY - (window.innerHeight - 60)}px`;
         }
     }
 
     function handleMachineListDrag(deltaY) {
         if (deltaY < 0 && Math.abs(deltaY) < window.innerHeight - 60) {
-            machineList.style.bottom = `${window.innerHeight - 60 + deltaY}px`;
-            footer.style.transform = `translateY(-${window.innerHeight - 60 + deltaY}px)`;
+            let newBottom = Math.min(0, parseInt(getComputedStyle(machineList).bottom) - deltaY);
+            machineList.style.bottom = `${newBottom}px`;
+            footer.style.transform = `translateY(${newBottom}px)`;
+        }
+    }
+
+    function resetFooterAndMachineList() {
+        machineList.classList.remove('active');
+        footer.style.transform = 'translateY(0)';
+        machineList.style.bottom = `-${window.innerHeight - 60}px`;
+        footer.style.zIndex = '1000';
+    }
+
+    function handleResize() {
+        if (!machineList.classList.contains('active')) {
+            machineList.style.bottom = `-${window.innerHeight - 60}px`;
         }
     }
 
@@ -100,19 +89,21 @@ document.addEventListener('DOMContentLoaded', function() {
         if (deltaY > 100) {
             machineList.classList.add('active');
             footer.style.transform = 'translateY(-100%)';
+            machineList.style.bottom = '0';
+            footer.style.zIndex = '997';
         } else {
-            machineList.classList.remove('active');
-            footer.style.transform = 'translateY(0)';
+            resetFooterAndMachineList();
         }
     }
 
     function finalizeMachineListDrag(deltaY) {
         if (deltaY < -100) {
-            machineList.classList.remove('active');
-            footer.style.transform = 'translateY(0)';
+            resetFooterAndMachineList();
         } else {
             machineList.classList.add('active');
             footer.style.transform = 'translateY(-100%)';
+            machineList.style.bottom = '0';
+            footer.style.zIndex = '997';
         }
     }
 
@@ -151,21 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
-    async function initializeQRScanner() {
-        try {
-            // Request camera permission
-            await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-            
-            const html5QrCode = new Html5Qrcode("qr-reader");
-            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-            
-            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure);
-        } catch (err) {
-            console.error("Error in accessing camera:", err);
-            alert("Unable to access the camera. Please ensure you've granted the necessary permissions.");
-        }
-    }
-
+    window.addEventListener('resize', handleResize);
     menuToggle.addEventListener('click', toggleSidebar);
     document.querySelector('.home-link').addEventListener('click', resetView);
     footer.addEventListener('touchstart', handleTouchStart);
@@ -175,5 +152,9 @@ document.addEventListener('DOMContentLoaded', function() {
     machineList.addEventListener('touchmove', handleTouchMove);
     machineList.addEventListener('touchend', handleTouchEnd);
 
-    initializeQRScanner();
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+        "qr-reader",
+        { fps: 10, qrbox: {width: 250, height: 250} },
+        /* verbose= */ false);
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 });
