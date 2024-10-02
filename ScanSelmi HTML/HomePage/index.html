@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Preloads google font and adding Dosis font, used by the Selmi website -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Selmi</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header></header>
+
+    <button id="menu-toggle">☰</button>
+
+    <nav id="sidebar">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="../LoginPage/index.html">Login</a></li>
+        <li><a href="#">Follow Us</a></li>
+        <li><a href="#">Machine List</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <div id="selmi"></div>
+      <p>Scan a QR code with SCANSELMI™</p>
+      <div id="qr-reader"></div>
+    </main>
+
+    <footer>
+      <p>Click here for more information</p>
+    </footer>
+
+    <div id="popup">
+      <div id="loading-bar"></div>
+      <p>Download completed</p>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

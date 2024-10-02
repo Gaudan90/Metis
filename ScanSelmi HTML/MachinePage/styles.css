@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Dosis", sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -9,12 +9,21 @@ body {
     background: linear-gradient(to bottom, white 50%, #003366 50%);
 }
 
+/* unused atm
+.dosis-normal-text {
+    font-family: "Dosis", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+  }
+*/
+
 .container {
     display: flex;
     flex-direction: column;
 }
 
-.back-arrow {
+button {
     font-size: 24px;
     color: #003366;
     text-decoration: none;
