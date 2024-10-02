@@ -29,10 +29,21 @@ header {
   cursor: pointer;
   width: 30px;
   height: 60px;
+  transition: left 0.3s ease-in-out;
 }
 
 .arrow-right::after {
   content: '›';
+  font-size: 24px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.arrow-left::after {
+  content: '‹';
   font-size: 24px;
   color: white;
   display: flex;
@@ -79,10 +90,15 @@ main {
   margin-top: 60px;
   overflow-y: auto;
   height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #qr-reader {
-  width: 300px;
+  width: 80%;
+  max-width: 500px;
+  height: 50vh;
   margin: 0 auto;
 }
 
@@ -95,6 +111,8 @@ footer {
   text-align: center;
   height: 60px;
   transition: transform 0.3s ease-in-out;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 #footer-content {
@@ -110,6 +128,7 @@ footer {
   background-repeat: no-repeat; 
   margin: 0 auto;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #popup {
@@ -155,12 +174,12 @@ footer {
   }
 
   #qr-reader {
-      width: 80%;
+      width: 90%;
   }
 
   #selmi {
       width: 90%;
-      height: auto;
+      height: 60px;
   }
 
   main {
@@ -197,5 +216,9 @@ footer {
 
   #machine-list.active {
       bottom: 50px;
+  }
+
+  #selmi {
+      height: 50px;
   }
 }

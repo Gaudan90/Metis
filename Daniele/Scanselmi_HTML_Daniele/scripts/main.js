@@ -10,70 +10,104 @@ document.addEventListener('DOMContentLoaded', function() {
     let startY, currentY;
     let isFooterDragging = false;
 
-    menuToggle.addEventListener('click', function() {
+    function toggleSidebar() {
         sidebar.classList.toggle('active');
         menuToggle.classList.toggle('arrow-left');
         menuToggle.classList.toggle('arrow-right');
-    });
+        if (sidebar.classList.contains('active')) {
+            menuToggle.style.left = '200px';
+        } else {
+            menuToggle.style.left = '0';
+        }
+    }
 
-    footer.addEventListener('touchstart', function(e) {
+    function resetView() {
+        sidebar.classList.remove('active');
+        menuToggle.classList.remove('arrow-left');
+        menuToggle.classList.add('arrow-right');
+        menuToggle.style.left = '0';
+        machineList.classList.remove('active');
+        footer.style.transform = 'translateY(0)';
+    }
+
+    function handleTouchStart(e) {
         startY = e.touches[0].clientY;
-        isFooterDragging = true;
-    });
+        isFooterDragging = e.target === footer || footer.contains(e.target);
+    }
 
-    footer.addEventListener('touchmove', function(e) {
-        if (!isFooterDragging) return;
+    function handleTouchMove(e) {
+        if (!startY) return;
         currentY = e.touches[0].clientY;
         let deltaY = startY - currentY;
+        if (isFooterDragging) {
+            handleFooterDrag(deltaY);
+        } else {
+            handleMachineListDrag(deltaY);
+        }
+    }
+
+    function handleTouchEnd() {
+        if (!startY || !currentY) return;
+        let deltaY = startY - currentY;
+        if (isFooterDragging) {
+            finalizeFooterDrag(deltaY);
+        } else {
+            finalizeMachineListDrag(deltaY);
+        }
+        resetDragState();
+    }
+
+    function handleFooterDrag(deltaY) {
         if (deltaY > 0 && deltaY < window.innerHeight - 60) {
             machineList.style.bottom = `${deltaY}px`;
             footer.style.transform = `translateY(-${deltaY}px)`;
         }
-    });
+    }
 
-    footer.addEventListener('touchend', function() {
+    function handleMachineListDrag(deltaY) {
+        if (deltaY < 0 && Math.abs(deltaY) < window.innerHeight - 60) {
+            machineList.style.bottom = `${window.innerHeight - 60 + deltaY}px`;
+            footer.style.transform = `translateY(-${window.innerHeight - 60 + deltaY}px)`;
+        }
+    }
+
+    function finalizeFooterDrag(deltaY) {
+        if (deltaY > 100) {
+            machineList.classList.add('active');
+            footer.style.transform = 'translateY(-100%)';
+        } else {
+            machineList.classList.remove('active');
+            footer.style.transform = 'translateY(0)';
+        }
+    }
+
+    function finalizeMachineListDrag(deltaY) {
+        if (deltaY < -100) {
+            machineList.classList.remove('active');
+            footer.style.transform = 'translateY(0)';
+        } else {
+            machineList.classList.add('active');
+            footer.style.transform = 'translateY(-100%)';
+        }
+    }
+
+    function resetDragState() {
+        machineList.style.bottom = '';
         isFooterDragging = false;
-        if (currentY && startY - currentY > 100) {
-            machineList.classList.add('active');
-            footer.style.transform = 'translateY(-100%)';
-        } else {
-            machineList.classList.remove('active');
-            footer.style.transform = 'translateY(0)';
-        }
-        machineList.style.bottom = '';
         startY = null;
         currentY = null;
-    });
-
-    machineList.addEventListener('touchstart', function(e) {
-        startY = e.touches[0].clientY;
-    });
-
-    machineList.addEventListener('touchmove', function(e) {
-        currentY = e.touches[0].clientY;
-        let deltaY = currentY - startY;
-        if (deltaY > 0 && deltaY < window.innerHeight - 60) {
-            machineList.style.bottom = `${window.innerHeight - 60 - deltaY}px`;
-            footer.style.transform = `translateY(-${window.innerHeight - 60 - deltaY}px)`;
-        }
-    });
-
-    machineList.addEventListener('touchend', function() {
-        if (currentY && currentY - startY > 100) {
-            machineList.classList.remove('active');
-            footer.style.transform = 'translateY(0)';
-        } else {
-            machineList.classList.add('active');
-            footer.style.transform = 'translateY(-100%)';
-        }
-        machineList.style.bottom = '';
-        startY = null;
-        currentY = null;
-    });
+    }
 
     function onScanSuccess(decodedText, decodedResult) {
         console.log(`Code matched = ${decodedText}`, decodedResult);
-        
+        showLoadingAnimation();
+    }
+
+    function onScanFailure(error) {
+        console.warn(`Code scan error = ${error}`);
+    }
+
+    function showLoadingAnimation() {
         popup.style.display = 'block';
         let width = 0;
         const interval = setInterval(() => {
@@ -92,9 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
-    function onScanFailure(error) {
-        console.warn(`Code scan error = ${error}`);
-    }
+    menuToggle.addEventListener('click', toggleSidebar);
+    document.querySelector('.home-link').addEventListener('click', resetView);
+    footer.addEventListener('touchstart', handleTouchStart);
+    footer.addEventListener('touchmove', handleTouchMove);
+    footer.addEventListener('touchend', handleTouchEnd);
+    machineList.addEventListener('touchstart', handleTouchStart);
+    machineList.addEventListener('touchmove', handleTouchMove);
+    machineList.addEventListener('touchend', handleTouchEnd);
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "qr-reader",
