@@ -26,81 +26,86 @@ document.addEventListener('DOMContentLoaded', function() {
         menuToggle.classList.remove('arrow-left');
         menuToggle.classList.add('arrow-right');
         menuToggle.style.left = '0';
-        machineList.classList.remove('active');
-        footer.style.transform = 'translateY(0)';
+        resetFooterAndMachineList();
     }
 
     function handleTouchStart(e) {
         startY = e.touches[0].clientY;
-        isFooterDragging = e.target === footer || footer.contains(e.target);
+        isFooterDragging = e.target === footer || footer.contains(e.target) || machineList.contains(e.target);
     }
 
     function handleTouchMove(e) {
         if (!startY) return;
         currentY = e.touches[0].clientY;
         let deltaY = startY - currentY;
+        
         if (isFooterDragging) {
-            handleFooterDrag(deltaY);
-        } else {
-            handleMachineListDrag(deltaY);
+            e.preventDefault();
+            if (machineList.classList.contains('active')) {
+                // If machine list is open, allow dragging down to close
+                let newTransform = Math.max(0, Math.min(window.innerHeight - 60, deltaY));
+                footer.style.transform = `translateY(calc(-100% + 60px + ${newTransform}px))`;
+                machineList.style.transform = `translateY(${newTransform}px)`;
+            } else {
+                // If machine list is closed, allow dragging up to open
+                let newTransform = Math.max(-window.innerHeight + 60, Math.min(0, -deltaY));
+                footer.style.transform = `translateY(${newTransform}px)`;
+                machineList.style.transform = `translateY(${newTransform}px)`;
+            }
         }
     }
 
     function handleTouchEnd() {
         if (!startY || !currentY) return;
         let deltaY = startY - currentY;
+        
         if (isFooterDragging) {
-            finalizeFooterDrag(deltaY);
-        } else {
-            finalizeMachineListDrag(deltaY);
+            if (machineList.classList.contains('active')) {
+                // If machine list is open
+                if (deltaY < -50) {
+                    // Dragged down more than 50px, close the machine list
+                    resetFooterAndMachineList();
+                } else {
+                    // Not dragged down enough, keep it open
+                    footer.style.transform = 'translateY(calc(-100% + 60px))';
+                    machineList.style.transform = 'translateY(0)';
+                }
+            } else {
+                // If machine list is closed
+                if (deltaY > 50) {
+                    // Dragged up more than 50px, open the machine list
+                    footer.style.transform = 'translateY(calc(-100% + 60px))';
+                    machineList.style.transform = 'translateY(0)';
+                    machineList.classList.add('active');
+                } else {
+                    // Not dragged up enough, keep it closed
+                    resetFooterAndMachineList();
+                }
+            }
         }
+        
         resetDragState();
     }
 
-    function handleFooterDrag(deltaY) {
-        if (deltaY > 0 && deltaY < window.innerHeight - 60) {
-            machineList.style.bottom = `${deltaY}px`;
-            footer.style.transform = `translateY(-${deltaY}px)`;
-        }
-    }
-
-    function handleMachineListDrag(deltaY) {
-        if (deltaY < 0 && Math.abs(deltaY) < window.innerHeight - 60) {
-            machineList.style.bottom = `${window.innerHeight - 60 + deltaY}px`;
-            footer.style.transform = `translateY(-${window.innerHeight - 60 + deltaY}px)`;
-        }
-    }
-
-    function finalizeFooterDrag(deltaY) {
-        if (deltaY > 100) {
-            machineList.classList.add('active');
-            footer.style.transform = 'translateY(-100%)';
-        } else {
-            machineList.classList.remove('active');
-            footer.style.transform = 'translateY(0)';
-        }
-    }
-
-    function finalizeMachineListDrag(deltaY) {
-        if (deltaY < -100) {
-            machineList.classList.remove('active');
-            footer.style.transform = 'translateY(0)';
-        } else {
-            machineList.classList.add('active');
-            footer.style.transform = 'translateY(-100%)';
-        }
-    }
-
     function resetDragState() {
-        machineList.style.bottom = '';
         isFooterDragging = false;
         startY = null;
         currentY = null;
     }
 
+    function resetFooterAndMachineList() {
+        machineList.classList.remove('active');
+        footer.style.transform = 'translateY(0)';
+        machineList.style.transform = 'translateY(100%)';
+    }
+
+    function handleResize() {
+        resetFooterAndMachineList();
+        adjustQRScannerSize();
+    }
+
     function onScanSuccess(decodedText, decodedResult) {
         console.log(`Code matched = ${decodedText}`, decodedResult);
-        window.location.assign("../MachinePageLegend/index.html");
         showLoadingAnimation();
     }
 
@@ -127,6 +132,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
+    function initQRScanner() {
+        const html5QrCode = new Html5Qrcode("qr-scanner-container");
+        const config = {
+            fps: 10,
+            qrbox: (viewfinderWidth, viewfinderHeight) => {
+                const minEdgePercentage = 70;
+                const minDimension = Math.min(viewfinderWidth, viewfinderHeight);
+                const qrboxSize = Math.floor(minDimension * minEdgePercentage / 100);
+                return { width: qrboxSize, height: qrboxSize };
+            },
+            aspectRatio: window.innerWidth / window.innerHeight
+        };
+
+        html5QrCode.start(
+            { facingMode: "environment" },
+            config,
+            onScanSuccess,
+            onScanFailure
+        ).catch(err => {
+            console.error("Error starting QR scanner:", err);
+        });
+
+        adjustQRScannerSize();
+    }
+
+    function adjustQRScannerSize() {
+        const scannerContainer = document.getElementById('qr-scanner-container');
+        scannerContainer.style.width = '100vw';
+        scannerContainer.style.height = '100vh';
+        scannerContainer.style.position = 'fixed';
+        scannerContainer.style.top = '0';
+        scannerContainer.style.left = '0';
+        scannerContainer.style.zIndex = '1000';
+    }
+
+    window.addEventListener('resize', handleResize);
     menuToggle.addEventListener('click', toggleSidebar);
     document.querySelector('.home-link').addEventListener('click', resetView);
     footer.addEventListener('touchstart', handleTouchStart);
@@ -136,9 +177,5 @@ document.addEventListener('DOMContentLoaded', function() {
     machineList.addEventListener('touchmove', handleTouchMove);
     machineList.addEventListener('touchend', handleTouchEnd);
 
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-        "qr-reader",
-        { fps: 10, qrbox: {width: 250, height: 250} },
-        /* verbose= */ false);
-    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    initQRScanner();
 });
