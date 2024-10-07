@@ -1,17 +1,19 @@
 function handleSignIn() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+  const errorMessage = document.getElementById("error-message");
 
   if (email === "" || password === "") {
-    alert("Please fill in all fields");
+    errorMessage.textContent = "Please fill in all fields";
+    errorMessage.style.display = "block"; // Mostra il messaggio di errore
     return;
   }
+
+  // Rimuove il messaggio di errore se i campi sono validi
+  errorMessage.style.display = "none";
 
   // Simula un'azione di login
   console.log("Email:", email);
   console.log("Password:", password);
   alert(`Welcome, ${email}!`);
-}
-function goBack() {
-  window.history.back();
 }

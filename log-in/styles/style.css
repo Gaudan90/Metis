@@ -85,3 +85,10 @@ body {
   margin-top: 16px;
   cursor: pointer;
 }
+
+#error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  display: none; /* Nascondi il messaggio di errore inizialmente */
+}
