@@ -14,7 +14,7 @@ class ProductDetailsPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text('LEGEND', style: TextStyle(color: Colors.red)),
+        title: const Text('TRUFFLE', style: TextStyle(color: Colors.red)),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -25,7 +25,7 @@ class ProductDetailsPage extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'TEMPERATRICE PROFESSIONALE\nCIOCCOLATO',
+                'Nastro per la ricopertura \ncon cioccolato',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class ProductDetailsPage extends StatelessWidget {
             ),
             Center(
               child: Image.network(
-                'https://example.com/placeholder-image.jpg', // Replace with actual image URL
+                'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png', // Replace with actual image URL
                 height: 300,
                 fit: BoxFit.contain,
               ),

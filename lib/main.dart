@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'product_details_page.dart';
+import 'product_details_page_legend.dart';
 
 void main() => runApp(const MainApp());
 
@@ -190,8 +190,8 @@ class _QRScannerState extends State<QRScanner>
                             ),
                             const SizedBox(height: 16),
                             _buildCard(
-                              imageUrl: '/api/placeholder/120/120',
-                              title: 'Scanner Product Two',
+                              imageUrl: 'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              title: 'TRUFFLE',
                               year: '2023',
                             ),
                           ],
