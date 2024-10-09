@@ -2,72 +2,100 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 20px 40px;
   background-color: #f2eded;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #button {
   display: inline-block;
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
+  padding: 10px 20px;
   border-radius: 5px;
-  border: 2px solid #000;
-  background-color: none;
-  font-size: large;
+  border: none;
+  background-color: #092d52;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#button:hover {
+  background-color: #0e3e6f;
 }
 
 .header i {
-  font-size: 4rem;
+  font-size: 3rem;
+  color: #092d52;
 }
 
 .imageofthemachine {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 40px auto;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 form {
   text-align: center;
-  border: 1px solid #ccc;
+  border: none;
   padding: 30px;
   background-color: #092d52;
-  width: 250px;
-
-  margin-left: auto;
-  margin-right: auto;
+  width: 300px;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .macchina {
   text-align: center;
+  color: #092d52;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
 }
 
 h1 {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 30px auto;
   text-align: center;
-}
-
-.description {
-  width: 300px;
-  height: 200px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  background-color: #f9f9f9;
-  margin-left: auto;
-  margin-right: auto;
+  color: #092d52;
 }
 
 a {
-  margin-left: auto;
-  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  color: #092d52;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a img {
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   color: white;
+  font-size: 16px;
+}
+
+.description {
+  width: 80%;
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px 40px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 1.6;
+  color: #333;
 }
