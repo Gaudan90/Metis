@@ -1,9 +1,12 @@
+// Import required packages
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'product_details_page_legend.dart';
+import 'package:mobile_scanner/mobile_scanner.dart'; // For QR code scanning functionality
+import 'product_details_page_legend.dart'; // Custom page for displaying product details
 
+// Entry point of the application
 void main() => runApp(const MainApp());
 
+/// Root widget of the application
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -11,12 +14,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-        body: QRScanner(),
+        body: QRScanner(), // Set QRScanner as the main content
       ),
     );
   }
 }
 
+/// Widget for QR code scanning functionality
 class QRScanner extends StatefulWidget {
   const QRScanner({super.key});
 
@@ -24,20 +28,28 @@ class QRScanner extends StatefulWidget {
   State<QRScanner> createState() => _QRScannerState();
 }
 
+/// State class for QRScanner
 class _QRScannerState extends State<QRScanner>
     with SingleTickerProviderStateMixin {
+  // Controller for the mobile scanner
   late MobileScannerController controller;
-  bool isDialogOpen = false;
-  bool isFlashOn = false;
+  
+  // State variables
+  bool isDialogOpen = false; // Prevents multiple dialogs from opening
+  bool isFlashOn = false;   // Tracks flashlight state
+  
+  // Controller for the bottom sheet drag animation
   late AnimationController dragController;
 
-  final double minHeight = 100;
-  final double maxHeight = 600;
-  final Color customBlue = const Color(0xFF092d52);
+  // Constants
+  final double minHeight = 100;  // Minimum height of bottom sheet
+  final double maxHeight = 600;  // Maximum height of bottom sheet
+  final Color customBlue = const Color(0xFF092d52); // Custom brand color
 
   @override
   void initState() {
     super.initState();
+    // Initialize controllers
     controller = MobileScannerController();
     dragController = AnimationController(
       vsync: this,
@@ -51,14 +63,18 @@ class _QRScannerState extends State<QRScanner>
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        // QR Scanner camera view
         MobileScanner(
           controller: controller,
           onDetect: (capture) {
+            // Handle QR code detection
             if (!isDialogOpen && capture.barcodes.isNotEmpty) {
               isDialogOpen = true;
-              controller.stop();
+              controller.stop(); // Stop scanning
               final String scannedData =
                   capture.barcodes.first.rawValue ?? 'No data';
+              
+              // Navigate to product details page
               Navigator.of(context)
                   .push(
                 MaterialPageRoute(
@@ -67,23 +83,26 @@ class _QRScannerState extends State<QRScanner>
                 ),
               )
                   .then((_) {
+                // Reset state when returning from product details
                 isDialogOpen = false;
                 controller.start();
               });
             }
           },
         ),
+        // UI overlay
         Column(
           children: [
-            _buildHeader(),
+            _buildHeader(),    // Top header with controls
             const Spacer(),
-            _buildBottomSheet(),
+            _buildBottomSheet(), // Draggable bottom sheet
           ],
         ),
       ],
     );
   }
 
+  /// Builds the top header with menu and control buttons
   Widget _buildHeader() {
     return Container(
       color: customBlue.withOpacity(0.9),
@@ -98,14 +117,17 @@ class _QRScannerState extends State<QRScanner>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // Menu button
                 IconButton(
                   icon: const Icon(Icons.menu, color: Colors.white),
                   onPressed: () {
-                    // Menu functionality
+                    // Menu functionality to be implemented
                   },
                 ),
+                // Control buttons
                 Row(
                   children: [
+                    // Flashlight toggle button
                     IconButton(
                       icon: Icon(
                         isFlashOn ? Icons.flash_on : Icons.flash_off,
@@ -118,10 +140,11 @@ class _QRScannerState extends State<QRScanner>
                         });
                       },
                     ),
+                    // Photo library button
                     IconButton(
                       icon: const Icon(Icons.photo_library, color: Colors.white),
                       onPressed: () {
-                        // Photo library functionality
+                        // Photo library functionality to be implemented
                       },
                     ),
                   ],
@@ -134,16 +157,18 @@ class _QRScannerState extends State<QRScanner>
     );
   }
 
+  /// Builds the draggable bottom sheet with product cards
   Widget _buildBottomSheet() {
     return GestureDetector(
+      // Handle vertical drag to expand/collapse bottom sheet
       onVerticalDragUpdate: (details) {
         dragController.value -= details.primaryDelta! / (maxHeight - minHeight);
       },
       onVerticalDragEnd: (details) {
         if (dragController.value > 0.5) {
-          dragController.forward();
+          dragController.forward(); // Expand fully if dragged more than halfway
         } else {
-          dragController.reverse();
+          dragController.reverse(); // Collapse if dragged less than halfway
         }
       },
       child: AnimatedBuilder(
@@ -161,6 +186,7 @@ class _QRScannerState extends State<QRScanner>
             ),
             child: Column(
               children: [
+                // Drag indicator
                 const SizedBox(height: 10),
                 Container(
                   width: 50,
@@ -175,6 +201,7 @@ class _QRScannerState extends State<QRScanner>
                   'Drag up for more',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
+                // Conditional content based on drag state
                 if (dragController.value > 0.2) ...[
                   const SizedBox(height: 20),
                   Expanded(
@@ -183,6 +210,7 @@ class _QRScannerState extends State<QRScanner>
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           children: [
+                            // Product cards
                             _buildCard(
                               imageUrl: 'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/legend-temperatrice-cioccolato/legend-temperatrice-cioccolato.png',
                               title: 'LEGEND',
@@ -208,6 +236,7 @@ class _QRScannerState extends State<QRScanner>
     );
   }
 
+  /// Builds a product card with image, title, and year
   Widget _buildCard({
     required String imageUrl,
     required String title,
@@ -222,6 +251,7 @@ class _QRScannerState extends State<QRScanner>
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Product image
             ClipRRect(
               borderRadius: const BorderRadius.horizontal(left: Radius.circular(15)),
               child: Image.network(
@@ -231,6 +261,7 @@ class _QRScannerState extends State<QRScanner>
                 fit: BoxFit.cover,
               ),
             ),
+            // Product details
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(12),
@@ -263,11 +294,13 @@ class _QRScannerState extends State<QRScanner>
     );
   }
 
+  /// Helper function to interpolate between min and max heights
   double lerp(double min, double max) =>
       min + (max - min) * dragController.value;
 
   @override
   void dispose() {
+    // Clean up controllers when widget is disposed
     controller.dispose();
     dragController.dispose();
     super.dispose();
