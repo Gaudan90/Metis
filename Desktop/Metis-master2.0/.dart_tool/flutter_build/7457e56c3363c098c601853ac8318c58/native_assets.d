@@ -1,0 +1,1 @@
+ C:\\Users\\loren\\Desktop\\Metis-master2.0\\.dart_tool\\flutter_build\\7457e56c3363c098c601853ac8318c58\\native_assets.yaml: 
