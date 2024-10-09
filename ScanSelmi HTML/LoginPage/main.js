@@ -10,7 +10,7 @@ function handleSignIn() {
   // Simula un'azione di login
   console.log("Email:", email);
   console.log("Password:", password);
-  alert(`Welcome, ${email}!`);
+  location.href = "../HomePage/index.html";
 }
 function goBack() {
   window.history.back();
