@@ -17,3 +17,6 @@ function handleSignIn() {
   console.log("Password:", password);
   alert(`Welcome, ${email}!`);
 }
+function goBack() {
+  history.back(); // Torna alla pagina precedente
+}
