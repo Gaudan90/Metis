@@ -15,7 +15,7 @@ function handleSignIn() {
   // Simula un'azione di login
   console.log("Email:", email);
   console.log("Password:", password);
-  alert(`Welcome, ${email}!`);
+  history.back();
 }
 function goBack() {
   history.back(); // Torna alla pagina precedente
