@@ -6,7 +6,7 @@ import '../product_details_page.dart';
 class BottomSheett extends StatelessWidget {
   final AnimationController dragController;
   final double minHeight = 100;
-  final double maxHeight = 600;
+  final double maxHeight = 700;
   final Color customBlue = const Color(0xFF092d52);
   final Color lightGrayBackground = const Color(0xFFF8F9FA);
 
@@ -99,6 +99,51 @@ class BottomSheett extends StatelessWidget {
                               year: '2024',
                               onTap: () =>
                                   _navigateToProductDetails(context, 'LEGEND'),
+                            ),
+                            const SizedBox(height: 16),
+                            ProductCard(
+                              imageUrl:
+                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              title: 'TRUFFLE',
+                              year: '2023',
+                              onTap: () =>
+                                  _navigateToProductDetails(context, 'TRUFFLE'),
+                            ),
+                            const SizedBox(height: 16),
+                            ProductCard(
+                              imageUrl:
+                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              title: 'TRUFFLE',
+                              year: '2023',
+                              onTap: () =>
+                                  _navigateToProductDetails(context, 'TRUFFLE'),
+                            ),
+                            const SizedBox(height: 16),
+                            ProductCard(
+                              imageUrl:
+                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              title: 'TRUFFLE',
+                              year: '2023',
+                              onTap: () =>
+                                  _navigateToProductDetails(context, 'TRUFFLE'),
+                            ),
+                            const SizedBox(height: 16),
+                            ProductCard(
+                              imageUrl:
+                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              title: 'TRUFFLE',
+                              year: '2023',
+                              onTap: () =>
+                                  _navigateToProductDetails(context, 'TRUFFLE'),
+                            ),
+                            const SizedBox(height: 16),
+                            ProductCard(
+                              imageUrl:
+                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              title: 'TRUFFLE',
+                              year: '2023',
+                              onTap: () =>
+                                  _navigateToProductDetails(context, 'TRUFFLE'),
                             ),
                             const SizedBox(height: 16),
                             ProductCard(

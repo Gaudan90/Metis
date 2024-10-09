@@ -20,3 +20,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: SpaceAge
+      fonts:
+        - asset: lib/custom_fonts/space_age.ttf
