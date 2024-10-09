@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results</title>
+  </head>
+  <body>
+    <h1>Selected Options</h1>
+    <p>Year: <span id="selectedYear"></span></p>
+    <p>Language: <span id="selectedLanguage"></span></p>
+
+    <script>
+      // Retrieve data from localStorage
+      const formData = JSON.parse(localStorage.getItem("formData"));
+
+      // Display the data
+      if (formData) {
+        document.getElementById("selectedYear").textContent = formData.year;
+        document.getElementById("selectedLanguage").textContent =
+          formData.language;
+      } else {
+        document.body.innerHTML =
+          "<p>No data available. Please go back and submit the form.</p>";
+      }
+    </script>
+  </body>
+</html>
