@@ -11,15 +11,14 @@ class CustomDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            // ORA E' COSTANTE MA QUANDO METTIAMO LE MACCHINE NON FASULLE DA TOGLIERE
-            const DrawerHeader(
-              decoration: BoxDecoration(
+            DrawerHeader(
+              decoration: const BoxDecoration(
                 color: Color(0xFF092d52),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+                children: const [
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: Colors.white,
