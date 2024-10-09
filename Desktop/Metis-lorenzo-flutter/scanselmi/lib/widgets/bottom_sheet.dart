@@ -64,12 +64,12 @@ class DraggableBottomSheet extends StatelessWidget {
         ),
         if (dragController.value > 0.2) ...[
           const SizedBox(height: 20),
-          Expanded(
+          const Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 child: Column(
-                  children: const [
+                  children: [
                     ProductCard(
                       imageUrl:
                           'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/legend-temperatrice-cioccolato/legend-temperatrice-cioccolato.png',

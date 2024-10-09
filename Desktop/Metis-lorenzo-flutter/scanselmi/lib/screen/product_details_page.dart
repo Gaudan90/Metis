@@ -57,7 +57,6 @@ class ProductDetailsPage extends StatelessWidget {
               child: Column(
                 children: [
                   ElevatedButton(
-                    child: const Text('Scarica il pdf della scheda tecnica'),
                     onPressed: () {
                       // TODO: Implement PDF download
                     },
@@ -66,10 +65,10 @@ class ProductDetailsPage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       minimumSize: const Size(double.infinity, 50),
                     ),
+                    child: const Text('Scarica il pdf della scheda tecnica'),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    child: const Text('Pagina web'),
                     onPressed: () {
                       // TODO: Implement web page navigation
                     },
@@ -78,6 +77,7 @@ class ProductDetailsPage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       minimumSize: const Size(double.infinity, 50),
                     ),
+                    child: const Text('Pagina web'),
                   ),
                 ],
               ),
