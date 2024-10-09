@@ -15,6 +15,7 @@ function handleSignIn() {
   // Simula un'azione di login
   console.log("Email:", email);
   console.log("Password:", password);
+  location.href = "../HomePage/index.html";
 }
 function goBack() {
   history.back(); // Torna alla pagina precedente
