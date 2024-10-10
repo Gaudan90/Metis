@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'product_details_page_legend.dart';
+import 'product_details_page.dart'; // Updated import
 import 'package:scanselmi/Components/bottom_sheet.dart';
 import 'package:scanselmi/Components/header.dart';
 import 'Components/custom_drawer.dart';
@@ -73,7 +73,8 @@ class _QRScannerPageState extends State<QRScannerPage>
       Navigator.of(context)
           .push(
         MaterialPageRoute(
-          builder: (context) => ProductDetailsPage(scannedData: scannedData),
+          builder: (context) => ProductDetailsPage(
+              productName: scannedData), // Updated to use productName
         ),
       )
           .then((_) {
