@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScanSelmi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <div id="qr-reader"></div>
+        <button id="menu-toggle" class="arrow-right"></button>
+
+        <nav id="sidebar">
+            <ul>
+                <li><a href="#" class="home-link">Home</a></li>
+                <li><a href="../LoginPage/index.html">Login</a></li>
+                <li><a href="#">Machines List</a></li>
+                <li><a href="https://www.facebook.com/SelmiGroupChocolateMachinery">Our Facebook</a></li>
+                <li><a href="https://www.youtube.com/user/Selmisrl">Our YouTube</a></li>
+                <li><a href="https://www.instagram.com/selmi_chocolate_machinery/">Our Instagram</a></li>
+            </ul>
+        </nav>
+
+        <main role="main">
+            <div id="qr-reader"></div>
+        </main>
+
+        <footer>
+            <div id="footer-content">Drag for more information</div>
+        </footer>
+
+    <div id="machine-list-overlay">
+        <div id="machine-list">
+            <a href="../MachinePageLegend/index.html" class="card">
+                <img src="../assets/legend-temperatrice-cioccolato.png" alt="Legend Temperatrice Professionale Cioccolato">
+                <div class="card-content">
+                    <div class="text-content">
+                        <h2>Legend Chocolate Tempering Machine</h2>
+                    </div>
+                </div>
+            </a>
+            <a href="../MachinePageTruffle/index.html" class="card">
+                <img src="../assets/truffle-nastro-ricopertura-tartufi-p.png" alt="Truffle Nastro ricopritore per tartufi in cioccolato">
+                <div class="card-content">
+                    <div class="text-content">
+                        <h2>Truffle Chocolate Truffle Covering Belt</h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div id="popup">
+        <div id="loading-bar"></div>
+        <p>Download completed</p>
+    </div>
+</div>
+    
+   <!--End of body--> 
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
