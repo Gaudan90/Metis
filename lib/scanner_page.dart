@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'product_details_page.dart'; // Updated import
+import 'package:google_fonts/google_fonts.dart';
+import 'product_details_page.dart';
 import 'package:scanselmi/Components/bottom_sheet.dart';
 import 'package:scanselmi/Components/header.dart';
 import 'Components/custom_drawer.dart';
@@ -45,14 +46,21 @@ class _QRScannerPageState extends State<QRScannerPage>
             controller: controller,
             onDetect: _onDetect,
           ),
+          _buildOverlay(),
           Column(
             children: [
-              Header(
-                isFlashOn: isFlashOn,
-                onFlashToggle: _toggleFlash,
-                onMenuPressed: () {
-                  _scaffoldKey.currentState?.openDrawer();
-                },
+              Container(
+                color: const Color(0xFF092d52).withOpacity(0.9),
+                child: SafeArea(
+                  bottom: false,
+                  child: Header(
+                    isFlashOn: isFlashOn,
+                    onFlashToggle: _toggleFlash,
+                    onMenuPressed: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                  ),
+                ),
               ),
               const Spacer(),
               BottomSheett(
@@ -65,6 +73,73 @@ class _QRScannerPageState extends State<QRScannerPage>
     );
   }
 
+  Widget _buildOverlay() {
+    return Stack(
+      children: [
+        Container(
+          color: const Color(0xFF092d52).withOpacity(0.9),
+          height: MediaQuery.of(context).padding.top,
+        ),
+        ColorFiltered(
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(0.5),
+            BlendMode.srcOut,
+          ),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  backgroundBlendMode: BlendMode.dstOut,
+                ),
+              ),
+              Center(
+                child: Container(
+                  height: 250,
+                  width: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ),
+              Center(
+                child: Container(
+                  height: 260,
+                  width: 260,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white, width: 5),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                  height: 300), // Adjust this value to position the text
+              Text(
+                "Scan your machine's QR code",
+                style: GoogleFonts.bebasNeue(
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   void _onDetect(BarcodeCapture capture) {
     if (!isDialogOpen && capture.barcodes.isNotEmpty) {
       isDialogOpen = true;
@@ -73,8 +148,7 @@ class _QRScannerPageState extends State<QRScannerPage>
       Navigator.of(context)
           .push(
         MaterialPageRoute(
-          builder: (context) => ProductDetailsPage(
-              productName: scannedData), // Updated to use productName
+          builder: (context) => ProductDetailsPage(productName: scannedData),
         ),
       )
           .then((_) {

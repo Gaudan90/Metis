@@ -50,32 +50,18 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.history),
-              title: const Text('Scan History'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
+              leading: const Icon(Icons.language),
+              title: const Text('Languages'),
               onTap: () {
                 Navigator.pop(context);
                 /*
                 
-                //TODO: It should be something like this, the settings_page.dart should have a widget called SettingsPage(),
+                //TODO: It should be something like this, the settings_page.dart should have a widget called LanguagesPage(),
                 //When it's ready, remove these comments
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SettingsPage()),
+                  MaterialPageRoute(builder: (context) => const LanguagesPage()),
                 );
 
                 */
