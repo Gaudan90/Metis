@@ -142,20 +142,53 @@ class _QRScannerPageState extends State<QRScannerPage>
 
   void _onDetect(BarcodeCapture capture) {
     if (!isDialogOpen && capture.barcodes.isNotEmpty) {
-      isDialogOpen = true;
-      controller.stop();
       final String scannedData = capture.barcodes.first.rawValue ?? 'No data';
-      Navigator.of(context)
-          .push(
-        MaterialPageRoute(
-          builder: (context) => ProductDetailsPage(productName: scannedData),
-        ),
-      )
-          .then((_) {
-        isDialogOpen = false;
-        controller.start();
-      });
+
+      // Check if the scanned QR code is "http://www.google.com"
+      if (scannedData != 'http://www.google.com') {
+        isDialogOpen = true;
+        _showInvalidQRCodeDialog();
+      } else {
+        isDialogOpen = true;
+        controller.stop();
+        Navigator.of(context)
+            .push(
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(productName: scannedData),
+          ),
+        )
+            .then((_) {
+          isDialogOpen = false;
+          controller.start();
+        });
+      }
     }
+  }
+
+// Serve a dire che il qr non è di selmi lol
+  void _showInvalidQRCodeDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Invalid QR Code'),
+          content: const Text('The scanned QR code is invalid.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                isDialogOpen = false;
+                controller.start();
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      // Reset isDialogOpen to false when the dialog is dismissed
+      isDialogOpen = false;
+    });
   }
 
   void _toggleFlash() {
