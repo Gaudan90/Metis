@@ -11,29 +11,42 @@ class CustomDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color(0xFF092d52),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white,
-                    child:
-                        Icon(Icons.person, color: Color(0xFF092d52), size: 40),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Account',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
+            GestureDetector(
+              /*
+              //TODO: It should be something like this, the settings_page.dart should have a widget called LoginPage(),
+                //When it's ready, remove these comments
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              },
+              */
+              child: DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Color(0xFF092d52),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.person,
+                          color: Color(0xFF092d52), size: 40),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 10),
+                    Text(
+                      'Account',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             ListTile(
@@ -55,6 +68,17 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Settings'),
               onTap: () {
                 Navigator.pop(context);
+                /*
+                
+                //TODO: It should be something like this, the settings_page.dart should have a widget called SettingsPage(),
+                //When it's ready, remove these comments
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
+                );
+
+                */
               },
             ),
             ListTile(
