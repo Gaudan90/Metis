@@ -12,17 +12,16 @@ class CustomDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             GestureDetector(
-              /*
+              
               //TODO: It should be something like this, the settings_page.dart should have a widget called LoginPage(),
                 //When it's ready, remove these comments
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
+               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
-              */
+              
               child: DrawerHeader(
                 decoration: const BoxDecoration(
                   color: Color(0xFF092d52),
