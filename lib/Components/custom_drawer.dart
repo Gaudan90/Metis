@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scanselmi/login_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -12,17 +13,16 @@ class CustomDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             GestureDetector(
-              
               //TODO: It should be something like this, the settings_page.dart should have a widget called LoginPage(),
-                //When it's ready, remove these comments
-               onTap: () {
+              //When it's ready, remove these comments
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
-              
-              child: DrawerHeader(
+
+              child:const DrawerHeader(
                 decoration: const BoxDecoration(
                   color: Color(0xFF092d52),
                 ),

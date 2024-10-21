@@ -30,7 +30,7 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/sfondo_log_in.jpg'),
             fit: BoxFit.cover,
@@ -39,8 +39,8 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
         child: Center(
           child: SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.all(40),
+              margin:const EdgeInsets.all(20),
+              padding:const EdgeInsets.all(40),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -60,9 +60,9 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                     'https://www.selmi-group.it/img/logo-selmi-social.png',
                     width: 80,
                   ),
-                  SizedBox(height: 24),
+                const  SizedBox(height: 24),
                   RichText(
-                    text: TextSpan(
+                    text:const TextSpan(
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -75,19 +75,19 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
-                  Text(
+                 const SizedBox(height: 16),
+                 const Text(
                     'Enter your email address below to receive password reset instructions.',
                     style: TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 16),
+                const  SizedBox(height: 16),
                   if (_errorMessage.isNotEmpty)
                     Text(
                       _errorMessage,
-                      style: TextStyle(color: Colors.red),
+                      style:const TextStyle(color: Colors.red),
                     ),
-                  SizedBox(height: 16),
+                 const SizedBox(height: 16),
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
@@ -97,23 +97,23 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 24),
+                 const SizedBox(height: 24),
                   ElevatedButton(
                     child: Text('Send Reset Instructions'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF304A78),
+                      backgroundColor:const Color(0xFF304A78),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                       padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                         const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     ),
                     onPressed: _handlePasswordReset,
                   ),
-                  SizedBox(height: 16),
+                 const SizedBox(height: 16),
                   TextButton(
-                    child: Text(
+                    child:const Text(
                       'Back to Login',
                       style: TextStyle(color: Color(0xFF304A78)),
                     ),
