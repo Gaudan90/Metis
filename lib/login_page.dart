@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scanselmi/password_recovery_page.dart';
 import 'package:scanselmi/scanner_page.dart';
-import 'password_recovery_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,34 +10,29 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _isAdmin = false;
   String _errorMessage = '';
 
   void _handleSignIn() {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _errorMessage = 'Please fill in all fields';
+        _errorMessage = 'Inserisci email e password';
       });
-    } else {
+    } else if (email == 'admin@gmail.com' && password == '123!') {
       setState(() {
         _errorMessage = '';
       });
-      print('Email: ${_emailController.text}');
-      print('Password: ${_passwordController.text}');
-      print('Is Admin: $_isAdmin');
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Welcome'),
-          content: Text('Welcome, ${_emailController.text}!'),
-          actions: [
-            TextButton(
-              child: Text('OK'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
+      // Passa l'email come parametro alla pagina QRScannerPage
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QRScannerPage(message: email)),
       );
+    } else {
+      setState(() {
+        _errorMessage = 'La password o l\'email potrebbero essere sbagliati';
+      });
     }
   }
 
@@ -45,17 +40,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/sfondo_log_in.jpg'),
-            fit: BoxFit.cover,
-          ),
+        decoration: const BoxDecoration(
+          Image.network(
+                    'https://dedw45hg5pjdq.cloudfront.net/Logo/selmi.png',
+                    width: 80,
+                  ),
         ),
         child: Center(
           child: SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.all(40),
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(40),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -64,49 +59,53 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black.withOpacity(0.1),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Usare immagine da URL
                   Image.network(
-                    'https://www.selmi-group.it/img/logo-selmi-social.png',
+                    'https://dedw45hg5pjdq.cloudfront.net/Logo/selmi.png',
                     width: 80,
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                       children: [
-                        TextSpan(text: 'Sign in to '),
+                        TextSpan(text: 'Accedi a '),
                         TextSpan(
                             text: 'ScanSelmi',
                             style: TextStyle(color: Color(0xFF304A78))),
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   if (_errorMessage.isNotEmpty)
-                    Text(
-                      _errorMessage,
-                      style: TextStyle(color: Colors.red),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Text(
+                        _errorMessage,
+                        style: const TextStyle(color: Colors.red),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  SizedBox(height: 16),
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      labelText: 'Email address',
+                      labelText: 'Indirizzo email',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
@@ -117,38 +116,24 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: _isAdmin,
-                        onChanged: (value) {
-                          setState(() {
-                            _isAdmin = value!;
-                          });
-                        },
-                      ),
-                      Text("I'm an admin"),
-                    ],
-                  ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   ElevatedButton(
-                    child: Text('Sign in'),
+                    child: const Text('Accedi'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF304A78),
+                      backgroundColor: const Color(0xFF304A78),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 15),
                     ),
                     onPressed: _handleSignIn,
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextButton(
-                    child: Text(
-                      'Forgot password?',
+                    child: const Text(
+                      'Password dimenticata?',
                       style: TextStyle(color: Color(0xFF304A78)),
                     ),
                     onPressed: () {
@@ -160,15 +145,15 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   TextButton(
-                    child: Text(
-                      'Return Home',
+                    child: const Text(
+                      'Torna alla Home',
                       style: TextStyle(color: Color(0xFF304A78)),
                     ),
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => QRScannerPage()),
+                            builder: (context) => const QRScannerPage()),
                       );
                     },
                   ),
