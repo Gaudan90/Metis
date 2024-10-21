@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'product_card.dart';
 import '../product_details_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomSheett extends StatelessWidget {
   final AnimationController dragController;
@@ -17,6 +18,8 @@ class BottomSheett extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return GestureDetector(
       onVerticalDragUpdate: (details) {
         dragController.value -= details.primaryDelta! / (maxHeight - minHeight);
@@ -31,7 +34,7 @@ class BottomSheett extends StatelessWidget {
       child: AnimatedBuilder(
         animation: dragController,
         builder: (context, child) {
-          return Container(
+          return SizedBox(
             height: lerp(minHeight, maxHeight),
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -68,7 +71,7 @@ class BottomSheett extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'SAVED MACHINES',
+                        localizations.savedMachines,
                         style: GoogleFonts.bebasNeue(
                           textStyle: const TextStyle(
                             color: Colors.white,
@@ -94,7 +97,7 @@ class BottomSheett extends StatelessWidget {
                           children: [
                             ProductCard(
                               imageUrl:
-                                  'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/legend-temperatrice-cioccolato/legend-temperatrice-cioccolato.png',
+                              'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/legend-temperatrice-cioccolato/legend-temperatrice-cioccolato.png',
                               title: 'LEGEND',
                               year: '2024',
                               onTap: () =>
@@ -103,7 +106,7 @@ class BottomSheett extends StatelessWidget {
                             const SizedBox(height: 16),
                             ProductCard(
                               imageUrl:
-                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
                               title: 'TRUFFLE',
                               year: '2023',
                               onTap: () =>
@@ -112,7 +115,7 @@ class BottomSheett extends StatelessWidget {
                             const SizedBox(height: 16),
                             ProductCard(
                               imageUrl:
-                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
                               title: 'TRUFFLE',
                               year: '2023',
                               onTap: () =>
@@ -121,7 +124,7 @@ class BottomSheett extends StatelessWidget {
                             const SizedBox(height: 16),
                             ProductCard(
                               imageUrl:
-                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
                               title: 'TRUFFLE',
                               year: '2023',
                               onTap: () =>
@@ -130,7 +133,7 @@ class BottomSheett extends StatelessWidget {
                             const SizedBox(height: 16),
                             ProductCard(
                               imageUrl:
-                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
                               title: 'TRUFFLE',
                               year: '2023',
                               onTap: () =>
@@ -139,7 +142,7 @@ class BottomSheett extends StatelessWidget {
                             const SizedBox(height: 16),
                             ProductCard(
                               imageUrl:
-                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
                               title: 'TRUFFLE',
                               year: '2023',
                               onTap: () =>
@@ -148,13 +151,12 @@ class BottomSheett extends StatelessWidget {
                             const SizedBox(height: 16),
                             ProductCard(
                               imageUrl:
-                                  'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
+                              'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
                               title: 'TRUFFLE',
                               year: '2023',
                               onTap: () =>
                                   _navigateToProductDetails(context, 'TRUFFLE'),
                             ),
-                            // TODO: Remove these placeholder cards or replace with actual products
                           ],
                         ),
                       ),

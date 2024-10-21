@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'product_details_page.dart';
 import 'package:scanselmi/Components/bottom_sheet.dart';
 import 'package:scanselmi/Components/header.dart';
 import 'Components/custom_drawer.dart';
+import 'app_language.dart';
 
 class QRScannerPage extends StatefulWidget {
   const QRScannerPage({super.key});
@@ -33,11 +34,64 @@ class _QRScannerPageState extends State<QRScannerPage>
     );
   }
 
+  void _openLanguageMenu() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.language),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const Text('English'),
+                onTap: () => _changeLanguage(const Locale('en')),
+              ),
+              ListTile(
+                title: const Text('Italiano'),
+                onTap: () => _changeLanguage(const Locale('it')),
+              ),
+              ListTile(
+                title: const Text('Français'),
+                onTap: () => _changeLanguage(const Locale('fr')),
+              ),
+              ListTile(
+                title: const Text('Español'),
+                onTap: () => _changeLanguage(const Locale('es')),
+              ),
+              ListTile(
+                title: const Text('Deutsch'),
+                onTap: () => _changeLanguage(const Locale('de')),
+              ),
+              ListTile(
+                title: const Text('Türkçe'),
+                onTap: () => _changeLanguage(const Locale('tr')),
+              ),
+              ListTile(
+                title: const Text('Русский'),
+                onTap: () => _changeLanguage(const Locale('ru')),
+              ),
+              ListTile(
+                title: const Text('中文'),
+                onTap: () => _changeLanguage(const Locale('zh')),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _changeLanguage(Locale newLocale) {
+    AppLanguage.of(context).changeLanguage(newLocale);
+    Navigator.of(context).pop(); // Close the language selection dialog
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: const CustomDrawer(),
+      drawer: CustomDrawer(onSettingsTap: _openLanguageMenu),
       drawerEnableOpenDragGesture: true,
       drawerScrimColor: Colors.black54,
       body: Stack(
@@ -46,21 +100,14 @@ class _QRScannerPageState extends State<QRScannerPage>
             controller: controller,
             onDetect: _onDetect,
           ),
-          _buildOverlay(),
           Column(
             children: [
-              Container(
-                color: const Color(0xFF092d52).withOpacity(0.9),
-                child: SafeArea(
-                  bottom: false,
-                  child: Header(
-                    isFlashOn: isFlashOn,
-                    onFlashToggle: _toggleFlash,
-                    onMenuPressed: () {
-                      _scaffoldKey.currentState?.openDrawer();
-                    },
-                  ),
-                ),
+              Header(
+                isFlashOn: isFlashOn,
+                onFlashToggle: _toggleFlash,
+                onMenuPressed: () {
+                  _scaffoldKey.currentState?.openDrawer();
+                },
               ),
               const Spacer(),
               BottomSheett(
@@ -73,122 +120,22 @@ class _QRScannerPageState extends State<QRScannerPage>
     );
   }
 
-  Widget _buildOverlay() {
-    return Stack(
-      children: [
-        Container(
-          color: const Color(0xFF092d52).withOpacity(0.9),
-          height: MediaQuery.of(context).padding.top,
-        ),
-        ColorFiltered(
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.5),
-            BlendMode.srcOut,
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                  backgroundBlendMode: BlendMode.dstOut,
-                ),
-              ),
-              Center(
-                child: Container(
-                  height: 250,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-              Center(
-                child: Container(
-                  height: 260,
-                  width: 260,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white, width: 5),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(
-                  height: 300), // Adjust this value to position the text
-              Text(
-                "Scan your machine's QR code",
-                style: GoogleFonts.bebasNeue(
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   void _onDetect(BarcodeCapture capture) {
     if (!isDialogOpen && capture.barcodes.isNotEmpty) {
+      isDialogOpen = true;
+      controller.stop();
       final String scannedData = capture.barcodes.first.rawValue ?? 'No data';
-
-      // Check if the scanned QR code is "http://www.google.com"
-      if (scannedData != 'http://www.google.com') {
-        isDialogOpen = true;
-        _showInvalidQRCodeDialog();
-      } else {
-        isDialogOpen = true;
-        controller.stop();
-        Navigator.of(context)
-            .push(
-          MaterialPageRoute(
-            builder: (context) => ProductDetailsPage(productName: scannedData),
-          ),
-        )
-            .then((_) {
-          isDialogOpen = false;
-          controller.start();
-        });
-      }
+      Navigator.of(context)
+          .push(
+        MaterialPageRoute(
+          builder: (context) => ProductDetailsPage(productName: scannedData),
+        ),
+      )
+          .then((_) {
+        isDialogOpen = false;
+        controller.start();
+      });
     }
-  }
-
-// Serve a dire che il qr non è di selmi lol
-  void _showInvalidQRCodeDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Invalid QR Code'),
-          content: const Text('The scanned QR code is invalid.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                isDialogOpen = false;
-                controller.start();
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    ).then((_) {
-      // Reset isDialogOpen to false when the dialog is dismissed
-      isDialogOpen = false;
-    });
   }
 
   void _toggleFlash() {

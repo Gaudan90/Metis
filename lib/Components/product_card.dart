@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProductCard extends StatelessWidget {
   final String imageUrl;
@@ -16,6 +17,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return GestureDetector(
       onTap: onTap,
       child: Card(
@@ -30,16 +33,14 @@ class ProductCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius:
-                    const BorderRadius.horizontal(left: Radius.circular(15)),
+                const BorderRadius.horizontal(left: Radius.circular(15)),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.all(0.0), // Add padding around the image
+                  padding: const EdgeInsets.all(0.0),
                   child: Image.network(
                     imageUrl,
                     width: 150,
                     height: 150,
-                    fit: BoxFit
-                        .contain, // Change to BoxFit.contain to avoid cutting the image
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
@@ -57,7 +58,7 @@ class ProductCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Year: $year',
+                      localizations.productYear(year),
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[600],

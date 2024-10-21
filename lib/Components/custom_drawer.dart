@@ -1,89 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key});
+  final VoidCallback onSettingsTap;
+
+  const CustomDrawer({super.key, required this.onSettingsTap});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Drawer(
       child: Container(
         color: Colors.white,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            GestureDetector(
-              /*
-              //TODO: It should be something like this, the settings_page.dart should have a widget called LoginPage(),
-                //When it's ready, remove these comments
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              },
-              */
-              child: DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Color(0xFF092d52),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.person,
-                          color: Color(0xFF092d52), size: 40),
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Color(0xFF092d52),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.person, color: Color(0xFF092d52), size: 40),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    localizations.account,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Account',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.language),
-              title: const Text('Languages'),
+              leading: const Icon(Icons.home),
+              title: Text(localizations.home),
               onTap: () {
                 Navigator.pop(context);
-                /*
-                
-                //TODO: It should be something like this, the settings_page.dart should have a widget called LanguagesPage(),
-                //When it's ready, remove these comments
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LanguagesPage()),
-                );
-
-                */
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.history),
+              title: Text(localizations.scanHistory),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: Text(localizations.language),
+              onTap: () {
+                Navigator.pop(context);
+                onSettingsTap();
               },
             ),
             ListTile(
               leading: const Icon(Icons.help),
-              title: const Text('Help & Support'),
+              title: Text(localizations.helpAndSupport),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
               leading: const Icon(Icons.info),
-              title: const Text('About'),
+              title: Text(localizations.about),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
               leading: const Icon(Icons.feedback),
-              title: const Text('Feedback'),
+              title: Text(localizations.feedback),
               onTap: () {
                 Navigator.pop(context);
               },

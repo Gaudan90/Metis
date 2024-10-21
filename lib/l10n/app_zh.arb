@@ -1,0 +1,136 @@
+{
+  "@@locale": "zh",
+
+  "appTitle": "ScanSelmi",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+
+  "menu": "菜单",
+  "@menu": {
+    "description": "Text for the menu button"
+  },
+  "home": "首页",
+  "@home": {
+    "description": "Text for the Home item in the menu"
+  },
+  "back": "返回",
+  "@back": {
+    "description": "Text for the back button"
+  },
+  "settings": "设置",
+  "@settings": {
+    "description": "Text for the Settings menu item"
+  },
+  "about": "关于",
+  "@about": {
+    "description": "Text for the About menu item"
+  },
+  "account": "账户",
+  "@account": {
+    "description": "Text for the account header in the drawer"
+  },
+  "feedback": "反馈",
+  "@feedback": {
+    "description": "Text for the Feedback menu item"
+  },
+  "helpAndSupport": "帮助与支持",
+  "@helpAndSupport": {
+    "description": "Text for the Help & Support menu item"
+  },
+  "scanHistory": "扫描历史",
+  "@scanHistory": {
+    "description": "Text for the Scan History menu item"
+  },
+
+  "scannerPageTitle": "QR扫描器",
+  "@scannerPageTitle": {
+    "description": "QR Scanner Page Title"
+  },
+  "flashOn": "闪光灯开",
+  "@flashOn": {
+    "description": "Text to indicate that the flash is on"
+  },
+  "flashOff": "闪光灯关",
+  "@flashOff": {
+    "description": "Text to indicate that the flash is off"
+  },
+  "photoLibrary": "相册",
+  "@photoLibrary": {
+    "description": "Text for the Photo Library button"
+  },
+
+  "savedMachines": "已保存的机器",
+  "@savedMachines": {
+    "description": "Title for the saved machines section"
+  },
+  "year": "年份",
+  "@year": {
+    "description": "Label for the year of a product"
+  },
+  "defaultProductDescription": "产品描述",
+  "@defaultProductDescription": {
+    "description": "Default description for unknown products"
+  },
+  "downloadTechnicalSheet": "下载技术规格表PDF",
+  "@downloadTechnicalSheet": {
+    "description": "Text for the download technical sheet button"
+  },
+  "webPage": "网页",
+  "@webPage": {
+    "description": "Text for the web page button"
+  },
+
+  "legend": "LEGEND",
+  "@legend": {
+    "description": "Product name Legend"
+  },
+  "legendSubtitle": "专业巧克力\n回火机",
+  "@legendSubtitle": {
+    "description": "Subtitle for the Legend product"
+  },
+  "truffle": "TRUFFLE",
+  "@truffle": {
+    "description": "Product name Truffle"
+  },
+  "truffleSubtitle": "巧克力\n涂层机",
+  "@truffleSubtitle": {
+    "description": "Subtitle for the Truffle product"
+  },
+
+  "productYear": "年份: {year}",
+  "@productYear": {
+    "description": "Text for the product year in the product sheet",
+    "placeholders": {
+      "year": {
+        "type": "String",
+        "example": "2024"
+      }
+    }
+  },
+  "hourlyProduction": "每小时产量: {production} 公斤",
+  "@hourlyProduction": {
+    "description": "Product hourly production",
+    "placeholders": {
+      "production": {
+        "type": "String",
+        "example": "170"
+      }
+    }
+  },
+  "tankCapacity": "储罐容量: {capacity} 公斤",
+  "@tankCapacity": {
+    "description": "Product tank capacity",
+    "placeholders": {
+      "capacity": {
+        "type": "String",
+        "example": "35"
+      }
+    }
+  },
+
+  "language": "语言",
+  "@language": {
+    "description": "Label for language selection"
+  }
+}

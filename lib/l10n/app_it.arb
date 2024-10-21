@@ -1,0 +1,136 @@
+{
+  "@@locale": "it",
+
+  "appTitle": "ScanSelmi",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+
+  "menu": "Menu",
+  "@menu": {
+    "description": "Text for the menu button"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Text for the Home item in the menu"
+  },
+  "back": "Indietro",
+  "@back": {
+    "description": "Text for the back button"
+  },
+  "settings": "Impostazioni",
+  "@settings": {
+    "description": "Text for the Settings menu item"
+  },
+  "about": "Informazioni",
+  "@about": {
+    "description": "Text for the About menu item"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Text for the account header in the drawer"
+  },
+  "feedback": "Feedback",
+  "@feedback": {
+    "description": "Text for the Feedback menu item"
+  },
+  "helpAndSupport": "Aiuto e Supporto",
+  "@helpAndSupport": {
+    "description": "Text for the Help & Support menu item"
+  },
+  "scanHistory": "Cronologia scansioni",
+  "@scanHistory": {
+    "description": "Text for the Scan History menu item"
+  },
+
+  "scannerPageTitle": "Scanner QR",
+  "@scannerPageTitle": {
+    "description": "QR Scanner Page Title"
+  },
+  "flashOn": "Flash Acceso",
+  "@flashOn": {
+    "description": "Text to indicate that the flash is on"
+  },
+  "flashOff": "Flash Spento",
+  "@flashOff": {
+    "description": "Text to indicate that the flash is off"
+  },
+  "photoLibrary": "Libreria Foto",
+  "@photoLibrary": {
+    "description": "Text for the Photo Library button"
+  },
+
+  "savedMachines": "MACCHINE SALVATE",
+  "@savedMachines": {
+    "description": "Title for the saved machines section"
+  },
+  "year": "Anno",
+  "@year": {
+    "description": "Label for the year of a product"
+  },
+  "defaultProductDescription": "Descrizione Prodotto",
+  "@defaultProductDescription": {
+    "description": "Default description for unknown products"
+  },
+  "downloadTechnicalSheet": "Scarica la scheda tecnica pdf",
+  "@downloadTechnicalSheet": {
+    "description": "Text for the download technical sheet button"
+  },
+  "webPage": "Pagina web",
+  "@webPage": {
+    "description": "Text for the web page button"
+  },
+
+  "legend": "LEGEND",
+  "@legend": {
+    "description": "Product name Legend"
+  },
+  "legendSubtitle": "MACCHINA PROFESSIONALE PER TEMPERAGGIO\nCIOCCOLATO",
+  "@legendSubtitle": {
+    "description": "Subtitle for the Legend product"
+  },
+  "truffle": "TRUFFLE",
+  "@truffle": {
+    "description": "Product name Truffle"
+  },
+  "truffleSubtitle": "Nastro di\nRivestimento Cioccolato",
+  "@truffleSubtitle": {
+    "description": "Subtitle for the Truffle product"
+  },
+
+  "productYear": "Anno: {year}",
+  "@productYear": {
+    "description": "Text for the product year in the product sheet",
+    "placeholders": {
+      "year": {
+        "type": "String",
+        "example": "2024"
+      }
+    }
+  },
+  "hourlyProduction": "Produzione oraria: {production} kg",
+  "@hourlyProduction": {
+    "description": "Product hourly production",
+    "placeholders": {
+      "production": {
+        "type": "String",
+        "example": "170"
+      }
+    }
+  },
+  "tankCapacity": "Capacità serbatoio: {capacity} kg",
+  "@tankCapacity": {
+    "description": "Product tank capacity",
+    "placeholders": {
+      "capacity": {
+        "type": "String",
+        "example": "35"
+      }
+    }
+  },
+
+  "language": "Lingua",
+  "@language": {
+    "description": "Label for language selection"
+  }
+}
