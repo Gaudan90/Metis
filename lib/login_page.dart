@@ -3,6 +3,7 @@ import 'package:scanselmi/password_recovery_page.dart';
 import 'package:scanselmi/scanner_page.dart';
 
 class LoginPage extends StatefulWidget {
+  final String message = "admin";
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -24,10 +25,9 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _errorMessage = '';
       });
-      // Passa l'email come parametro alla pagina QRScannerPage
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QRScannerPage(message: email)),
+        MaterialPageRoute(builder: (context) => const QRScannerPage()),
       );
     } else {
       setState(() {
@@ -40,12 +40,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          Image.network(
-                    'https://dedw45hg5pjdq.cloudfront.net/Logo/selmi.png',
-                    width: 80,
-                  ),
-        ),
         child: Center(
           child: SingleChildScrollView(
             child: Container(
@@ -66,9 +60,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Usare immagine da URL
                   Image.network(
-                    'https://dedw45hg5pjdq.cloudfront.net/Logo/selmi.png',
+                    'https://www.selmi-group.it/img/logo-selmi-social.png',
                     width: 80,
                   ),
                   const SizedBox(height: 24),
@@ -118,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    child: const Text('Accedi'),
+                    child: Text('Accedi'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF304A78),
                       foregroundColor: Colors.white,
@@ -137,6 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(color: Color(0xFF304A78)),
                     ),
                     onPressed: () {
+                      // Aggiungi la navigazione alla pagina di recupero password qui
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -150,6 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(color: Color(0xFF304A78)),
                     ),
                     onPressed: () {
+                      // Navigazione verso la home page o un'altra pagina se necessario
                       Navigator.push(
                         context,
                         MaterialPageRoute(
