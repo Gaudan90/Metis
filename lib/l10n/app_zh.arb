@@ -80,6 +80,23 @@
   "@webPage": {
     "description": "Text for the web page button"
   },
+  "scanQRCode": "扫描机器的二维码",
+  "@scanQRCode": {
+    "description": "扫描机器二维码的菜单项文本"
+  },
+  "invalidQRCode": "无效的二维码",
+  "@invalidQRCode": {
+    "description": "无效二维码提示的文本"
+  },
+  "invalidQRCodeMessage": "您扫描的二维码无效。请再试一次。",
+  "@invalidQRCodeMessage": {
+    "description": "无效二维码的详细消息"
+  },
+  "ok": "确定",
+  "@ok": {
+    "description": "确定按钮的文本"
+  }
+
 
   "legend": "LEGEND",
   "@legend": {

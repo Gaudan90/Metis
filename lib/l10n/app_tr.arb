@@ -80,6 +80,23 @@
   "@webPage": {
     "description": "Text for the web page button"
   },
+  "scanQRCode": "Makinenin QR kodunu tarat",
+  "@scanQRCode": {
+    "description": "Makinenin QR kodunu taratmak için menü seçeneği metni"
+  },
+  "invalidQRCode": "Geçersiz QR kodu",
+  "@invalidQRCode": {
+    "description": "Geçersiz QR kodu mesajı için metin"
+  },
+  "invalidQRCodeMessage": "Taratmış olduğunuz QR kodu geçersiz. Lütfen tekrar deneyin.",
+  "@invalidQRCodeMessage": {
+    "description": "Geçersiz bir QR kodu için detaylı mesaj"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK düğmesi için metin"
+  }
+
 
   "legend": "LEGEND",
   "@legend": {

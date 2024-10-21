@@ -80,6 +80,23 @@
   "@webPage": {
     "description": "Text for the web page button"
   },
+  "scanQRCode": "Scansiona il codice QR della macchina",
+  "@scanQRCode": {
+    "description": "Testo per la voce di menu Scansiona Codice QR"
+  },
+  "invalidQRCode": "Codice QR non valido",
+  "@invalidQRCode": {
+    "description": "Testo per il messaggio di Codice QR non valido"
+  },
+  "invalidQRCodeMessage": "Il codice QR che hai scansionato non è valido. Riprova.",
+  "@invalidQRCodeMessage": {
+    "description": "Messaggio dettagliato per un codice QR non valido"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "Testo per il pulsante OK"
+  }
+
 
   "legend": "LEGEND",
   "@legend": {

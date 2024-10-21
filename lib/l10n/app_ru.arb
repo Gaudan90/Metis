@@ -80,6 +80,23 @@
   "@webPage": {
     "description": "Text for the web page button"
   },
+  "scanQRCode": "Сканировать QR-код автомата",
+  "@scanQRCode": {
+    "description": "Текст для пункта меню Сканировать QR-код автомата"
+  },
+  "invalidQRCode": "Недействительный QR-код",
+  "@invalidQRCode": {
+    "description": "Текст для сообщения о недействительном QR-коде"
+  },
+  "invalidQRCodeMessage": "Отсканированный вами QR-код недействителен. Попробуйте снова.",
+  "@invalidQRCodeMessage": {
+    "description": "Подробное сообщение для недействительного QR-кода"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "Текст для кнопки OK"
+  }
+
 
   "legend": "LEGEND",
   "@legend": {

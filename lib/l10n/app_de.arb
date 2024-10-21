@@ -80,6 +80,23 @@
   "@webPage": {
     "description": "Text for the web page button"
   },
+  "scanQRCode": "QR-Code der Maschine scannen",
+  "@scanQRCode": {
+    "description": "Text für den Menüpunkt QR-Code scannen"
+  },
+  "invalidQRCode": "Ungültiger QR-Code",
+  "@invalidQRCode": {
+    "description": "Text für die Meldung Ungültiger QR-Code"
+  },
+  "invalidQRCodeMessage": "Der gescannte QR-Code ist ungültig. Bitte versuchen Sie es erneut.",
+  "@invalidQRCodeMessage": {
+    "description": "Detaillierte Meldung für einen ungültigen QR-Code"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "Text für die Schaltfläche OK"
+  }
+
 
   "legend": "LEGEND",
   "@legend": {

@@ -178,7 +178,8 @@ class _QRScannerPageState extends State<QRScannerPage>
             children: [
               const SizedBox(height: 300),
               Text(
-                "AppLocalizations.of(context)!.scanQRCode",
+                //TODO: scanQRCode
+                AppLocalizations.of(context)!.scanQRCode,
                 style: GoogleFonts.bebasNeue(
                   textStyle: const TextStyle(
                     color: Colors.white,
@@ -223,8 +224,10 @@ class _QRScannerPageState extends State<QRScannerPage>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("AppLocalizations.of(context)!.invalidQRCode"),
-          content: Text("AppLocalizations.of(context)!.invalidQRCodeMessage"),
+          //TODO: invalidQRCode
+          title: Text(AppLocalizations.of(context)!.invalidQRCode),
+          //TODO: invalidQRCodeMessage
+          content: Text(AppLocalizations.of(context)!.invalidQRCodeMessage),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -232,7 +235,8 @@ class _QRScannerPageState extends State<QRScannerPage>
                 controller.start();
                 Navigator.of(context).pop();
               },
-              child: Text("AppLocalizations.of(context)!.ok"),
+              //TODO: ok
+              child: Text(AppLocalizations.of(context)!.ok),
             ),
           ],
         );

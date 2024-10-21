@@ -80,6 +80,23 @@
   "@webPage": {
     "description": "Text for the web page button"
   },
+  "scanQRCode": "Escanear el código QR de la máquina",
+  "@scanQRCode": {
+    "description": "Texto para la opción de menú para escanear el código QR de la máquina"
+  },
+  "invalidQRCode": "Código QR no válido",
+  "@invalidQRCode": {
+    "description": "Texto para el mensaje de Código QR no válido"
+  },
+  "invalidQRCodeMessage": "El código QR que escaneaste no es válido. Inténtalo de nuevo.",
+  "@invalidQRCodeMessage": {
+    "description": "Mensaje detallado para un código QR no válido"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "Texto para el botón OK"
+  }
+
 
   "legend": "LEGEND",
   "@legend": {
