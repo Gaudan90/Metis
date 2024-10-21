@@ -27,7 +27,8 @@ class CustomDrawer extends StatelessWidget {
                   const CircleAvatar(
                     radius: 30,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.person, color: Color(0xFF092d52), size: 40),
+                    child:
+                        Icon(Icons.person, color: Color(0xFF092d52), size: 40),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -39,20 +40,6 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: Text(localizations.home),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.history),
-              title: Text(localizations.scanHistory),
-              onTap: () {
-                Navigator.pop(context);
-              },
             ),
             ListTile(
               leading: const Icon(Icons.language),
@@ -67,13 +54,7 @@ class CustomDrawer extends StatelessWidget {
               title: Text(localizations.helpAndSupport),
               onTap: () {
                 Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: Text(localizations.about),
-              onTap: () {
-                Navigator.pop(context);
+                onSettingsTap();
               },
             ),
             ListTile(
@@ -81,6 +62,7 @@ class CustomDrawer extends StatelessWidget {
               title: Text(localizations.feedback),
               onTap: () {
                 Navigator.pop(context);
+                onSettingsTap();
               },
             ),
           ],
