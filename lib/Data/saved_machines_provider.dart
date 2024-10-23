@@ -1,4 +1,3 @@
-// saved_machines_provider.dart
 import 'package:flutter/foundation.dart';
 
 class SavedMachinesProvider extends ChangeNotifier {

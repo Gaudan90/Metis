@@ -6,8 +6,15 @@ import 'Data/products_data.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final String productName;
+  final String language;
+  final String year;
 
-  const ProductDetailsPage({super.key, required this.productName});
+  const ProductDetailsPage({
+    super.key,
+    required this.productName,
+    this.language = "English", // default value
+    this.year = "2024", // default value
+  });
 
   Future<void> _launchURL(String url) async {
     if (!await launchUrl(Uri.parse(url))) {

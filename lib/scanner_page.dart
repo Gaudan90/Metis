@@ -8,6 +8,7 @@ import 'product_details_page.dart';
 import 'package:flutter_application_1/Components/bottom_sheet.dart';
 import 'package:flutter_application_1/Components/header.dart';
 import 'Components/custom_drawer.dart';
+import 'choice_page.dart';
 
 class QRScannerPage extends StatefulWidget {
   final bool isAfterLogin;
@@ -249,33 +250,46 @@ class _QRScannerPageState extends State<QRScannerPage>
         // Verify if the scanned product exists
         final product = ProductsData.getProduct(scannedData);
         if (product != null) {
-          // Add to saved machines
-          final wasAdded =
-              Provider.of<SavedMachinesProvider>(context, listen: false)
-                  .addMachine(product.name);
+          final savedMachinesProvider =
+              Provider.of<SavedMachinesProvider>(context, listen: false);
 
-          // Show success/info message
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  wasAdded
-                      ? '${product.name} added to saved machines'
-                      : '${product.name} is already in your saved machines',
+          if (savedMachinesProvider.isMachineSaved(product.name)) {
+            // Product already scanned - go directly to product details
+            if (mounted) {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailsPage(
+                    productName: scannedData,
+                    // Use default values for language and year
+                    language: "English",
+                    year: "2024",
+                  ),
                 ),
-                duration: const Duration(seconds: 2),
-              ),
-            );
-          }
+              );
+            }
+          } else {
+            // First time scanning this product - go to choice page
+            if (mounted) {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChoicePage(
+                    productName: scannedData,
+                  ),
+                ),
+              );
 
-          // Navigate to product details
-          if (mounted) {
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                    ProductDetailsPage(productName: scannedData),
-              ),
-            );
+              // Add to saved machines after user makes choices
+              final wasAdded = savedMachinesProvider.addMachine(product.name);
+
+              if (mounted && wasAdded) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('${product.name} added to saved machines'),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
+            }
           }
         } else {
           // Show error for invalid QR code
