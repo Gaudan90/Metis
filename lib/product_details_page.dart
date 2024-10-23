@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final String productName;
 
   const ProductDetailsPage({super.key, required this.productName});
+
+  Future<void> _downloadPDF() async {
+    //TODO: Creare una funziona che assegna l'url del pdf giusto alla macchina giusta, altrimenti facciamo data mock con url statici
+    const url = 'https://www.orimi.com/pdf-test.pdf';
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  Future<void> _openWebPage() async {
+    //TODO: Creare una funziona che assegna l'url del pagina della macchina giusta alla macchina giusta, altrimenti
+    const url = 'https://www.selmi-group.it/';
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +38,9 @@ class ProductDetailsPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor:
-            const Color(0xFFF8F9FA), // Set to the top half gradient color
+        backgroundColor: const Color(0xFFF8F9FA),
         elevation: 0,
-        centerTitle: true, // Center the title
+        centerTitle: true,
         title: Text(
           title,
           style: const TextStyle(
@@ -35,14 +51,12 @@ class ProductDetailsPage extends StatelessWidget {
           ),
         ),
       ),
-      extendBodyBehindAppBar:
-          true, // Content extends behind AppBar for the full background effect
+      extendBodyBehindAppBar: true,
       body: LayoutBuilder(
         builder: (context, constraints) {
           final double availableHeight = constraints.maxHeight;
-          final double imageHeight =
-              availableHeight * 0.35; // Make image bigger but fit screen
-          final double spacing = availableHeight * 0.02; // Dynamic spacing
+          final double imageHeight = availableHeight * 0.35;
+          final double spacing = availableHeight * 0.02;
 
           return Container(
             width: double.infinity,
@@ -59,15 +73,14 @@ class ProductDetailsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                      height: spacing * 5), // Add some space below the AppBar
+                  SizedBox(height: spacing * 5),
                   Text(
                     subtitle,
                     style: GoogleFonts.bebasNeue(
                       textStyle: const TextStyle(
                         fontSize: 24,
                         color: Colors.blue,
-                        fontWeight: FontWeight.w300, // Thinner font weight
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                     textAlign: TextAlign.center,
@@ -75,7 +88,7 @@ class ProductDetailsPage extends StatelessWidget {
                   SizedBox(height: spacing * 1.5),
                   Image.network(
                     imageUrl,
-                    height: imageHeight, // Adjusted image height to fit screen
+                    height: imageHeight,
                     fit: BoxFit.contain,
                   ),
                   SizedBox(height: spacing * 1.5),
@@ -95,7 +108,7 @@ class ProductDetailsPage extends StatelessWidget {
                     style: GoogleFonts.dosis(
                       textStyle: const TextStyle(
                         fontSize: 24,
-                        color: Color(0xFFF8F9FA), // Changed to #F8F9FA
+                        color: Color(0xFFF8F9FA),
                       ),
                     ),
                   ),
@@ -104,12 +117,13 @@ class ProductDetailsPage extends StatelessWidget {
                     style: GoogleFonts.dosis(
                       textStyle: const TextStyle(
                         fontSize: 24,
-                        color: Color(0xFFF8F9FA), // Changed to #F8F9FA
+                        color: Color(0xFFF8F9FA),
                       ),
                     ),
                   ),
                   SizedBox(height: spacing * 1.5),
                   TextButton(
+                    onPressed: _downloadPDF,
                     child: Text(
                       'Scarica il pdf della scheda tecnica',
                       style: GoogleFonts.dosis(
@@ -117,16 +131,13 @@ class ProductDetailsPage extends StatelessWidget {
                           fontSize: 24,
                           color: Color(0xFFF8F9FA),
                           decoration: TextDecoration.underline,
-                          decorationColor: Color(
-                              0xFFF8F9FA), // Underline color set to #F8F9FA
+                          decorationColor: Color(0xFFF8F9FA),
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      // TODO: Implement PDF download
-                    },
                   ),
                   TextButton(
+                    onPressed: _openWebPage,
                     child: Text(
                       'Pagina web',
                       style: GoogleFonts.dosis(
@@ -134,14 +145,10 @@ class ProductDetailsPage extends StatelessWidget {
                           fontSize: 24,
                           color: Color(0xFFF8F9FA),
                           decoration: TextDecoration.underline,
-                          decorationColor: Color(
-                              0xFFF8F9FA), // Underline color set to #F8F9FA
+                          decorationColor: Color(0xFFF8F9FA),
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      // TODO: Implement web page navigation
-                    },
                   ),
                 ],
               ),
@@ -165,12 +172,12 @@ class ProductDetailsPage extends StatelessWidget {
 
   String _getImageUrl(String productName) {
     switch (productName.toUpperCase()) {
-      case 'LEGEND':
+      case 'LEGEND': // TODO: || url del QR
         return 'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/legend-temperatrice-cioccolato/legend-temperatrice-cioccolato.png';
       case 'TRUFFLE':
         return 'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png';
       default:
-        return 'https://via.placeholder.com/300'; // Placeholder image if product is unknown
+        return 'https://via.placeholder.com/300';
     }
   }
 }
