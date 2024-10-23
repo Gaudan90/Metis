@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/menu-pages/login/login.dart';
+/*import 'package:flutter_application_1/menu-pages/language.dart';*/
 import 'package:flutter_application_1/menu-pages/support.dart';
 import 'package:flutter_application_1/menu-pages/about.dart';
 import 'package:flutter_application_1/menu-pages/feedback.dart';
+
+import '../menu-pages/login/login.dart';
+import '../menu-pages/machine_list.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -20,7 +23,7 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.pop(context); // Chiude il drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                 );
               },
               child: const DrawerHeader(
@@ -49,6 +52,18 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
             ),
+            /*
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: const Text('Language'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LanguagePage()),
+                );
+              },
+            ), */
             ListTile(
               leading: const Icon(Icons.help),
               title: const Text('Help & Support'),
@@ -79,6 +94,17 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const FeedbackPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.list_alt),
+              title: const Text('Machine List'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MachineList()),
                 );
               },
             ),
