@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'Data/product_model.dart';
+import 'Data/products_data.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final String productName;
 
   const ProductDetailsPage({super.key, required this.productName});
 
-  Future<void> _downloadPDF() async {
-    //TODO: Creare una funziona che assegna l'url del pdf giusto alla macchina giusta, altrimenti facciamo data mock con url statici
-    const url = 'https://www.orimi.com/pdf-test.pdf';
-    if (!await launchUrl(Uri.parse(url))) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
-  Future<void> _openWebPage() async {
-    //TODO: Creare una funziona che assegna l'url del pagina della macchina giusta alla macchina giusta, altrimenti
-    const url = 'https://www.selmi-group.it/';
+  Future<void> _launchURL(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }
@@ -25,12 +17,15 @@ class ProductDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String title = productName.toUpperCase();
-    final String subtitle = _getSubtitle(productName);
-    final String imageUrl = _getImageUrl(productName);
-    const String year = '2024';
-    const String capacity = 'Capacità vasca: 35 kg';
-    const String production = 'Produzione oraria: 170 kg';
+    final Product? product = ProductsData.getProduct(productName);
+
+    if (product == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Product not found'),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -42,7 +37,7 @@ class ProductDetailsPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          title,
+          product.name,
           style: const TextStyle(
             fontFamily: 'SpaceAge',
             fontSize: 45,
@@ -75,7 +70,7 @@ class ProductDetailsPage extends StatelessWidget {
                 children: [
                   SizedBox(height: spacing * 5),
                   Text(
-                    subtitle,
+                    product.subtitle,
                     style: GoogleFonts.bebasNeue(
                       textStyle: const TextStyle(
                         fontSize: 24,
@@ -87,13 +82,13 @@ class ProductDetailsPage extends StatelessWidget {
                   ),
                   SizedBox(height: spacing * 1.5),
                   Image.network(
-                    imageUrl,
+                    product.imageUrl,
                     height: imageHeight,
                     fit: BoxFit.contain,
                   ),
                   SizedBox(height: spacing * 1.5),
                   Text(
-                    year,
+                    product.year,
                     style: GoogleFonts.dosis(
                       textStyle: const TextStyle(
                         fontSize: 35,
@@ -104,26 +99,18 @@ class ProductDetailsPage extends StatelessWidget {
                   ),
                   SizedBox(height: spacing * 0.5),
                   Text(
-                    capacity,
+                    product.description,
                     style: GoogleFonts.dosis(
                       textStyle: const TextStyle(
                         fontSize: 24,
                         color: Color(0xFFF8F9FA),
                       ),
                     ),
-                  ),
-                  Text(
-                    production,
-                    style: GoogleFonts.dosis(
-                      textStyle: const TextStyle(
-                        fontSize: 24,
-                        color: Color(0xFFF8F9FA),
-                      ),
-                    ),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(height: spacing * 1.5),
                   TextButton(
-                    onPressed: _downloadPDF,
+                    onPressed: () => _launchURL(product.pdfUrl),
                     child: Text(
                       'Scarica il pdf della scheda tecnica',
                       style: GoogleFonts.dosis(
@@ -137,7 +124,7 @@ class ProductDetailsPage extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: _openWebPage,
+                    onPressed: () => _launchURL(product.webPageUrl),
                     child: Text(
                       'Pagina web',
                       style: GoogleFonts.dosis(
@@ -157,27 +144,5 @@ class ProductDetailsPage extends StatelessWidget {
         },
       ),
     );
-  }
-
-  String _getSubtitle(String productName) {
-    switch (productName.toUpperCase()) {
-      case 'LEGEND':
-        return 'TEMPERATRICE PROFESSIONALE\nCIOCCOLATO';
-      case 'TRUFFLE':
-        return 'Nastro per la ricopertura \ncon cioccolato';
-      default:
-        return 'Descrizione prodotto';
-    }
-  }
-
-  String _getImageUrl(String productName) {
-    switch (productName.toUpperCase()) {
-      case 'LEGEND': // TODO: || url del QR
-        return 'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/legend-temperatrice-cioccolato/legend-temperatrice-cioccolato.png';
-      case 'TRUFFLE':
-        return 'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png';
-      default:
-        return 'https://via.placeholder.com/300';
-    }
   }
 }

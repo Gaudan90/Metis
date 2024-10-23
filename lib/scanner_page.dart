@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/Data/products_data.dart';
+import 'package:flutter_application_1/Data/saved_machines_provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:provider/provider.dart';
 import 'product_details_page.dart';
 import 'package:flutter_application_1/Components/bottom_sheet.dart';
 import 'package:flutter_application_1/Components/header.dart';
@@ -242,11 +245,49 @@ class _QRScannerPageState extends State<QRScannerPage>
 
       try {
         final String scannedData = capture.barcodes.first.rawValue ?? 'No data';
-        await Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ProductDetailsPage(productName: scannedData),
-          ),
-        );
+
+        // Verify if the scanned product exists
+        final product = ProductsData.getProduct(scannedData);
+        if (product != null) {
+          // Add to saved machines
+          final wasAdded =
+              Provider.of<SavedMachinesProvider>(context, listen: false)
+                  .addMachine(product.name);
+
+          // Show success/info message
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  wasAdded
+                      ? '${product.name} added to saved machines'
+                      : '${product.name} is already in your saved machines',
+                ),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          }
+
+          // Navigate to product details
+          if (mounted) {
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    ProductDetailsPage(productName: scannedData),
+              ),
+            );
+          }
+        } else {
+          // Show error for invalid QR code
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Invalid QR code: Product not found'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
       } finally {
         _isDialogOpen = false;
         if (mounted) {
