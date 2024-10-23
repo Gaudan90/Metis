@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _errorMessage = '';
       });
-      Navigator.push(
+      Navigator.pop(
         context,
         MaterialPageRoute(builder: (context) => const QRScannerPage()),
       );
@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () {
                       // Aggiungi la navigazione alla pagina di recupero password qui
-                      Navigator.push(
+                      Navigator.pop(
                         context,
                         MaterialPageRoute(
                             builder: (context) => PasswordRecoveryPage()),
@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () {
                       // Navigazione verso la home page o un'altra pagina se necessario
-                      Navigator.push(
+                      Navigator.pop(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const QRScannerPage()),
