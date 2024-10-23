@@ -172,7 +172,7 @@ class ProductDetailsPage extends StatelessWidget {
 
   String _getImageUrl(String productName) {
     switch (productName.toUpperCase()) {
-      case 'LEGEND': // || url del QR
+      case 'LEGEND': // TODO: || url del QR
         return 'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/legend-temperatrice-cioccolato/legend-temperatrice-cioccolato.png';
       case 'TRUFFLE':
         return 'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png';
