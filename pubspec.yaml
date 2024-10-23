@@ -1,19 +1,25 @@
 name: flutter_application_1
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
   sdk: ^3.5.3
 
 dependencies:
-  provider: ^6.0.5
-  url_launcher: ^6.1.14
-  mobile_scanner: ^5.2.3
   flutter:
     sdk: flutter
-  google_fonts: ^5.1.0
-    
+
+  # Dipendenze per gestire le immagini e file
+  image_picker: ^1.0.4 # Versione da te richiesta
+  file_picker: ^6.1.1 # Versione da te richiesta
+  path_provider: ^2.0.11 # Per gestire percorsi di file
+  shared_preferences: ^2.2.0 # Versione aggiornata
+
+  # Altre dipendenze
+  url_launcher: ^6.1.14 # Per aprire URL esterni
+  mobile_scanner: ^5.2.3 # Per la scansione di codici a barre
+  google_fonts: ^5.1.0 # Per utilizzare font Google
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +28,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
   fonts:
     - family: SpaceAge
       fonts:
