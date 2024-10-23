@@ -4,8 +4,11 @@ import 'package:flutter_application_1/menu-pages/support.dart';
 import 'package:flutter_application_1/menu-pages/about.dart';
 import 'package:flutter_application_1/menu-pages/feedback.dart';
 
+import '../menu-pages/login/login.dart';
+import '../menu-pages/machine_list.dart';
+
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,28 +18,36 @@ class CustomDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFF092d52),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person, color: Color(0xFF092d52), size: 40),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Account',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
+            GestureDetector(onTap: () {
+              Navigator.pop(context); // Chiude il drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            },
+              child: const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color(0xFF092d52),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.person, color: Color(0xFF092d52), size: 40),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 10),
+                    Text(
+                      'Account',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             /*
@@ -81,6 +92,17 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const FeedbackPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.list_alt),
+              title: const Text('Machine List'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MachineList()),
                 );
               },
             ),
