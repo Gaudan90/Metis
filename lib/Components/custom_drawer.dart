@@ -16,7 +16,7 @@ class CustomDrawer extends StatelessWidget {
               //TODO: It should be something like this, the settings_page.dart should have a widget called LoginPage(),
               //When it's ready, remove these comments
               onTap: () {
-                Navigator.push(
+                Navigator.pop(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
