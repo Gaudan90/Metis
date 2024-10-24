@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/menu-pages/login/password_recovery.dart';
-import 'package:flutter_application_1/scanner_page.dart';
+import 'package:flutter_application_1/admin_page.dart';
+import 'package:flutter_application_1/login/password_recovery.dart';
 
 class LoginPage extends StatefulWidget {
   final String message = "admin";
@@ -23,13 +23,13 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _errorMessage = 'Inserisci email e password';
       });
-    } else if (email == 'admin@gmail.com' && password == '123!') {
+    } else if (email == 'admin' && password == 'admin') {
       setState(() {
         _errorMessage = '';
       });
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const QRScannerPage()),
+        MaterialPageRoute(builder: (context) => const AdminPage()),
       );
     } else {
       setState(() {
@@ -132,25 +132,10 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(color: Color(0xFF304A78)),
                     ),
                     onPressed: () {
-                      // Aggiungi la navigazione alla pagina di recupero password qui
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => PasswordRecoveryPage()),
-                      );
-                    },
-                  ),
-                  TextButton(
-                    child: const Text(
-                      'Torna alla Home',
-                      style: TextStyle(color: Color(0xFF304A78)),
-                    ),
-                    onPressed: () {
-                      // Navigazione verso la home page o un'altra pagina se necessario
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const QRScannerPage()),
                       );
                     },
                   ),

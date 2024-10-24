@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import '../edit_machine_list.dart';
 
 class Header extends StatelessWidget {
-  final bool isFlashOn;
-  final VoidCallback onFlashToggle;
   final VoidCallback onMenuPressed;
 
   const Header({
     super.key,
-    required this.isFlashOn,
-    required this.onFlashToggle,
     required this.onMenuPressed,
   });
 
@@ -25,30 +22,30 @@ class Header extends StatelessWidget {
           SizedBox(
             height: 60,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.menu, color: Colors.white),
-                  onPressed: onMenuPressed,
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        isFlashOn ? Icons.flash_on : Icons.flash_off,
+                const SizedBox(width: 16), // Margine a sinistra
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      'Selmi-Group',
+                      style: const TextStyle(
                         color: Colors.white,
+                        fontSize: 20, // Dimensione del testo
+                        fontWeight: FontWeight.bold, // Grassetto
                       ),
-                      onPressed: onFlashToggle,
                     ),
-                    IconButton(
-                      icon:
-                          const Icon(Icons.photo_library, color: Colors.white),
-                      onPressed: () {
-                        // Photo library functionality
-                      },
-                    ),
-                  ],
+                  ),
                 ),
+                IconButton(
+                  icon: const Icon(Icons.edit, color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EditMachineList()),
+                    );
+                  },
+                ),
+                const SizedBox(width: 16), // Margine a destra
               ],
             ),
           ),

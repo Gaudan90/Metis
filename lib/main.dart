@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'scanner_page.dart';
+import 'package:flutter_application_1/login/login.dart';
+
 
 void main() => runApp(const MainApp());
 
@@ -9,7 +10,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: QRScannerPage(),
+      home: LoginPage(),
     );
   }
 }
