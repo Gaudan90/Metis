@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/menu-pages/login/password_recovery.dart';
 import 'package:flutter_application_1/scanner_page.dart';
+import 'package:flutter_application_1/menu-pages/login/auth_state.dart';
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -34,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
       _errorMessage = '';
     });
 
-    // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 500));
 
     final email = _emailController.text.trim();
@@ -42,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _errorMessage = 'Inserisci email e password';
+        _errorMessage = 'Enter email and password';
         _isLoading = false;
       });
       return;
@@ -51,16 +53,19 @@ class _LoginPageState extends State<LoginPage> {
     if (email == 'admin@gmail.com' && password == '123!') {
       if (!mounted) return;
 
+      // Set authentication state
+      Provider.of<AuthProvider>(context, listen: false).setAuthenticated(true);
+
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => const QRScannerPage(isAfterLogin: true),
         ),
-        (route) => false, // This removes all previous routes from the stack
+        (route) => false,
       );
     } else {
       setState(() {
-        _errorMessage = 'La password o l\'email potrebbero essere sbagliati';
+        _errorMessage = 'Your password or email may be wrong';
         _isLoading = false;
       });
     }
@@ -68,17 +73,17 @@ class _LoginPageState extends State<LoginPage> {
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Inserisci un indirizzo email';
+      return 'Enter email address';
     }
     if (!value.contains('@') || !value.contains('.')) {
-      return 'Inserisci un indirizzo email valido';
+      return 'Enter a valid email address';
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Inserisci una password';
+      return 'Enter password';
     }
     return null;
   }
@@ -117,8 +122,9 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.network(
-                      'https://www.selmi-group.it/img/logo-selmi-social.png',
-                      width: 80,
+                      'https://i.ibb.co/0mTY3mK/selmi-logo-app.png',
+                      height: 120,
+                      width: 360,
                       errorBuilder: (context, error, stackTrace) {
                         return const Icon(
                           Icons.business,
@@ -127,19 +133,20 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                     ),
-                    const SizedBox(height: 24),
                     RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
+                      text: TextSpan(
+                        style: GoogleFonts.dosis(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                         children: [
-                          TextSpan(text: 'Accedi a '),
+                          const TextSpan(text: 'Access to '),
                           TextSpan(
                             text: 'ScanSelmi',
-                            style: TextStyle(color: Color(0xFF304A78)),
+                            style: GoogleFonts.dosis(
+                              color: const Color(0xFF304A78),
+                            ),
                           ),
                         ],
                       ),
@@ -150,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.only(bottom: 16),
                         child: Text(
                           _errorMessage,
-                          style: const TextStyle(
+                          style: GoogleFonts.dosis(
                             color: Colors.red,
                             fontWeight: FontWeight.w500,
                           ),
@@ -161,8 +168,10 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       validator: _validateEmail,
                       keyboardType: TextInputType.emailAddress,
+                      style: GoogleFonts.dosis(),
                       decoration: InputDecoration(
-                        labelText: 'Indirizzo email',
+                        labelText: 'Email address',
+                        labelStyle: GoogleFonts.dosis(),
                         prefixIcon: const Icon(Icons.email_outlined),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -180,8 +189,10 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _passwordController,
                       validator: _validatePassword,
                       obscureText: !_isPasswordVisible,
+                      style: GoogleFonts.dosis(),
                       decoration: InputDecoration(
                         labelText: 'Password',
+                        labelStyle: GoogleFonts.dosis(),
                         prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -229,9 +240,9 @@ class _LoginPageState extends State<LoginPage> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text(
-                                'Accedi',
-                                style: TextStyle(
+                            : Text(
+                                'Login',
+                                style: GoogleFonts.dosis(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -248,10 +259,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         );
                       },
-                      child: const Text(
-                        'Password dimenticata?',
-                        style: TextStyle(
-                          color: Color(0xFF304A78),
+                      child: Text(
+                        'Forgotten password?',
+                        style: GoogleFonts.dosis(
+                          color: const Color(0xFF304A78),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -267,10 +278,10 @@ class _LoginPageState extends State<LoginPage> {
                           (route) => false,
                         );
                       },
-                      child: const Text(
-                        'Torna alla Home',
-                        style: TextStyle(
-                          color: Color(0xFF304A78),
+                      child: Text(
+                        'Go back to Home',
+                        style: GoogleFonts.dosis(
+                          color: const Color(0xFF304A78),
                           fontWeight: FontWeight.w500,
                         ),
                       ),

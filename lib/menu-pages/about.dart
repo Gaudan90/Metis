@@ -7,6 +7,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FA),
       body: Column(
         children: [
           Container(
@@ -22,7 +23,7 @@ class AboutPage extends StatelessWidget {
                   Expanded(
                     child: Center(
                       child: Text(
-                        'Chi siamo - Selmi Group',
+                        'Who are we - Selmi Group',
                         style: GoogleFonts.roboto(
                           fontSize: 28,
                           color: Colors.white,
@@ -52,7 +53,7 @@ class AboutPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Selmi Group è un\'azienda leader nel settore delle tecnologie innovative per l\'industria alimentare. Fondata nel 1980, la nostra missione è fornire soluzioni all\'avanguardia per migliorare l\'efficienza e la qualità della produzione alimentare.',
+                    'SelmiGroup is a leading provider of innovative technologies for the food industry. Founded in 1980, our mission is to provide state-of-the-art solutions to improve the efficiency and quality of food production.',
                     style: GoogleFonts.roboto(
                       fontSize: 16,
                       color: const Color(0xFF25344D),
@@ -60,7 +61,7 @@ class AboutPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   Text(
-                    'I nostri servizi includono:',
+                    'Our services include:',
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -69,13 +70,14 @@ class AboutPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   _buildBulletPoint(
-                      'Progettazione e produzione di macchinari per l\'industria alimentare'),
-                  _buildBulletPoint('Consulenza tecnica e formazione'),
-                  _buildBulletPoint('Assistenza post-vendita e manutenzione'),
-                  _buildBulletPoint('Ricerca e sviluppo di nuove tecnologie'),
+                      'Design and manufacture of machinery for the food industry'),
+                  _buildBulletPoint('Technical consulting and training'),
+                  _buildBulletPoint('After-sales service and maintenance'),
+                  _buildBulletPoint(
+                      'Research and development of new technologies'),
                   const SizedBox(height: 32),
                   Text(
-                    'Seguici sui social media:',
+                    'Follow us on our social media:',
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -83,8 +85,8 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  _buildSocialLink(Icons.language, 'Sito web',
-                      'https://www.selmi-group.it/'),
+                  _buildSocialLink(
+                      Icons.language, 'Website', 'https://www.selmi-group.it/'),
                   _buildSocialLink(Icons.facebook, 'Facebook',
                       'https://www.facebook.com/SelmiGroupChocolateMachinery'),
                   _buildSocialLink(Icons.camera_alt, 'Instagram',
@@ -150,7 +152,7 @@ class AboutPage extends StatelessWidget {
             foregroundColor: const Color(0xFF25344D),
           ),
           child: Text(
-            'Visita',
+            'Visit',
             style: GoogleFonts.roboto(
               fontSize: 16,
               fontWeight: FontWeight.bold,

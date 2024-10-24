@@ -7,6 +7,7 @@ class SupportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FA),
       body: Column(
         children: [
           Container(
@@ -22,7 +23,7 @@ class SupportPage extends StatelessWidget {
                   Expanded(
                     child: Center(
                       child: Text(
-                        'Supporto SelmiGroup',
+                        'SelmiGroup Support',
                         style: GoogleFonts.roboto(
                           fontSize: 28,
                           color: Colors.white,
@@ -43,7 +44,7 @@ class SupportPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Come possiamo aiutarti?',
+                    'How can we help you?',
                     style: GoogleFonts.roboto(
                       fontSize: 24,
                       color: const Color(0xFF25344D),
@@ -53,7 +54,7 @@ class SupportPage extends StatelessWidget {
                   const SizedBox(height: 32),
                   _buildSupportOption(
                     icon: Icons.phone,
-                    title: 'Chiamaci',
+                    title: 'Call us',
                     subtitle: '+39 123 456 7890',
                     onTap: () {
                       // Implementa la funzionalità di chiamata
@@ -61,7 +62,7 @@ class SupportPage extends StatelessWidget {
                   ),
                   _buildSupportOption(
                     icon: Icons.email,
-                    title: 'Inviaci un\'email',
+                    title: 'Send us an email',
                     subtitle: 'supporto@selmigroup.com',
                     onTap: () {
                       // Implementa la funzionalità di invio email
@@ -69,15 +70,15 @@ class SupportPage extends StatelessWidget {
                   ),
                   _buildSupportOption(
                     icon: Icons.chat,
-                    title: 'Chat dal vivo',
-                    subtitle: 'Disponibile 9:00 - 18:00',
+                    title: 'Live chat',
+                    subtitle: 'Availability 9:00 - 18:00',
                     onTap: () {
                       // Implementa la funzionalità di chat dal vivo
                     },
                   ),
                   const SizedBox(height: 32),
                   Text(
-                    'Domande frequenti',
+                    'FAQ',
                     style: GoogleFonts.roboto(
                       fontSize: 24,
                       color: const Color(0xFF25344D),
@@ -85,9 +86,9 @@ class SupportPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  _buildFAQItem('Come posso tracciare il mio ordine?'),
-                  _buildFAQItem('Quali sono i tempi di consegna?'),
-                  _buildFAQItem('Come posso effettuare un reso?'),
+                  _buildFAQItem('How can I track my order?'),
+                  _buildFAQItem('What are the delivery times?'),
+                  _buildFAQItem('How can I file a return?'),
                 ],
               ),
             ),
@@ -163,7 +164,7 @@ class SupportPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              'Questa è una risposta di esempio. Sostituisci questo testo con la risposta effettiva alla domanda.',
+              'This is a sample. Replace this text with the actual answer to the question.',
               style: GoogleFonts.roboto(
                 fontSize: 14,
                 color: const Color(0xFF25344D),

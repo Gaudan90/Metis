@@ -10,7 +10,7 @@ class FeedbackPage extends StatefulWidget {
 
 class _FeedbackPageState extends State<FeedbackPage> {
   final _formKey = GlobalKey<FormState>();
-  String _feedbackType = 'Suggerimento';
+  String _feedbackType = 'Suggestion';
   final TextEditingController _feedbackController = TextEditingController();
 
   @override
@@ -25,7 +25,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         SnackBar(
           backgroundColor: const Color(0xFF25344D),
           content: Text(
-            'Feedback inviato con successo!',
+            'Feedback successfully sent!',
             style: GoogleFonts.roboto(
               fontSize: 16,
               color: Colors.white,
@@ -40,6 +40,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FA),
       body: Column(
         children: [
           Container(
@@ -79,7 +80,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Ci piacerebbe sentire la tua opinione!',
+                        'We would like to know your opinion!',
                         style: GoogleFonts.roboto(
                           fontSize: 24,
                           color: const Color(0xFF25344D),
@@ -90,7 +91,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       DropdownButtonFormField<String>(
                         value: _feedbackType,
                         decoration: InputDecoration(
-                          labelText: 'Tipo di feedback',
+                          labelText: 'Feedback type',
                           labelStyle: GoogleFonts.roboto(
                             color: const Color(0xFF25344D),
                           ),
@@ -114,7 +115,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                             ),
                           ),
                         ),
-                        items: ['Suggerimento', 'Problema', 'Altro']
+                        items: ['Suggestion', 'Problem', 'Other']
                             .map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -141,7 +142,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                           color: const Color(0xFF25344D),
                         ),
                         decoration: InputDecoration(
-                          labelText: 'Il tuo feedback',
+                          labelText: 'Your feedback',
                           labelStyle: GoogleFonts.roboto(
                             color: const Color(0xFF25344D),
                           ),
@@ -168,7 +169,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                         maxLines: 5,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Per favore inserisci il tuo feedback';
+                            return 'Please add your feedback';
                           }
                           return null;
                         },
@@ -189,7 +190,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                               ),
                             ),
                             child: Text(
-                              'Invia Feedback',
+                              'Send Feedback',
                               style: GoogleFonts.roboto(
                                 fontSize: 18,
                                 color: Colors.white,
