@@ -111,7 +111,7 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
                           horizontal: 50, vertical: 15),
                     ),
                     onPressed: _handlePasswordReset,
-                    child: Text('Send Reset Instructions'),
+                    child: const Text('Send Reset Instructions'),
                   ),
                   const SizedBox(height: 16),
                   TextButton(

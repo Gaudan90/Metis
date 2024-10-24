@@ -112,7 +112,7 @@ class ProductDetailsPage extends StatelessWidget {
                   TextButton(
                     onPressed: () => _launchURL(product.pdfUrl),
                     child: Text(
-                      'Scarica il pdf della scheda tecnica',
+                      'Download the PDF of the technical data sheet',
                       style: GoogleFonts.dosis(
                         textStyle: const TextStyle(
                           fontSize: 24,
@@ -126,7 +126,7 @@ class ProductDetailsPage extends StatelessWidget {
                   TextButton(
                     onPressed: () => _launchURL(product.webPageUrl),
                     child: Text(
-                      'Pagina web',
+                      'Web page',
                       style: GoogleFonts.dosis(
                         textStyle: const TextStyle(
                           fontSize: 24,

@@ -9,7 +9,7 @@ class FeedbackPage extends StatefulWidget {
 
 class _FeedbackPageState extends State<FeedbackPage> {
   final _formKey = GlobalKey<FormState>();
-  String _feedbackType = 'Suggerimento';
+  String _feedbackType = 'Suggestion';
   final TextEditingController _feedbackController = TextEditingController();
 
   @override
@@ -23,7 +23,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       // Qui puoi implementare la logica per inviare il feedback
       // Per esempio, inviarlo a un backend o salvarlo localmente
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Feedback inviato con successo!')),
+        const SnackBar(content: Text('Feedback successfully sent!')),
       );
       // Pulisci il form dopo l'invio
       _feedbackController.clear();
@@ -45,17 +45,17 @@ class _FeedbackPageState extends State<FeedbackPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Ci piacerebbe sentire la tua opinione!',
+                'We would like to know your opinion!',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 value: _feedbackType,
                 decoration: const InputDecoration(
-                  labelText: 'Tipo di feedback',
+                  labelText: 'feedback type',
                   border: OutlineInputBorder(),
                 ),
-                items: ['Suggerimento', 'Problema', 'Altro']
+                items: ['Suggestion', 'Problem', 'Other']
                     .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -74,13 +74,13 @@ class _FeedbackPageState extends State<FeedbackPage> {
               TextFormField(
                 controller: _feedbackController,
                 decoration: const InputDecoration(
-                  labelText: 'Il tuo feedback',
+                  labelText: 'Your feedback',
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Per favore inserisci il tuo feedback';
+                    return 'Please add your feedback';
                   }
                   return null;
                 },
@@ -93,7 +93,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 ),
                 child: const Text(
-                  'Invia Feedback',
+                  'Send Feedback',
                   style: TextStyle(fontSize: 18),
                 ),
               ),

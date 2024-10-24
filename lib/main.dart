@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/Data/saved_machines_provider.dart';
 import 'scanner_page.dart';
-import 'menu-pages/login/auth_state.dart';
+import 'auth_state.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SavedMachinesProvider()),
-        ChangeNotifierProvider(create: (_) => AuthState()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         // Qui puoi aggiungere altri provider se necessario in futuro
       ],
       child: const MainApp(),

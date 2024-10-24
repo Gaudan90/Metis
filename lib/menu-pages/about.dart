@@ -7,7 +7,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chi siamo - SelmiGroup'),
+        title: const Text('Who are we - SelmiGroup'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -20,26 +20,26 @@ class AboutPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'SelmiGroup è un\'azienda leader nel settore delle tecnologie innovative per l\'industria alimentare. Fondata nel 1980, la nostra missione è fornire soluzioni all\'avanguardia per migliorare l\'efficienza e la qualità della produzione alimentare.',
+              'SelmiGroup is a leading provider of innovative technologies for the food industry. Founded in 1980, our mission is to provide state-of-the-art solutions to improve the efficiency and quality of food production.',
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 16),
             const Text(
-              'I nostri servizi includono:',
+              'Our services include:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            _buildBulletPoint('Progettazione e produzione di macchinari per l\'industria alimentare'),
-            _buildBulletPoint('Consulenza tecnica e formazione'),
-            _buildBulletPoint('Assistenza post-vendita e manutenzione'),
-            _buildBulletPoint('Ricerca e sviluppo di nuove tecnologie'),
+            _buildBulletPoint('Design and manufacture of machinery for the food industry'),
+            _buildBulletPoint('Technical consulting and training'),
+            _buildBulletPoint('After-sales service and maintenance'),
+            _buildBulletPoint('Research and development of new technologies'),
             const SizedBox(height: 16),
             const Text(
-              'Seguici sui social media:',
+              'Follow us on our social media:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            _buildSocialLink(Icons.language, 'Sito web', 'https://www.selmigroup.com'),
+            _buildSocialLink(Icons.language, 'Web Page', 'https://www.selmigroup.com'),
             _buildSocialLink(Icons.facebook, 'Facebook', 'https://www.facebook.com/SelmiGroup'),
             _buildSocialLink(Icons.camera_alt, 'Instagram', 'https://www.instagram.com/selmigroup'),
           ],
@@ -74,7 +74,7 @@ class AboutPage extends StatelessWidget {
             onPressed: () {
               // Implementare la navigazione all'URL
             },
-            child: const Text('Visita'),
+            child: const Text('Visit'),
           ),
         ],
       ),

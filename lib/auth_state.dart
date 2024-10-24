@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class AuthState extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier {
   bool _isAuthenticated = false;
 
   bool get isAuthenticated => _isAuthenticated;

@@ -7,7 +7,7 @@ class SupportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Supporto SelmiGroup'),
+        title: const Text('SelmiGroup Support'),
         backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
@@ -16,13 +16,13 @@ class SupportPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Come possiamo aiutarti?',
+              'How can we help you?',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             _buildSupportOption(
               icon: Icons.phone,
-              title: 'Chiamaci',
+              title: 'Call us',
               subtitle: '+39 123 456 7890',
               onTap: () {
                 // Implementa la funzionalità di chiamata
@@ -30,7 +30,7 @@ class SupportPage extends StatelessWidget {
             ),
             _buildSupportOption(
               icon: Icons.email,
-              title: 'Inviaci un\'email',
+              title: 'Send us an email',
               subtitle: 'supporto@selmigroup.com',
               onTap: () {
                 // Implementa la funzionalità di invio email
@@ -38,21 +38,21 @@ class SupportPage extends StatelessWidget {
             ),
             _buildSupportOption(
               icon: Icons.chat,
-              title: 'Chat dal vivo',
-              subtitle: 'Disponibile 9:00 - 18:00',
+              title: 'Live chat',
+              subtitle: 'Availability 9:00 - 18:00',
               onTap: () {
                 // Implementa la funzionalità di chat dal vivo
               },
             ),
             const SizedBox(height: 20),
             const Text(
-              'Domande frequenti',
+              'FAQ',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            _buildFAQItem('Come posso tracciare il mio ordine?'),
-            _buildFAQItem('Quali sono i tempi di consegna?'),
-            _buildFAQItem('Come posso effettuare un reso?'),
+            _buildFAQItem('How can I track my order?'),
+            _buildFAQItem('What are the delivery times?'),
+            _buildFAQItem('How can I file a return?'),
           ],
         ),
       ),
@@ -83,7 +83,7 @@ class SupportPage extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            'Questa è una risposta di esempio. Sostituisci questo testo con la risposta effettiva alla domanda.',
+            'This is a sample. Replace this text with the actual answer to the question.',
           ),
         ),
       ],

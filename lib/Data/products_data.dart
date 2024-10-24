@@ -4,10 +4,10 @@ class ProductsData {
   static const Map<String, Product> products = {
     'LEGEND': Product(
       name: 'LEGEND',
-      subtitle: 'Temperatrice professionale cioccolato',
+      subtitle: 'Professional chocolate tempering machine',
       imageUrl:
       'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/legend-temperatrice-cioccolato/legend-temperatrice-cioccolato.png',
-      description: 'Capacità vasca: 24 kg\nProduzione oraria: 90 kg',
+      description: 'Tank capacity: 24 kg\nProduction per hour: 90 kg',
       pdfUrl:
       'https://www.selmi-group.it/pdf/Legend-Temperatrice-professionale-cioccolato.pdf',
       webPageUrl:
@@ -15,10 +15,10 @@ class ProductsData {
     ),
     'TRUFFLE': Product(
       name: 'TRUFFLE',
-      subtitle: 'Nastro ricopritore per tartufi in cioccolato',
+      subtitle: 'Chocolate truffle coating tape',
       imageUrl:
       'https://www.selmi-group.it/img/truffle-nastro-ricopertura-tartufi/truffle-nastro-ricopertura-tartufi-p.png',
-      description: 'Nastro per la ricopertura con cioccolato',
+      description: 'Chocolate enrobing tape',
       pdfUrl:
       'https://www.selmi-group.it/pdf/Truffle-Nastro-ricopritore-per-tartufi-in-cioccolato.pdf',
       webPageUrl:
@@ -27,10 +27,10 @@ class ProductsData {
     ),
     'SELMI ONE': Product(
       name: 'SELMI ONE',
-      subtitle: 'Temperatrice professionale cioccolato',
+      subtitle: 'Professional chocolate tempering machine',
       imageUrl:
       'https://www.selmi-group.it/img/macchine-temperaggio-cioccolato/selmi-one-temperatrice-cioccolato/selmi-one-temperatrice-cioccolato-p.png',
-      description: 'Capacità vasca: 12 kg\nProduzione oraria: 55 kg',
+      description: 'Tank capacity: 12 kg\nProduction per hour: 55 kg',
       pdfUrl:
       'https://www.selmi-group.it/pdf/Selmi-One-Temperatrice-professionale-cioccolato.pdf',
       webPageUrl:
