@@ -14,13 +14,13 @@ class LanguageSelector extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(
         popupMenuTheme: const PopupMenuThemeData(
-          color: Color(0xFFF8F9FA),
+          color: Color(0xFF092d52),
         ),
       ),
       child: DropdownButton<String>(
         value: context.locale.languageCode,
         underline: Container(),
-        icon: const Icon(Icons.language, color: Colors.blueGrey),
+        icon: const Icon(Icons.language, color: Color(0xFF092d52)),
         items: LanguageManager.languageData.entries.map((entry) {
           return DropdownMenuItem(
             value: entry.key,
@@ -32,9 +32,9 @@ class LanguageSelector extends StatelessWidget {
             _changeLanguage(context, value);
           }
         },
-        dropdownColor: const Color(0xFF092d52),
+        dropdownColor: Colors.white,
         style: const TextStyle(
-          color: Colors.blueGrey,
+          color: Color(0xFF092d52),
           fontSize: 16,
         ),
       ),

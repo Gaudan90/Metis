@@ -512,8 +512,8 @@ class _MachineListState extends State<MachineList> {
                               ListTile(
                                 leading: Image.network(
                                   machine.imageUrl,
-                                 // width: 150,
-                                  //height: 150,
+                                  width: 150,
+                                  height: 150,
                                  fit: BoxFit.cover,
                                 ),
                                 title: Text(
