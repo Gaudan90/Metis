@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'language_selector.dart';
 
 class Header extends StatelessWidget {
   final bool isFlashOn;

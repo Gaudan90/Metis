@@ -1,9 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'language_manager.dart';
 import 'product_model.dart';
-import 'package:easy_localization/easy_localization.dart';
-
 class ProductsData extends ChangeNotifier {
   ProductsData._internal() {
     refreshProducts();
