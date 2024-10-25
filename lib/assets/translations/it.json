@@ -1,0 +1,29 @@
+{
+  "product_not_found": "Prodotto non trovato",
+  "download_pdf": "Scarica il PDF della scheda tecnica",
+  "web_page": "Pagina web",
+  "scanner": {
+    "camera_error": "Errore fotocamera: {code} \n Riprovo...",
+    "initializing": "Inizializzazione fotocamera...",
+    "init_failed": "Impossibile inizializzare la fotocamera. Riavvia l'app."
+  },
+  "product": {
+    "added": "{} aggiunto ai macchinari salvati",
+    "already_saved": "{} è già nei tuoi macchinari salvati",
+    "invalid_qr": "Codice QR non valido: Prodotto non trovato"
+  },
+  "products": {
+    "legend": {
+      "subtitle": "Temperatrice professionale per cioccolato",
+      "description": "Capacità vasca: 24 kg \n Produzione oraria: 90 kg"
+    },
+    "truffle": {
+      "subtitle": "Nastro per ricopertura tartufi di cioccolato",
+      "description": "Nastro per ricopertura cioccolato"
+    },
+    "selmi_one": {
+      "subtitle": "Temperatrice professionale per cioccolato",
+      "description": "Capacità vasca: 12 kg \n Produzione oraria: 55 kg"
+    }
+  }
+}

@@ -43,7 +43,7 @@ class CustomDrawer extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          authProvider.isAuthenticated ? 'Admin' : 'Account',
+                          authProvider.isAuthenticated ? 'Admin' : 'Guest',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 24,

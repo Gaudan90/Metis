@@ -1,5 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Data/products_data.dart';
 import 'package:flutter_application_1/Data/saved_machines_provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -28,6 +28,7 @@ class _QRScannerPageState extends State<QRScannerPage>
   bool _isFlashOn = false;
   bool _isCameraInitializing = true;
   int _initializationAttempts = 0;
+  String? _errorMessage;
   static const int maxInitializationAttempts = 3;
 
   late AnimationController _dragController;
@@ -43,7 +44,6 @@ class _QRScannerPageState extends State<QRScannerPage>
       lowerBound: 0,
       upperBound: 1,
     );
-    // Delay the initial camera setup slightly to ensure proper initialization
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeCamera();
     });
@@ -91,31 +91,27 @@ class _QRScannerPageState extends State<QRScannerPage>
     setState(() {
       _isCameraInitializing = true;
       _initializationAttempts++;
+      _errorMessage = null;
     });
 
-    // Clean up any existing controller
     await _stopAndDisposeCamera();
 
     try {
-      // Create new controller
       _controller = MobileScannerController(
         formats: [BarcodeFormat.qrCode],
         facing: CameraFacing.back,
         torchEnabled: _isFlashOn,
       );
 
-      // Wait a moment before starting
       await Future.delayed(const Duration(milliseconds: 200));
-
       if (!mounted) return;
-
-      // Start the camera
       await _controller!.start();
 
       if (mounted) {
         setState(() {
           _isCameraInitializing = false;
           _initializationAttempts = 0;
+          _errorMessage = null;
         });
       }
     } catch (e) {
@@ -126,11 +122,12 @@ class _QRScannerPageState extends State<QRScannerPage>
         } else {
           setState(() {
             _isCameraInitializing = false;
+            _errorMessage = ('scanner.init_failed').tr();
           });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text(
-                  'Failed to initialize camera. Please restart the app.'),
+              content: Text(
+                ('scanner.init_failed').tr()),
               action: SnackBarAction(
                 label: 'Retry',
                 onPressed: () {
@@ -147,21 +144,56 @@ class _QRScannerPageState extends State<QRScannerPage>
     }
   }
 
+  void _handleCameraError(MobileScannerException error) {
+    _errorMessage = 'Camera error: ${error.errorCode}\nRetrying...';
+
+    if (mounted && _initializationAttempts < maxInitializationAttempts) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          _initializeCamera();
+        }
+      });
+    }
+  }
+
+  Widget _buildErrorWidget() {
+    return Container(
+      color: Colors.black,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              _errorMessage ?? ('scanner.camera_error').tr(),
+              style: const TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildCameraView() {
     if (_controller == null || _isCameraInitializing) {
       return Container(
         color: Colors.black,
-        child: const Center(
+        child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(
+              const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
-                'Initializing camera...',
-                style: TextStyle(color: Colors.white),
+                _errorMessage ?? ('scanner.initializing').tr(),
+                style: const TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
@@ -173,40 +205,16 @@ class _QRScannerPageState extends State<QRScannerPage>
       controller: _controller!,
       onDetect: _onDetect,
       errorBuilder: (context, error, child) {
-        // Attempt to recover from error
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted && _initializationAttempts < maxInitializationAttempts) {
-            _initializeCamera();
-          }
-        });
-
-        return Container(
-          color: Colors.black,
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Camera error: ${error.errorCode}\nRetrying...',
-                  style: const TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        );
+        _handleCameraError(error);
+        return _buildErrorWidget();
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => !widget.isAfterLogin,
+    return PopScope(
+      canPop: !widget.isAfterLogin,
       child: Scaffold(
         key: _scaffoldKey,
         drawer: const CustomDrawer(),
@@ -245,30 +253,26 @@ class _QRScannerPageState extends State<QRScannerPage>
 
       try {
         final String scannedData = capture.barcodes.first.rawValue ?? 'No data';
+        final productsData = ProductsData();
+        final product = productsData.getProduct(scannedData);
 
-        // Verify if the scanned product exists
-        final product = ProductsData.getProduct(scannedData);
         if (product != null) {
-          // Add to saved machines
           final wasAdded =
           Provider.of<SavedMachinesProvider>(context, listen: false)
               .addMachine(product.name);
 
-          // Show success/info message
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
                   wasAdded
-                      ? '${product.name} added to saved machines'
-                      : '${product.name} is already in your saved machines',
+                      ? ('product.added').tr()
+                      : ('product.already_saved').tr(),
                 ),
                 duration: const Duration(seconds: 2),
               ),
             );
           }
-
-          // Navigate to product details
           if (mounted) {
             await Navigator.of(context).push(
               MaterialPageRoute(
@@ -278,11 +282,10 @@ class _QRScannerPageState extends State<QRScannerPage>
             );
           }
         } else {
-          // Show error for invalid QR code
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Invalid QR code: Product not found'),
+              SnackBar(
+                content: Text(('product.invalid_qr').tr()),
                 backgroundColor: Colors.red,
               ),
             );

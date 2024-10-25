@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SupportPage extends StatelessWidget {
@@ -15,8 +16,8 @@ class SupportPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'How can we help you?',
+             const Text(
+          'How can we help you?',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
@@ -38,8 +39,8 @@ class SupportPage extends StatelessWidget {
             ),
             _buildSupportOption(
               icon: Icons.chat,
-              title: 'Live chat',
-              subtitle: 'Availability 9:00 - 18:00',
+              title: ('Live chat'),
+              subtitle: ('Availability 9:00 - 18:00'),
               onTap: () {
                 // Implementa la funzionalità di chat dal vivo
               },
@@ -83,7 +84,7 @@ class SupportPage extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            'This is a sample. Replace this text with the actual answer to the question.',
+    'This is a sample. Replace this text with the actual answer to the question.',
           ),
         ),
       ],

@@ -1,0 +1,29 @@
+{
+  "product_not_found": "Product not found",
+  "download_pdf": "Download the PDF datasheet",
+  "web_page": "Web page",
+  "scanner": {
+    "camera_error": "Camera error: {code} \n Retrying...",
+    "initializing": "Initializing camera...",
+    "init_failed": "Unable to initialize the camera. Restart the app."
+  },
+  "product": {
+    "added": "{} added to saved machines",
+    "already_saved": "{} is already in your saved machines",
+    "invalid_qr": "Invalid QR Code: Product not found"
+  },
+  "products": {
+    "legend": {
+      "subtitle": "Professional chocolate tempering machine",
+      "description": "Tank capacity: 24 kg \n Production per hour: 90 kg"
+    },
+    "truffle": {
+      "subtitle": "Chocolate truffle coating belt",
+      "description": "Belt for chocolate coating"
+    },
+    "selmi_one": {
+      "subtitle": "Professional chocolate tempering machine",
+      "description": "Tank capacity: 12 kg \n Production per hour: 55 kg"
+    }
+  }
+}

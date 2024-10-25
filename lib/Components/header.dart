@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'language_selector.dart';
 
 class Header extends StatelessWidget {
   final bool isFlashOn;
@@ -41,8 +42,7 @@ class Header extends StatelessWidget {
                       onPressed: onFlashToggle,
                     ),
                     IconButton(
-                      icon:
-                          const Icon(Icons.photo_library, color: Colors.white),
+                      icon: const Icon(Icons.photo_library, color: Colors.white),
                       onPressed: () {
                         // Photo library functionality
                       },

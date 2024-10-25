@@ -1,0 +1,29 @@
+{
+  "product_not_found": "Ürün bulunamadı",
+  "download_pdf": "Teknik özellikler PDF'sini indir",
+  "web_page": "Web sayfası",
+  "scanner": {
+    "camera_error": "Kamera hatası: {code} \n Tekrar deneniyor...",
+    "initializing": "Kamera başlatılıyor...",
+    "init_failed": "Kamera başlatılamıyor. Uygulamayı yeniden başlatın."
+  },
+  "product": {
+    "added": "{} kaydedilen makineler arasına eklendi",
+    "already_saved": "{} zaten kaydedilen makinelerinizde",
+    "invalid_qr": "Geçersiz QR kodu: Ürün bulunamadı"
+  },
+  "products": {
+    "legend": {
+      "subtitle": "Profesyonel çikolata temperleme makinesi",
+      "description": "Tank kapasitesi: 24 kg \n Saatlik üretim: 90 kg"
+    },
+    "truffle": {
+      "subtitle": "Çikolata trüf kaplama bandı",
+      "description": "Çikolata kaplama bandı"
+    },
+    "selmi_one": {
+      "subtitle": "Profesyonel çikolata temperleme makinesi",
+      "description": "Tank kapasitesi: 12 kg \n Saatlik üretim: 55 kg"
+    }
+  }
+}

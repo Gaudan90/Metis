@@ -1,0 +1,29 @@
+{
+  "product_not_found": "未找到产品",
+  "download_pdf": "下载PDF规格表",
+  "web_page": "网页",
+  "scanner": {
+    "camera_error": "摄像头错误：{code} \n 重试中...",
+    "initializing": "正在初始化摄像头...",
+    "init_failed": "无法初始化摄像头。请重新启动应用程序。"
+  },
+  "product": {
+    "added": "{} 已添加到保存的机器中",
+    "already_saved": "{} 已在您的保存的机器中",
+    "invalid_qr": "无效的QR码：未找到产品"
+  },
+  "products": {
+    "legend": {
+      "subtitle": "专业巧克力调温机",
+      "description": "容器容量：24 公斤 \n 每小时产量：90 公斤"
+    },
+    "truffle": {
+      "subtitle": "巧克力松露涂层带",
+      "description": "用于巧克力涂层的传送带"
+    },
+    "selmi_one": {
+      "subtitle": "专业巧克力调温机",
+      "description": "容器容量：12 公斤 \n 每小时产量：55 公斤"
+    }
+  }
+}

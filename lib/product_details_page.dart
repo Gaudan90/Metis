@@ -1,13 +1,44 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Data/product_model.dart';
 import 'Data/products_data.dart';
+import 'Components/language_selector.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   final String productName;
 
   const ProductDetailsPage({super.key, required this.productName});
+
+  @override
+  State<ProductDetailsPage> createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  late final ProductsData _productsData;
+  Product? _product;
+
+  @override
+  void initState() {
+    super.initState();
+    _productsData = ProductsData();
+    _product = _productsData.getProduct(widget.productName);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.locale; // Questo crea una dipendenza con la locale
+    _updateProduct();
+  }
+
+  void _updateProduct() {
+    setState(() {
+      _productsData.refreshProducts();
+      _product = _productsData.getProduct(widget.productName);
+    });
+  }
 
   Future<void> _launchURL(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
@@ -17,12 +48,10 @@ class ProductDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product? product = ProductsData.getProduct(productName);
-
-    if (product == null) {
-      return const Scaffold(
+    if (_product == null) {
+      return Scaffold(
         body: Center(
-          child: Text('Product not found'),
+          child: const Text('product_not_found').tr(),
         ),
       );
     }
@@ -37,7 +66,7 @@ class ProductDetailsPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          product.name,
+          _product!.name,
           style: const TextStyle(
             fontFamily: 'SpaceAge',
             fontSize: 45,
@@ -45,6 +74,12 @@ class ProductDetailsPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 16.0),
+            child: LanguageSelector(),
+          ),
+        ],
       ),
       extendBodyBehindAppBar: true,
       body: LayoutBuilder(
@@ -70,7 +105,7 @@ class ProductDetailsPage extends StatelessWidget {
                 children: [
                   SizedBox(height: spacing * 5),
                   Text(
-                    product.subtitle,
+                    _product!.subtitle,
                     style: GoogleFonts.bebasNeue(
                       textStyle: const TextStyle(
                         fontSize: 24,
@@ -82,13 +117,13 @@ class ProductDetailsPage extends StatelessWidget {
                   ),
                   SizedBox(height: spacing * 1.5),
                   Image.network(
-                    product.imageUrl,
+                    _product!.imageUrl,
                     height: imageHeight,
                     fit: BoxFit.contain,
                   ),
                   SizedBox(height: spacing * 1.5),
                   Text(
-                    product.year,
+                    _product!.year,
                     style: GoogleFonts.dosis(
                       textStyle: const TextStyle(
                         fontSize: 35,
@@ -99,7 +134,7 @@ class ProductDetailsPage extends StatelessWidget {
                   ),
                   SizedBox(height: spacing * 0.5),
                   Text(
-                    product.description,
+                    _product!.description,
                     style: GoogleFonts.dosis(
                       textStyle: const TextStyle(
                         fontSize: 24,
@@ -110,9 +145,9 @@ class ProductDetailsPage extends StatelessWidget {
                   ),
                   SizedBox(height: spacing * 1.5),
                   TextButton(
-                    onPressed: () => _launchURL(product.pdfUrl),
+                    onPressed: () => _launchURL(_product!.pdfUrl),
                     child: Text(
-                      'Download the PDF of the technical data sheet',
+                      ('download_pdf').tr(),
                       style: GoogleFonts.dosis(
                         textStyle: const TextStyle(
                           fontSize: 24,
@@ -124,9 +159,9 @@ class ProductDetailsPage extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => _launchURL(product.webPageUrl),
+                    onPressed: () => _launchURL(_product!.webPageUrl),
                     child: Text(
-                      'Web page',
+                      ('web_page').tr(),
                       style: GoogleFonts.dosis(
                         textStyle: const TextStyle(
                           fontSize: 24,

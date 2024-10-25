@@ -1,0 +1,29 @@
+{
+  "product_not_found": "Produkt nicht gefunden",
+  "download_pdf": "PDF-Datenblatt herunterladen",
+  "web_page": "Webseite",
+  "scanner": {
+    "camera_error": "Kamerafehler: {code} \n Erneuter Versuch...",
+    "initializing": "Kamera wird initialisiert...",
+    "init_failed": "Kamera konnte nicht initialisiert werden. Starten Sie die App neu."
+  },
+  "product": {
+    "added": "{} zu den gespeicherten Maschinen hinzugefügt",
+    "already_saved": "{} ist bereits in den gespeicherten Maschinen",
+    "invalid_qr": "Ungültiger QR-Code: Produkt nicht gefunden"
+  },
+  "products": {
+    "legend": {
+      "subtitle": "Professionelle Schokoladentemperiermaschine",
+      "description": "Behälterkapazität: 24 kg \n Produktion pro Stunde: 90 kg"
+    },
+    "truffle": {
+      "subtitle": "Beschichtungsband für Schokoladentrüffel",
+      "description": "Band für Schokoladenbeschichtung"
+    },
+    "selmi_one": {
+      "subtitle": "Professionelle Schokoladentemperiermaschine",
+      "description": "Behälterkapazität: 12 kg \n Produktion pro Stunde: 55 kg"
+    }
+  }
+}

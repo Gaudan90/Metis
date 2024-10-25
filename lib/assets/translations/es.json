@@ -1,0 +1,29 @@
+{
+  "product_not_found": "Producto no encontrado",
+  "download_pdf": "Descargar la hoja de datos en PDF",
+  "web_page": "Página web",
+  "scanner": {
+    "camera_error": "Error de cámara: {code} \n Reintentando...",
+    "initializing": "Inicializando cámara...",
+    "init_failed": "No se puede inicializar la cámara. Reinicie la aplicación."
+  },
+  "product": {
+    "added": "{} añadido a las máquinas guardadas",
+    "already_saved": "{} ya está en sus máquinas guardadas",
+    "invalid_qr": "Código QR no válido: Producto no encontrado"
+  },
+  "products": {
+    "legend": {
+      "subtitle": "Templadora de chocolate profesional",
+      "description": "Capacidad del tanque: 24 kg \n Producción por hora: 90 kg"
+    },
+    "truffle": {
+      "subtitle": "Cinta para cobertura de trufas de chocolate",
+      "description": "Cinta para cobertura de chocolate"
+    },
+    "selmi_one": {
+      "subtitle": "Templadora de chocolate profesional",
+      "description": "Capacidad del tanque: 12 kg \n Producción por hora: 55 kg"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "product_not_found": "Produit non trouvé",
+  "download_pdf": "Télécharger la fiche technique PDF",
+  "web_page": "Page Web",
+  "scanner": {
+    "camera_error": "Erreur caméra : {code} \n Nouvelle tentative...",
+    "initializing": "Initialisation de la caméra...",
+    "init_failed": "Impossible d'initialiser la caméra. Redémarrez l'application."
+  },
+  "product": {
+    "added": "{} ajouté aux machines enregistrées",
+    "already_saved": "{} est déjà dans vos machines enregistrées",
+    "invalid_qr": "QR Code invalide : Produit non trouvé"
+  },
+  "products": {
+    "legend": {
+      "subtitle": "Tempéreuse professionnelle pour chocolat",
+      "description": "Capacité de la cuve : 24 kg \n Production par heure : 90 kg"
+    },
+    "truffle": {
+      "subtitle": "Bande pour enrobage des truffes au chocolat",
+      "description": "Bande pour enrobage de chocolat"
+    },
+    "selmi_one": {
+      "subtitle": "Tempéreuse professionnelle pour chocolat",
+      "description": "Capacité de la cuve : 12 kg \n Production par heure : 55 kg"
+    }
+  }
+}
