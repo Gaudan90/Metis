@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/Data/saved_machines_provider.dart';
 import 'scanner_page.dart';
 import 'menu-pages/login/auth_state.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => SavedMachinesProvider()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-        // Qui puoi aggiungere altri provider se necessario in futuro
-      ],
-      child: const MainApp(),
-    ),
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => SavedMachinesProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ],
+        child: const MainApp(),
+      ),
+    );
+  });
 }
 
 class MainApp extends StatelessWidget {
@@ -24,7 +31,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'ScanSelmi',
-      debugShowCheckedModeBanner: false, // Rimuove il banner debug
+      debugShowCheckedModeBanner: false,
       home: QRScannerPage(),
     );
   }

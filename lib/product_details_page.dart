@@ -47,7 +47,7 @@ class ProductDetailsPage extends StatelessWidget {
           product.name,
           style: const TextStyle(
             fontFamily: 'SpaceAge',
-            fontSize: 45,
+            fontSize: 35,
             color: Colors.red,
             fontWeight: FontWeight.bold,
           ),

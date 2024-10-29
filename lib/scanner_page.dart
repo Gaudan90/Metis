@@ -4,6 +4,7 @@ import 'package:flutter_application_1/Data/products_data.dart';
 import 'package:flutter_application_1/Data/saved_machines_provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'product_details_page.dart';
 import 'package:flutter_application_1/Components/bottom_sheet.dart';
 import 'package:flutter_application_1/Components/header.dart';
@@ -44,7 +45,6 @@ class _QRScannerPageState extends State<QRScannerPage>
       lowerBound: 0,
       upperBound: 1,
     );
-    // Delay the initial camera setup slightly to ensure proper initialization
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeCamera();
     });
@@ -94,23 +94,19 @@ class _QRScannerPageState extends State<QRScannerPage>
       _initializationAttempts++;
     });
 
-    // Clean up any existing controller
     await _stopAndDisposeCamera();
 
     try {
-      // Create new controller
       _controller = MobileScannerController(
         formats: [BarcodeFormat.qrCode],
         facing: CameraFacing.back,
         torchEnabled: _isFlashOn,
       );
 
-      // Wait a moment before starting
       await Future.delayed(const Duration(milliseconds: 200));
 
       if (!mounted) return;
 
-      // Start the camera
       await _controller!.start();
 
       if (mounted) {
@@ -122,7 +118,6 @@ class _QRScannerPageState extends State<QRScannerPage>
     } catch (e) {
       if (mounted) {
         if (_initializationAttempts < maxInitializationAttempts) {
-          // Wait and try again
           Future.delayed(const Duration(milliseconds: 500), _initializeCamera);
         } else {
           setState(() {
@@ -148,6 +143,47 @@ class _QRScannerPageState extends State<QRScannerPage>
     }
   }
 
+  Widget _buildScannerOverlay() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final windowSize = 300.0; // Your desired window size
+        final cornerRadius = 20.0; // Your desired corner radius
+
+        // Calculate window position
+        final windowTop = (constraints.maxHeight - windowSize) / 2;
+
+        // Position text 20 pixels below the window
+        final textTop = windowTop + windowSize + 20;
+
+        return Stack(
+          children: [
+            CustomPaint(
+              size: Size.infinite,
+              painter: ScannerOverlayPainter(
+                windowSize: windowSize,
+                cornerRadius: cornerRadius,
+              ),
+            ),
+            Positioned(
+              top: textTop, // Dynamic positioning
+              left: 0,
+              right: 0,
+              child: Text(
+                'Scan your machine\'s QR code',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.bebasNeue(
+                  fontSize: 24,
+                  color: Colors.white,
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildCameraView() {
     if (_controller == null || _isCameraInitializing) {
       return Container(
@@ -170,37 +206,42 @@ class _QRScannerPageState extends State<QRScannerPage>
       );
     }
 
-    return MobileScanner(
-      controller: _controller!,
-      onDetect: _onDetect,
-      errorBuilder: (context, error, child) {
-        // Attempt to recover from error
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted && _initializationAttempts < maxInitializationAttempts) {
-            _initializeCamera();
-          }
-        });
+    return Stack(
+      children: [
+        MobileScanner(
+          controller: _controller!,
+          onDetect: _onDetect,
+          errorBuilder: (context, error, child) {
+            Future.delayed(const Duration(milliseconds: 500), () {
+              if (mounted &&
+                  _initializationAttempts < maxInitializationAttempts) {
+                _initializeCamera();
+              }
+            });
 
-        return Container(
-          color: Colors.black,
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            return Container(
+              color: Colors.black,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Camera error: ${error.errorCode}\nRetrying...',
+                      style: const TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  'Camera error: ${error.errorCode}\nRetrying...',
-                  style: const TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+              ),
+            );
+          },
+        ),
+        _buildScannerOverlay(),
+      ],
     );
   }
 
@@ -247,20 +288,17 @@ class _QRScannerPageState extends State<QRScannerPage>
       try {
         final String scannedData = capture.barcodes.first.rawValue ?? 'No data';
 
-        // Verify if the scanned product exists
         final product = ProductsData.getProduct(scannedData);
         if (product != null) {
           final savedMachinesProvider =
               Provider.of<SavedMachinesProvider>(context, listen: false);
 
           if (savedMachinesProvider.isMachineSaved(product.name)) {
-            // Product already scanned - go directly to product details
             if (mounted) {
               await Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ProductDetailsPage(
                     productName: scannedData,
-                    // Use default values for language and year
                     language: "English",
                     year: "2024",
                   ),
@@ -268,7 +306,6 @@ class _QRScannerPageState extends State<QRScannerPage>
               );
             }
           } else {
-            // First time scanning this product - go to choice page
             if (mounted) {
               await Navigator.of(context).push(
                 MaterialPageRoute(
@@ -278,7 +315,6 @@ class _QRScannerPageState extends State<QRScannerPage>
                 ),
               );
 
-              // Add to saved machines after user makes choices
               final wasAdded = savedMachinesProvider.addMachine(product.name);
 
               if (mounted && wasAdded) {
@@ -292,7 +328,6 @@ class _QRScannerPageState extends State<QRScannerPage>
             }
           }
         } else {
-          // Show error for invalid QR code
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -319,4 +354,46 @@ class _QRScannerPageState extends State<QRScannerPage>
       });
     }
   }
+}
+
+class ScannerOverlayPainter extends CustomPainter {
+  final double windowSize;
+  final double cornerRadius;
+
+  ScannerOverlayPainter({
+    this.windowSize = 300,
+    this.cornerRadius = 20,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = Colors.black54
+      ..style = PaintingStyle.fill;
+
+    final double left = (size.width - windowSize) / 2;
+    final double top = (size.height - windowSize) / 2;
+
+    // Create a path for the entire screen
+    Path path = Path()..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    // Create a path for the scanner window with rounded corners
+    RRect windowRRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(left, top, windowSize, windowSize),
+      Radius.circular(cornerRadius),
+    );
+    Path windowPath = Path()..addRRect(windowRRect);
+
+    // Subtract the window path from the main path to create the cutout
+    final cutoutPath = Path.combine(
+      PathOperation.difference,
+      path,
+      windowPath,
+    );
+
+    canvas.drawPath(cutoutPath, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

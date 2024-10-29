@@ -35,15 +35,18 @@ class CustomDrawer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 30,
                         backgroundColor: Colors.white,
-                        child: Icon(Icons.person,
-                            color: Color(0xFF092d52), size: 40),
+                        child: authProvider.isAuthenticated
+                            ? const Icon(Icons.person,
+                                color: Color(0xFF092d52), size: 40)
+                            : const Icon(Icons.login,
+                                color: Color(0xFF092d52), size: 40),
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        authProvider.isAuthenticated ? 'Admin' : 'Account',
+                        authProvider.isAuthenticated ? 'Admin' : 'Login',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 24,

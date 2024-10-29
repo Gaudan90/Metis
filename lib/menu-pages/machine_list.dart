@@ -512,9 +512,9 @@ class _MachineListState extends State<MachineList> {
                               ListTile(
                                 leading: Image.network(
                                   machine.imageUrl,
-                                  // width: 150,
-                                  //height: 150,
-                                  fit: BoxFit.cover,
+                                  //TODO: Ho cambiato i valori qui, prima venivano tagliate le immagini, non ho testato molto ma va per ora
+                                  width: 50,
+                                  height: 200,
                                 ),
                                 title: Text(
                                   machine.name,
