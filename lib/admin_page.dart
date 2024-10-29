@@ -29,21 +29,6 @@ class _AdminPageState extends State<AdminPage> {
   String _searchQuery = '';
   String _selectedFilter = 'name';
   final MachineListState _machineListState = MachineListState();
-  String _selectedCategory = '';
-  late final TextEditingController _categoryNameController;
-  bool _isDeleteMode = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _categoryNameController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _categoryNameController.dispose();
-    super.dispose();
-  }
 
   List<String> getFilteredCategories() {
     if (_searchQuery.isEmpty) return _machineListState.categories.keys.toList();
@@ -75,184 +60,109 @@ class _AdminPageState extends State<AdminPage> {
         [];
   }
 
-  Widget _buildExpandableCategory(BuildContext context, String category) {
-    return Card(
-      color: Colors.white,
-      margin: const EdgeInsets.only(bottom: 4.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        side: BorderSide(
-          color: const Color(0xFF25344D).withOpacity(0.24),
-          width: 1.0,
-        ),
-      ),
-      child: ExpansionTile(
-        onExpansionChanged: (isExpanded) {
-          if (isExpanded) {
-            setState(() {
-              _selectedCategory = category;
-              _categoryNameController.text = category;
-            });
-          }
-        },
-        title: Row(
-          children: [
-            Expanded(
-              child: Text(
-                category,
-                style: GoogleFonts.dosis(
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF25344D),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Consumer<AuthState>(
-              builder: (context, authState, child) {
-                return authState.isAuthenticated
-                    ? IconButton(
-                  icon: const Icon(Icons.edit),
-                  color: const Color(0xFF25344D).withOpacity(0.7),
-                  onPressed: () => _showEditCategoryDialog(context, category),
-                )
-                    : const SizedBox.shrink();
-              },
-            ),
-            if (_isDeleteMode)
-              IconButton(
-                icon: const Icon(Icons.delete),
-                color: const Color(0xFF25344D).withOpacity(0.7),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        backgroundColor: const Color(0xFF25344D),
-                        title: const Text(
-                          'Cancella Categoria',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        content: const Text(
-                          'Sei sicuro di voler cancellare la categoria?',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                        actions: [
-                          TextButton(
-                            child: const Text('Annulla', style: TextStyle(color: Colors.white70)),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                          TextButton(
-                            child: const Text('Cancella', style: TextStyle(color: Colors.red)),
-                            onPressed: () {
-                              setState(() {
-                                // Rimuovi la categoria dalla lista
-                                _machineListState.categories.remove(_selectedCategory);
-                                _selectedCategory = ''; // Resetta la categoria selezionata
-                              });
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              )
-          ],
-        ),
-        children: getFilteredMachines(category).map((machine) {
-          return _buildMachineListTile(context, category, machine);
-        }).toList(),
-      ),
-    );
-  }
+  void _showAddDialog(BuildContext context) {
+    String newItemName = '';
+    String newItemYear = '';
+    String newItemDescription = '';
+    bool isCategory = false;
 
-  Widget _buildMachineListTile(BuildContext context, String category, Machine machine) {
-    return ListTile(
-      leading: Image.network(
-        machine.imageUrl,
-        width: 50,
-        height: 50,
-        fit: BoxFit.cover,
-      ),
-      title: Text(
-        machine.name,
-        style: GoogleFonts.dosis(
-          textStyle: const TextStyle(
-            fontSize: 18,
-            color: Color(0xFF25344D),
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFF25344D),
+          title: Text(
+            'Add New ${isCategory ? 'Category' : 'Machine'}',
+            style: const TextStyle(color: Colors.white),
           ),
-        ),
-      ),
-      subtitle: Text(
-        'Production Year: ${machine.productionYear}',
-        style: TextStyle(color: const Color(0xFF25344D).withOpacity(0.7)),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Consumer<AuthState>(
-            builder: (context, authState, child) {
-              return authState.isAuthenticated
-                  ? IconButton(
-                icon: const Icon(Icons.edit),
-                color: const Color(0xFF25344D).withOpacity(0.7),
-                onPressed: () => _showEditMachineDialog(context, category, machine),
-              )
-                  : const SizedBox.shrink();
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Switch(
+                    value: isCategory,
+                    onChanged: (bool value) {
+                      setState(() {
+                        isCategory = value;
+                      });
+                    },
+                  ),
+                  Text(
+                    isCategory ? 'Add Category' : 'Add Machine',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(
+                      labelText: 'Name',
+                      labelStyle: TextStyle(color: Colors.white70),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white54),
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                    onChanged: (value) => newItemName = value,
+                  ),
+                  if (!isCategory) ...[
+                    TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Production Year',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white54),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) => newItemYear = value,
+                    ),
+                    TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white54),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) => newItemDescription = value,
+                    ),
+                  ],
+                ],
+              );
             },
           ),
-          if (_isDeleteMode)
-            IconButton(
-              icon: const Icon(Icons.delete),
-              color: const Color(0xFF25344D).withOpacity(0.7),
+          actions: [
+            TextButton(
+              child: const Text('Cancel', style: TextStyle(color: Colors.white70)),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: const Text('Add', style: TextStyle(color: Colors.white70)),
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      backgroundColor: const Color(0xFF25344D),
-                      title: const Text(
-                        'Cancella Macchina',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      content: const Text(
-                        'Sei sicuro di voler cancellare questa macchina?',
-                        style: TextStyle(color: Colors.white70),
-                      ),
-                      actions: [
-                        TextButton(
-                          child: const Text('Annulla', style: TextStyle(color: Colors.white70)),
-                          onPressed: () => Navigator.pop(context),
+                if (isCategory) {
+                  if (newItemName.isNotEmpty) {
+                    setState(() {
+                      _machineListState.categories[newItemName] = [];
+                    });
+                  }
+                } else {
+                  if (newItemName.isNotEmpty && newItemYear.isNotEmpty) {
+                    setState(() {
+                      _machineListState.categories.entries.first.value.add(
+                        Machine(
+                          name: newItemName,
+                          productionYear: newItemYear,
+                          imageUrl: '/api/placeholder/100/100',
+                          description: newItemDescription,
                         ),
-                        TextButton(
-                          child: const Text('Cancella', style: TextStyle(color: Colors.red)),
-                          onPressed: () {
-                            setState(() {
-                              // Rimuovi la macchina dalla lista
-                              _machineListState.categories[_selectedCategory]?.remove(machine);
-                            });
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
+                      );
+                    });
+                  }
+                }
+                Navigator.pop(context);
               },
             ),
-        ],
-      ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailsPage(
-              productName: machine.name,
-            ),
-          ),
+          ],
         );
       },
     );
@@ -267,14 +177,10 @@ class _AdminPageState extends State<AdminPage> {
         floatingActionButton: Consumer<AuthState>(
           builder: (context, authState, child) {
             return authState.isAuthenticated
-                ? FloatingActionButton.extended(
+                ? FloatingActionButton(
               onPressed: () => _showAddDialog(context),
               backgroundColor: const Color(0xFFCFB587),
-              icon: const Icon(Icons.add),
-              label: const Text("Nuova Categoria",
-                style: TextStyle(
-                    color: Colors.white),
-              ),
+              child: const Icon(Icons.add),
             )
                 : const SizedBox.shrink();
           },
@@ -307,177 +213,9 @@ class _AdminPageState extends State<AdminPage> {
                 ),
               ),
             ),
-            Consumer<AuthState>(
-              builder: (context, authState, child) {
-                return Container(
-                  color: const Color(0xFF25344D),
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          authState.isAuthenticated ? Icons.edit_off : Icons.edit,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          authState.setAuthenticated(!authState.isAuthenticated);
-                        },
-                      ),
-                      const SizedBox(width: 16),
-                      IconButton(
-                        icon: Icon(
-                          _isDeleteMode ? Icons.delete_forever_outlined : Icons.delete,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _isDeleteMode = !_isDeleteMode;
-                          });
-                        },
-                      ),
-                      const SizedBox(width: 16),
-                    ],
-                  ),
-                );
-              },
-            ),
           ],
         ),
       ),
-    );
-  }
-
-  void _showEditCategoryDialog(BuildContext context, String category) {
-    _categoryNameController.text = category;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: const Color(0xFF25344D),
-          title: const Text(
-            'Modifica Categoria',
-            style: TextStyle(color: Colors.white),
-          ),
-          content: TextField(
-            controller: _categoryNameController,
-            decoration: const InputDecoration(
-              labelText: 'Nome Categoria',
-              labelStyle: TextStyle(color: Colors.white70),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white54),
-              ),
-            ),
-            style: const TextStyle(color: Colors.white),
-          ),
-          actions: [
-            TextButton(
-              child: const Text('Annulla', style: TextStyle(color: Colors.white70)),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: const Text('Salva', style: TextStyle(color: Colors.white70)),
-              onPressed: () {
-                final newCategoryName = _categoryNameController.text;
-                if (newCategoryName.isNotEmpty && newCategoryName != _selectedCategory) {
-                  setState(() {
-                    final machines = _machineListState.categories[_selectedCategory];
-                    _machineListState.categories.remove(_selectedCategory);
-                    _machineListState.categories[newCategoryName] = machines ?? [];
-                    _selectedCategory = newCategoryName; // Aggiorna la categoria selezionata
-                  });
-                }
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showEditMachineDialog(BuildContext context, String category, Machine machine) {
-    String newName = machine.name;
-    String newYear = machine.productionYear;
-    String newDescription = machine.description;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: const Color(0xFF25344D),
-          title: const Text(
-            'Modifica Macchina',
-            style: TextStyle(color: Colors.white),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: TextEditingController(text: machine.name),
-                decoration: const InputDecoration(
-                  labelText: 'Nome',
-                  labelStyle: TextStyle(color: Colors.white70),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white54),
-                  ),
-                ),
-                style: const TextStyle(color: Colors.white),
-                onChanged: (value) => newName = value,
-              ),
-              TextField(
-                controller: TextEditingController(text: machine.productionYear),
-                decoration: const InputDecoration(
-                  labelText: 'Anno di Produzione',
-                  labelStyle: TextStyle(color: Colors.white70),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white54),
-                  ),
-                ),
-                style: const TextStyle(color: Colors.white),
-                onChanged: (value) => newYear = value,
-              ),
-              TextField(
-                controller: TextEditingController(text: machine.description),
-                decoration: const InputDecoration(
-                  labelText: 'Descrizione',
-                  labelStyle: TextStyle(color: Colors.white70),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white54),
-                  ),
-                ),
-                style: const TextStyle(color: Colors.white),
-                onChanged: (value) => newDescription = value,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: const Text('Annulla', style: TextStyle(color: Colors.white70)),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: const Text('Salva', style: TextStyle(color: Colors.white70)),
-              onPressed: () {
-                if (newName.isNotEmpty && newYear.isNotEmpty) {
-                  setState(() {
-                    final index = _machineListState.categories[category]?.indexOf(machine) ?? -1;
-                    if (index != -1) {
-                      _machineListState.categories[category]?[index] = Machine(
-                        name: newName,
-                        productionYear: newYear,
-                        imageUrl: machine.imageUrl,
-                        description: newDescription,
-                      );
-                    }
-                  });
-                }
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 
@@ -527,9 +265,9 @@ class _AdminPageState extends State<AdminPage> {
               _selectedFilter = value!;
             });
           },
-          fillColor: WidgetStateProperty.resolveWith<Color>(
-                (Set<WidgetState> states) {
-              return states.contains(WidgetState.disabled)
+          fillColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              return states.contains(MaterialState.disabled)
                   ? Colors.grey
                   : const Color(0xFF25344D);
             },
@@ -540,110 +278,94 @@ class _AdminPageState extends State<AdminPage> {
     );
   }
 
-  void _showAddDialog(BuildContext context) {
-    String newItemName = '';
-    String newItemYear = '';
-    String newItemDescription = '';
-    bool isCategory = false;
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-      return AlertDialog(backgroundColor: const Color(0xFF25344D),
-        title: Text(
-          'Add New ${isCategory ? 'Category' : 'Machine'}',
-          style: const TextStyle(color: Colors.white),
+  Widget _buildExpandableCategory(BuildContext context, String category) {
+    return Card(
+      color: Colors.white,
+      margin: const EdgeInsets.only(bottom: 4.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        side: BorderSide(
+          color: const Color(0xFF25344D).withOpacity(0.24),
+          width: 1.0,
         ),
-        content: StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Switch(
-                  value: isCategory,
-                  onChanged: (bool value) {
-                    setState(() {
-                      isCategory = value;
-                    });
-                  },
-                ),
-                Text(
-                  isCategory ? 'Add Category' : 'Add Machine',
-                  style: const TextStyle(color: Colors.white),
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                    labelStyle: TextStyle(color: Colors.white70),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white54),
-                    ),
-                  ),
-                  style: const TextStyle(color: Colors.white),
-                  onChanged: (value) => newItemName = value,
-                ),
-                if (!isCategory) ...[
-                  TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Production Year',
-                      labelStyle: TextStyle(color: Colors.white70),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white54),
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                    onChanged: (value) => newItemYear = value,
-                  ),
-                  TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Description',
-                      labelStyle: TextStyle(color: Colors.white70),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white54),
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                    onChanged: (value) => newItemDescription = value,
-                  ),
-                ],
-              ],
-            );
+      ),
+      child: ExpansionTile(
+        title: Text(
+          category,
+          style: GoogleFonts.dosis(
+            textStyle: const TextStyle(
+              fontSize: 20,
+              color: Color(0xFF25344D),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        children: getFilteredMachines(category).map((machine) {
+          return _buildMachineListTile(context, machine);
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildMachineListTile(BuildContext context, Machine machine) {
+    return ListTile(
+      leading: Image.network(
+        machine.imageUrl,
+        width: 50,
+        height: 50,
+        fit: BoxFit.cover,
+      ),
+      title: Text(
+        machine.name,
+        style: GoogleFonts.dosis(
+          textStyle: const TextStyle(
+            fontSize: 18,
+            color: Color(0xFF25344D),
+          ),
+        ),
+      ),
+      subtitle: Text(
+        'Production Year: ${machine.productionYear}',
+        style: TextStyle(color: const Color(0xFF25344D).withOpacity(0.7)),
+      ),
+      trailing: Consumer<AuthState>(
+        builder: (context, authState, child) {
+          if (authState.isAuthenticated) {
+            return _buildMachineActionButtons(machine);
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(
+              productName: machine.name,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildMachineActionButtons(Machine machine) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          icon: Icon(Icons.edit, color: const Color(0xFF25344D).withOpacity(0.7)),
+          onPressed: () {
+            // Implement edit functionality
           },
         ),
-        actions: [
-          TextButton(
-            child: const Text('Cancel', style: TextStyle(color: Colors.white70)),
-            onPressed: () => Navigator.pop(context),
-          ),
-          TextButton(
-            child: const Text('Add', style: TextStyle(color: Colors.white70)),
-            onPressed: () {
-              if (isCategory) {
-                if (newItemName.isNotEmpty) {
-                  setState(() {
-                    _machineListState.categories[newItemName] = [];
-                  });
-                }
-              } else {
-                if (newItemName.isNotEmpty && newItemYear.isNotEmpty) {
-                  setState(() {
-                    _machineListState.categories.entries.first.value.add(
-                      Machine(
-                        name: newItemName,
-                        productionYear: newItemYear,
-                        imageUrl: '/api/placeholder/100/100',
-                        description: newItemDescription,
-                      ),
-                    );
-                  });
-                }
-              }
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-        },
+        IconButton(
+          icon: Icon(Icons.delete, color: const Color(0xFF25344D).withOpacity(0.7)),
+          onPressed: () {
+            // Implement delete functionality
+          },
+        ),
+      ],
     );
   }
 }
