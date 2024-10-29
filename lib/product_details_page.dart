@@ -80,8 +80,8 @@ class ProductDetailsPage extends StatelessWidget {
                     product.subtitle,
                     style: GoogleFonts.bebasNeue(
                       textStyle: const TextStyle(
-                        fontSize: 24,
-                        color: Colors.blue,
+                        fontSize: 28,
+                        color: Color(0xFF486494),
                         fontWeight: FontWeight.w300,
                       ),
                     ),

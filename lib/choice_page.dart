@@ -176,8 +176,8 @@ class _ChoicePageState extends State<ChoicePage> {
                         Text(
                           product?.subtitle ?? '',
                           style: GoogleFonts.bebasNeue(
-                            fontSize: 20,
-                            color: Colors.blue,
+                            fontSize: 28,
+                            color: const Color(0xFF486494),
                             fontWeight: FontWeight.w300,
                           ),
                           textAlign: TextAlign.center,
@@ -221,7 +221,7 @@ class _ChoicePageState extends State<ChoicePage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue[700],
+                              backgroundColor: const Color(0xFF486494),
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -232,9 +232,7 @@ class _ChoicePageState extends State<ChoicePage> {
                             child: Text(
                               "Continue",
                               style: GoogleFonts.dosis(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
