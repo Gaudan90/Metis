@@ -3,18 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'Components/header.dart';
 import 'product_details_page.dart';
-
-class Machine {
-  final String name;
-  final String productionYear;
-  final String imageUrl;
-
-  Machine({
-    required this.name,
-    required this.productionYear,
-    required this.imageUrl,
-  });
-}
+import '../Data/machine.dart';
+import '../Data/machine_list_state.dart';
 
 class AuthState extends ChangeNotifier {
   bool _isAuthenticated = false;
@@ -38,229 +28,12 @@ class _AdminPageState extends State<AdminPage> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   String _selectedFilter = 'name';
-
-  final Map<String, List<Machine>> _categories = {
-    'Temperaggio': [
-      Machine(name: 'LEGEND',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'SELMI ONE',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'COLOR EX',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'PLUS EX',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'FUTURA EX',
-          productionYear: '2024',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'TOP EX',
-          productionYear: '2020',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'CENTO',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Ricopertura': [
-      Machine(name: 'TRUFFLE',
-          productionYear: '2020',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'R200 LEGEND',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'RS200',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'AUTOMATIC TRUFFLE',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'Rt400 PLUS',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'R600',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Modellaggio Cioccolato': [
-      Machine(name: 'MOULD LOADER 175',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'MOULDING LINE 275',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'SMODELLATORE AUTOMATICO',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'INJECTION PLATE',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'FILLER PRALINE',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'FILLER VASI - FILLER VASI AUTOMATICA',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'GALILEO',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'STAMPi',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Chocopaint': [
-      Machine(name: 'CHOCOPAINT',
-          productionYear: '2024',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Tunnel di Raffreddamento e Ricopertura': [
-      Machine(name: 'SPIDER',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'SPIDER MAXNEW',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'TUNNEL 200/250 MM',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'TUNNEL 300/400 MM',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'TUNNEL 600 MM',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'DROPS SYSTEM',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'One Shot Tuttuno': [
-      Machine(name: 'ONE SHOT TUTTUNO 4',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'ONE SHOT TUTTUNO 9',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'CARICATORE DI STAMPI',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'CHARGER 175/275',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'VIBRA',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'DEPOSITOR',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'SPINNER EXIT 175/275',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'One Shot Tuttuno ICE': [
-      Machine(name: 'ONE SHOT TUTTUNO ICE',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Cluster': [
-      Machine(name: 'CLUSTER',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'CLUSTER TEGLIA',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Confettatrici Bassine': [
-      Machine(name: 'COMFIT',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'COMFIT MAXI',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'SPRAYSYSTEM',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Scioglitori e Miscelatori': [
-      Machine(name: 'TANK 200',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'TANK 400',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Estrusori': [
-      Machine(name: 'CHOCOFORM',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'CHOCOLINER',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'EXTRUDER',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Raffinatrici a Sfere': [
-      Machine(name: 'MICRON 25',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'MICRON 50',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'Tostatrici': [
-      Machine(name: 'TOSTATRICE ROASTER 106',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'TOSTATRICE ROASTER 120',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'BeanToBar': [
-      Machine(name: 'WINNOWERS',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'GRINDER PLUS',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'CONCA 100',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'CONCA 200-400',
-          productionYear: '2024',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'VAGLIO',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'LavorazioneFruttaSecca': [
-      Machine(name: 'GRINDER PLUS',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'GRAIN',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'VAGLIO',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-    'FontaneDiCioccolato': [
-      Machine(name: 'MACCHIA',
-          productionYear: '2021',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'MACCHIA TEMPERANTE',
-          productionYear: '2022',
-          imageUrl: '/api/placeholder/100/100'),
-      Machine(name: 'FONTANA A MURO',
-          productionYear: '2023',
-          imageUrl: '/api/placeholder/100/100'),
-    ],
-  };
+  final MachineListState _machineListState = MachineListState();
 
   List<String> getFilteredCategories() {
-    if (_searchQuery.isEmpty) return _categories.keys.toList();
+    if (_searchQuery.isEmpty) return _machineListState.categories.keys.toList();
 
-    return _categories.entries
+    return _machineListState.categories.entries
         .where((entry) =>
         entry.value.any((machine) {
           if (_selectedFilter == 'name') {
@@ -275,9 +48,9 @@ class _AdminPageState extends State<AdminPage> {
   }
 
   List<Machine> getFilteredMachines(String category) {
-    if (_searchQuery.isEmpty) return _categories[category] ?? [];
+    if (_searchQuery.isEmpty) return _machineListState.categories[category] ?? [];
 
-    return _categories[category]?.where((machine) {
+    return _machineListState.categories[category]?.where((machine) {
       if (_selectedFilter == 'name') {
         return machine.name.toLowerCase().contains(_searchQuery.toLowerCase());
       } else {
@@ -290,6 +63,7 @@ class _AdminPageState extends State<AdminPage> {
   void _showAddDialog(BuildContext context) {
     String newItemName = '';
     String newItemYear = '';
+    String newItemDescription = '';
     bool isCategory = false;
 
     showDialog(
@@ -329,7 +103,7 @@ class _AdminPageState extends State<AdminPage> {
                     style: const TextStyle(color: Colors.white),
                     onChanged: (value) => newItemName = value,
                   ),
-                  if (!isCategory)
+                  if (!isCategory) ...[
                     TextField(
                       decoration: const InputDecoration(
                         labelText: 'Production Year',
@@ -341,14 +115,25 @@ class _AdminPageState extends State<AdminPage> {
                       style: const TextStyle(color: Colors.white),
                       onChanged: (value) => newItemYear = value,
                     ),
+                    TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white54),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: (value) => newItemDescription = value,
+                    ),
+                  ],
                 ],
               );
             },
           ),
           actions: [
             TextButton(
-              child: const Text(
-                  'Cancel', style: TextStyle(color: Colors.white70)),
+              child: const Text('Cancel', style: TextStyle(color: Colors.white70)),
               onPressed: () => Navigator.pop(context),
             ),
             TextButton(
@@ -357,17 +142,18 @@ class _AdminPageState extends State<AdminPage> {
                 if (isCategory) {
                   if (newItemName.isNotEmpty) {
                     setState(() {
-                      _categories[newItemName] = [];
+                      _machineListState.categories[newItemName] = [];
                     });
                   }
                 } else {
                   if (newItemName.isNotEmpty && newItemYear.isNotEmpty) {
                     setState(() {
-                      _categories.entries.first.value.add(
+                      _machineListState.categories.entries.first.value.add(
                         Machine(
                           name: newItemName,
                           productionYear: newItemYear,
                           imageUrl: '/api/placeholder/100/100',
+                          description: newItemDescription,
                         ),
                       );
                     });
@@ -393,7 +179,7 @@ class _AdminPageState extends State<AdminPage> {
             return authState.isAuthenticated
                 ? FloatingActionButton(
               onPressed: () => _showAddDialog(context),
-              backgroundColor: const Color(0xFFCFB587), // Inverted color
+              backgroundColor: const Color(0xFFCFB587),
               child: const Icon(Icons.add),
             )
                 : const SizedBox.shrink();
@@ -403,7 +189,7 @@ class _AdminPageState extends State<AdminPage> {
           children: [
             Header(
               onMenuPressed: () {
-
+                // Implement menu functionality
               },
             ),
             Padding(
@@ -436,7 +222,7 @@ class _AdminPageState extends State<AdminPage> {
   Widget _buildSearchField() {
     return TextField(
       controller: _searchController,
-      style: const TextStyle(color: Color(0xFF25344D)), // Inverted text color
+      style: const TextStyle(color: Color(0xFF25344D)),
       decoration: InputDecoration(
         hintText: 'Search...',
         hintStyle: const TextStyle(color: Color(0xFF25344D)),
@@ -487,19 +273,19 @@ class _AdminPageState extends State<AdminPage> {
             },
           ),
         ),
-        Text(label, style: TextStyle(color: Color(0xFF25344D))),
+        Text(label, style: const TextStyle(color: Color(0xFF25344D))),
       ],
     );
   }
 
   Widget _buildExpandableCategory(BuildContext context, String category) {
     return Card(
-      color: Colors.white, // Inverted card color
+      color: Colors.white,
       margin: const EdgeInsets.only(bottom: 4.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
         side: BorderSide(
-          color: Color(0xFF25344D).withOpacity(0.24), // Inverted border color
+          color: const Color(0xFF25344D).withOpacity(0.24),
           width: 1.0,
         ),
       ),
@@ -507,9 +293,9 @@ class _AdminPageState extends State<AdminPage> {
         title: Text(
           category,
           style: GoogleFonts.dosis(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               fontSize: 20,
-              color: Color(0xFF25344D), // Inverted text color
+              color: Color(0xFF25344D),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -532,16 +318,15 @@ class _AdminPageState extends State<AdminPage> {
       title: Text(
         machine.name,
         style: GoogleFonts.dosis(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: 18,
-            color: Color(0xFF25344D), // Inverted text color
+            color: Color(0xFF25344D),
           ),
         ),
       ),
       subtitle: Text(
         'Production Year: ${machine.productionYear}',
-        style: TextStyle(color: Color(0xFF25344D).withOpacity(
-            0.7)), // Inverted subtitle color
+        style: TextStyle(color: const Color(0xFF25344D).withOpacity(0.7)),
       ),
       trailing: Consumer<AuthState>(
         builder: (context, authState, child) {
@@ -555,10 +340,9 @@ class _AdminPageState extends State<AdminPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ProductDetailsPage(
-                  productName: machine.name,
-                ),
+            builder: (context) => ProductDetailsPage(
+              productName: machine.name,
+            ),
           ),
         );
       },
@@ -570,15 +354,13 @@ class _AdminPageState extends State<AdminPage> {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          icon: Icon(Icons.edit, color: Color(0xFF25344D).withOpacity(0.7)),
-          // Inverted icon color
+          icon: Icon(Icons.edit, color: const Color(0xFF25344D).withOpacity(0.7)),
           onPressed: () {
             // Implement edit functionality
           },
         ),
         IconButton(
-          icon: Icon(Icons.delete, color: Color(0xFF25344D).withOpacity(0.7)),
-          // Inverted icon color
+          icon: Icon(Icons.delete, color: const Color(0xFF25344D).withOpacity(0.7)),
           onPressed: () {
             // Implement delete functionality
           },
