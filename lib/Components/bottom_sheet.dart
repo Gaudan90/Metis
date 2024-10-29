@@ -77,7 +77,7 @@ class BottomSheett extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           Text(
-                            'SAVED MACHINES (${savedMachines.length})',
+                            'SAVED MACHINES',
                             style: GoogleFonts.bebasNeue(
                               textStyle: const TextStyle(
                                 color: Colors.white,
